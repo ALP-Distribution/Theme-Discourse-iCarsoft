@@ -1,1 +1,6 @@
+icons_sprite:
+  type: upload
+  default: null
+  description:
+    en: Upload an SVG sprite file containing <symbol> icons to register globally.
 
