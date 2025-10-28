@@ -1,0 +1,58 @@
+/* Custom properties and their default values */
+:root {
+  /* Layout */
+  --canvas-nav-space: 1.25rem;
+  // --canvas-content-padding: 1.5rem;
+  // --canvas-topic-list-padding: 0.8em;
+  --d-max-width: 1000px;
+
+  /* Base Styles */
+  --canvas-background: var(--primary-50);
+  --canvas-border: 1px solid var(--primary-200);
+  // --canvas-border-light: 1px solid var(--primary-200);
+
+  /* Border Radius */
+  // --d-border-radius: 2px;
+  --d-border-radius-large: 16px;
+  --d-button-border-radius: 8px;
+  // --d-input-border-radius: var(--d-button-border-radius);
+  // --d-nav-pill-border-radius: var(--d-button-border-radius);
+
+  /* Button Styles */
+  // --canvas-button-padding: 0.5rem 0.75rem;
+  --canvas-button-primary-padding: 0.65rem 0.75rem;
+
+  /* Header */
+  // --canvas-header-height: 4rem;
+  // --canvas-header-border: none;
+  // --canvas-header-background: var(--header_background);
+  // --canvas-header-shadow: var(--shadow-header);
+
+  /* Sidebar */
+  --canvas-sidebar-border: none;
+  // --canvas-sidebar-scrollbar: var(--scrollbarWidth);
+  --d-sidebar-width: clamp(12rem, 2rem + 21.3333vw, 18rem);
+  --d-sidebar-background: var(--canvas-background);
+  --d-sidebar-row-height: 2.8125rem;
+  // --d-sidebar-highlight-background: var(--primary-low);
+
+  /* Panels */
+  --canvas-panel-padding: 2rem;
+  // --canvas-panel-radius: var(--d-border-radius-large);
+  // --canvas-panel-border: none;
+  // --canvas-panel-shadow: var(--shadow-header);
+  // --canvas-panel-background: var(--secondary);
+
+  /* Banners */
+  // --canvas-banner-background: var(--secondary);
+  // --canvas-banner-color: var(--primary);
+  --canvas-banner-padding: clamp(2.5rem, 1.413rem + 5.4348vw, 5.625rem)
+    clamp(2rem, -0.087rem + 10.4348vw, 8rem);
+  // --canvas-banner-radius: var(--d-border-radius-large);
+  // --canvas-banner-border: none;
+  // --canvas-banner-shadow: var(--shadow-header);
+
+  /* Header Search */
+  // --canvas-header-search-border: 1px solid var(--primary-400);
+  // --canvas-header-search-padding: 0.5em;
+}

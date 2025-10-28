@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="300" preserveAspectRatio="none" viewBox="0 0 1000 300">
+    <g mask="url(&quot;#SvgjsMask14548&quot;)" fill="none">
+        <rect width="1000" height="300" x="0" y="0" fill="url(&quot;#SvgjsLinearGradient14549&quot;)"></rect>
+        <path d="M386.71000000000004 72.11 L397.04 53.089999999999996L403.55056750713186 74.27556750713183z" fill="#e73635"></path>
+        <rect width="144" height="144" clip-path="url(&quot;#SvgjsClipPath14550&quot;)" x="741.22" y="116" fill="url(&quot;#SvgjsPattern14551&quot;)" transform="rotate(246.81, 813.22, 188)"></rect>
+        <path d="M24.24 56.8L12.01 60.59 5.63 49.48-6.6 53.27-12.99 42.17-25.22 45.96-31.6 34.86M27.17 49.35L14.94 53.14 8.55 42.04-3.68 45.83-10.06 34.72-22.29 38.51-28.67 27.41M30.1 41.91L17.86 45.7 11.48 34.59-0.75 38.38-7.13 27.28-19.37 31.07-25.75 19.97" stroke="#e73635" stroke-width="1.51"></path>
+        <path d="M667.59 156.07L657.03 163.31 647.65 154.59 637.08 161.83 627.7 153.11 617.14 160.36 607.75 151.64M668.18 148.09L657.62 155.33 648.24 146.61 637.67 153.85 628.29 145.14 617.73 152.38 608.34 143.66M668.77 140.11L658.21 147.35 648.83 138.63 638.26 145.87 628.88 137.16 618.32 144.4 608.93 135.68" stroke="#d3b714" stroke-width="1.47" stroke-dasharray="3, 2"></path>
+        <circle r="25" cx="366.55" cy="37.6" fill="#d3b714"></circle>
+        <circle r="48.11433309650081" cx="777.78" cy="71.47" fill="#e73635"></circle>
+        <rect width="77.52" height="77.52" clip-path="url(&quot;#SvgjsClipPath14552&quot;)" x="31.27" y="226.88" fill="url(&quot;#SvgjsPattern14553&quot;)" transform="rotate(89.94, 70.03, 265.64)"></rect>
+        <path d="M988.7 58.85a5.6 5.6 0 1 0 11.08-1.61 5.6 5.6 0 1 0-11.08 1.61zM1004.53 56.55a5.6 5.6 0 1 0 11.09-1.6 5.6 5.6 0 1 0-11.09 1.6zM1020.37 54.26a5.6 5.6 0 1 0 11.08-1.6 5.6 5.6 0 1 0-11.08 1.6zM1036.2 51.97a5.6 5.6 0 1 0 11.09-1.61 5.6 5.6 0 1 0-11.09 1.61z" stroke="#d3b714" stroke-width="1" stroke-dasharray="2, 2"></path>
+        <path d="M632.2 305.76000000000005 L724.74 297.65000000000003L738.4074747574746 361.64247475747453z" fill="#e73635"></path>
+        <path d="M807.84 168.31 L825.78 105.57L858.2267343073291 178.35673430732916z" stroke="#037b0b" stroke-width="1.94" stroke-dasharray="3, 3"></path>
+        <path d="M527.19 160.51L514.4 161.32 510.8 149.03 498.02 149.85 494.42 137.56 481.64 138.38 478.04 126.09" stroke="#d3b714" stroke-width="1" stroke-dasharray="4, 4"></path>
+        <rect width="180" height="180" clip-path="url(&quot;#SvgjsClipPath14554&quot;)" x="864.42" y="-84.41" fill="url(&quot;#SvgjsPattern14555&quot;)" transform="rotate(313.76, 954.42, 5.59)"></rect>
+        <path d="M923.02 221.5a5.6 5.6 0 1 0-6.41-9.18 5.6 5.6 0 1 0 6.41 9.18zM913.86 208.38a5.6 5.6 0 1 0-6.41-9.18 5.6 5.6 0 1 0 6.41 9.18zM904.7 195.27a5.6 5.6 0 1 0-6.42-9.18 5.6 5.6 0 1 0 6.42 9.18zM895.53 182.15a5.6 5.6 0 1 0-6.41-9.18 5.6 5.6 0 1 0 6.41 9.18zM954.47 238.57a5.6 5.6 0 1 0-6.42-9.18 5.6 5.6 0 1 0 6.42 9.18zM945.3 225.45a5.6 5.6 0 1 0-6.41-9.18 5.6 5.6 0 1 0 6.41 9.18zM936.14 212.34a5.6 5.6 0 1 0-6.41-9.18 5.6 5.6 0 1 0 6.41 9.18zM926.98 199.22a5.6 5.6 0 1 0-6.42-9.18 5.6 5.6 0 1 0 6.42 9.18zM985.91 255.64a5.6 5.6 0 1 0-6.41-9.18 5.6 5.6 0 1 0 6.41 9.18zM976.75 242.52a5.6 5.6 0 1 0-6.42-9.18 5.6 5.6 0 1 0 6.42 9.18zM967.58 229.41a5.6 5.6 0 1 0-6.41-9.19 5.6 5.6 0 1 0 6.41 9.19zM958.42 216.29a5.6 5.6 0 1 0-6.42-9.18 5.6 5.6 0 1 0 6.42 9.18z" stroke="#e73635" stroke-width="1" stroke-dasharray="3, 2"></path>
+        <circle r="42.2923223809334" cx="905.51" cy="289.22" stroke="#037b0b" stroke-width="1.62" stroke-dasharray="3, 3"></circle>
+        <path d="M819.22 273.28L831.64 276.39 831.34 289.19 843.77 292.29 843.46 305.1 855.89 308.2 855.59 321M812.86 278.13L825.28 281.23 824.98 294.04 837.4 297.14 837.1 309.94 849.53 313.05 849.22 325.85M806.49 282.98L818.92 286.08 818.62 298.89 831.04 301.99 830.74 314.79 843.16 317.9 842.86 330.7" stroke="#d3b714" stroke-width="2.26" stroke-dasharray="2, 2"></path>
+    </g>
+    <defs>
+        <mask id="SvgjsMask14548">
+            <rect width="1000" height="300" fill="#ffffff"></rect>
+        </mask>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" gradientUnits="userSpaceOnUse" id="SvgjsLinearGradient14549">
+            <stop stop-color="rgba(230, 184, 47, 0.63)" offset="0"></stop>
+            <stop stop-color="rgba(230, 186, 81, 0.69)" offset="1"></stop>
+        </linearGradient>
+        <pattern x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse" id="SvgjsPattern14551">
+            <path d="M3 1L3 5M1 3L5 3" stroke="#d3b714" fill="none" stroke-width="1"></path>
+        </pattern>
+        <clipPath id="SvgjsClipPath14550">
+            <circle r="36" cx="813.22" cy="188"></circle>
+        </clipPath>
+        <pattern x="0" y="0" width="6.46" height="6.46" patternUnits="userSpaceOnUse" id="SvgjsPattern14553">
+            <path d="M3.23 1L3.23 5.46M1 3.23L5.46 3.23" stroke="#d3b714" fill="none" stroke-width="1.07"></path>
+        </pattern>
+        <clipPath id="SvgjsClipPath14552">
+            <circle r="19.38" cx="70.03" cy="265.64"></circle>
+        </clipPath>
+        <pattern x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse" id="SvgjsPattern14555">
+            <path d="M0 6L3 0L6 6" stroke="#037b0b" fill="none"></path>
+        </pattern>
+        <clipPath id="SvgjsClipPath14554">
+            <circle r="45" cx="954.42" cy="5.59"></circle>
+        </clipPath>
+    </defs>
+</svg>

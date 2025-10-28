@@ -1,0 +1,36 @@
+{
+  "name": "Canvas iCarsoft",
+  "authors": "Matthieu Munoz",
+  "about_url": "",
+  "license_url": "",
+  "learn_more": "",
+  "theme_version": "0.0.1",
+  "minimum_discourse_version": null,
+  "maximum_discourse_version": null,
+  "assets": {
+    "banner_bg_category": "assets/bg-category.svg",
+    "banner_bg_tag": "assets/bg-tag.svg",
+    "banner_bg_extra": "assets/bg-extra.svg"
+  },
+  "modifiers": {},
+  "color_schemes": {
+    "iCarsoft": {
+      "primary": "221f20",
+      "secondary": "ffffff",
+      "tertiary": "de1a00",
+      "quaternary": "dd8800",
+      "header_background": "ffffff",
+      "header_primary": "333333",
+      "highlight": "ffff4d",
+      "selected": "d1f0ff",
+      "hover": "f2f2f2"
+    }
+  },
+  "components": [
+    "https://gitlab.com/manuelkostka/discourse/canvas/component.git",
+    "https://gitlab.com/manuelkostka/discourse/components/extra-banners.git",
+    "https://github.com/discourse/discourse-category-banners.git",
+    "https://github.com/discourse/discourse-tag-banners.git",
+    "https://github.com/discourse/discourse-topic-cards.git"
+  ]
+}
