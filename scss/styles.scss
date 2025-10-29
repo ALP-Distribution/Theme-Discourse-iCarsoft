@@ -1,3 +1,7 @@
+.sidebar-section-wrapper.sidebar-section[data-section-name="tags"] {
+  display: none;
+}
+
 body div[class^="category-title-header"] {
   background-image: url($banner-bg-category);
 }
@@ -18,8 +22,11 @@ body #sidebar-section-content-categories svg[class*="d-icon-icarsoft-"] {
   width: 1.5rem;
   height: 1.5rem;
 }
-body .topic-card {
+body .topic-card.topic-list-item {
   background-color: var(--topic-card-background);
   border-radius: var(--topic-card-border-radius);
   box-shadow: var(--topic-card-shadow);
+}
+body .topic-card.topic-list-item.visited {
+  background-color: var(--topic-card-background-visited);
 }
