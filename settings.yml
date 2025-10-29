@@ -4,3 +4,74 @@ icons_sprite:
   description:
     en: Upload an SVG sprite file containing <symbol> icons to register globally.
 
+
+# Homepage toggles
+enable_home_hero:
+  type: bool
+  default: true
+  description:
+    en: Show the Extra Banner hero on the homepage (/latest)
+
+enable_home_search_banner:
+  type: bool
+  default: true
+  description:
+    en: Show the official Search Banner on the homepage (/latest)
+
+enable_home_nav:
+  type: bool
+  default: true
+  description:
+    en: Show the category nav strip under the header on the homepage (/latest)
+
+# Homepage nav (five items)
+nav1_label:
+  type: text
+  default: Bienvenue
+nav1_path:
+  type: text
+  default: /c/bienvenue/4
+nav1_icon:
+  type: text
+  default: bienvenue
+
+nav2_label:
+  type: text
+  default: Nos produits
+nav2_path:
+  type: text
+  default: /c/nos-produits/5
+nav2_icon:
+  type: text
+  default: produits
+
+nav3_label:
+  type: text
+  default: Par marques
+nav3_path:
+  type: text
+  default: /c/par-marques/6
+nav3_icon:
+  type: text
+  default: marques
+
+nav4_label:
+  type: text
+  default: Videos & tutos
+nav4_path:
+  type: text
+  default: /c/videos-tutos/7
+nav4_icon:
+  type: text
+  default: videos
+
+nav5_label:
+  type: text
+  default: Communauté
+nav5_path:
+  type: text
+  default: /c/communaute/77
+nav5_icon:
+  type: text
+  default: communaute
+

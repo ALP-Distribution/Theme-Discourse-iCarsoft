@@ -33,3 +33,83 @@ body .topic-card.topic-list-item {
 body .topic-card.topic-list-item.visited {
   background-color: var(--topic-card-background-visited);
 }
+
+/* Homepage: hero banner, search banner, and nav strip */
+.icarsoft-home-nav {
+  display: none;
+}
+
+.icarsoft-home-latest.icarsoft-home-nav-enabled .icarsoft-home-nav {
+  display: block;
+}
+
+.icarsoft-home-latest .icarsoft-home-nav {
+  margin: 0 auto;
+  max-width: var(--d-max-width);
+  padding: 0 var(--canvas-nav-space);
+}
+
+.icarsoft-home-nav__list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.icarsoft-home-nav__item {
+  display: contents;
+}
+
+.icarsoft-home-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--primary-200);
+  border-radius: var(--d-border-radius-medium);
+  background: var(--secondary);
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.icarsoft-home-nav__link:hover,
+.icarsoft-home-nav__link:focus {
+  background: var(--primary-50);
+  outline: none;
+}
+
+.icarsoft-home-nav .d-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.icarsoft-home-nav__divider {
+  height: 1px;
+  background: var(--primary-200);
+  margin: 1rem 0;
+}
+
+@media (max-width: 700px) {
+  .icarsoft-home-nav__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Tweak Extra Banner on homepage */
+.icarsoft-home-latest.icarsoft-home-hero-enabled .extra-banner {
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--d-border-radius-large);
+  margin: 1rem auto;
+  max-width: var(--d-max-width);
+}
+
+/* Tweak Search Banner spacing on homepage */
+.icarsoft-home-latest.icarsoft-home-search-enabled .search-banner {
+  margin: 1rem auto;
+  max-width: var(--d-max-width);
+  border-radius: var(--d-border-radius-large);
+}
