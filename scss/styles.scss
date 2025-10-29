@@ -24,6 +24,7 @@ body .topic-card.topic-list-item {
 
 body .topic-card.topic-list-item.visited {
   background-color: var(--topic-card-background-visited);
+  opacity: 0.75;
 }
 
 /* Homepage hero banner */
