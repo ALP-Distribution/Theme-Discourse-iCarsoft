@@ -1,0 +1,14 @@
+{{#if this.showHero}}
+  <section class="icarsoft-hero" style={{this.heroStyle}}>
+    <div class="icarsoft-hero__content wrap">
+      <h1>{{theme-setting "hero_title"}}</h1>
+      {{#if (theme-setting "hero_subtitle")}}
+        <p>{{theme-setting "hero_subtitle"}}</p>
+      {{/if}}
+      {{#if (theme-setting "hero_cta_text")}}
+        <a class="btn btn-primary" href="{{theme-setting "hero_cta_url"}}">{{theme-setting "hero_cta_text"}}</a>
+      {{/if}}
+    </div>
+  </section>
+{{/if}}
+

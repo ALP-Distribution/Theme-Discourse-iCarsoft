@@ -4,3 +4,159 @@ icons_sprite:
   description:
     en: Upload an SVG sprite file containing <symbol> icons to register globally.
 
+enable_hero:
+  type: bool
+  default: true
+  description:
+    en: Show the hero banner on /latest
+
+hero_title:
+  type: string
+  default: "Bienvenue sur la communauté iCarsoft"
+  description:
+    en: Main title text for the hero banner
+
+hero_subtitle:
+  type: string
+  default: "Support, produits, tutoriels et entraide entre passionnés."
+  description:
+    en: Subtitle text for the hero banner
+
+hero_bg:
+  type: upload
+  default: ""
+  description:
+    en: Background image for the hero banner
+
+hero_cta_text:
+  type: string
+  default: ""
+  description:
+    en: Optional CTA button text on the hero banner
+
+hero_cta_url:
+  type: string
+  default: "/latest"
+  description:
+    en: Optional CTA button URL on the hero banner
+
+enable_search_hero:
+  type: bool
+  default: true
+  description:
+    en: Show the search hero bar on /latest
+
+search_placeholder:
+  type: string
+  default: "Rechercher des sujets, marques, produits…"
+  description:
+    en: Placeholder text for the search input
+
+search_bg:
+  type: upload
+  default: ""
+  description:
+    en: Background image for the search hero bar
+
+enable_icon_nav:
+  type: bool
+  default: true
+  description:
+    en: Show the icon navigation menu on /latest
+
+nav_infos_label:
+  type: string
+  default: "Bienvenue"
+  description:
+    en: Label for the Infos/Bienvenue nav item
+
+nav_infos_url:
+  type: string
+  default: "/c/bienvenue/4"
+  description:
+    en: URL for the Infos/Bienvenue nav item
+
+nav_product_label:
+  type: string
+  default: "Nos produits"
+  description:
+    en: Label for the Products nav item
+
+nav_product_url:
+  type: string
+  default: "/c/nos-produits/5"
+  description:
+    en: URL for the Products nav item
+
+nav_brands_label:
+  type: string
+  default: "Par marques"
+  description:
+    en: Label for the Brands nav item
+
+nav_brands_url:
+  type: string
+  default: "/c/par-marques/6"
+  description:
+    en: URL for the Brands nav item
+
+nav_videos_label:
+  type: string
+  default: "Vidéos & tutos"
+  description:
+    en: Label for the Videos nav item
+
+nav_videos_url:
+  type: string
+  default: "/c/videos-tutos/7"
+  description:
+    en: URL for the Videos nav item
+
+nav_community_label:
+  type: string
+  default: "Communauté"
+  description:
+    en: Label for the Community nav item
+
+nav_community_url:
+  type: string
+  default: "/c/communaute/77"
+  description:
+    en: URL for the Community nav item
+
+enable_hot_block:
+  type: bool
+  default: true
+  description:
+    en: Show the Hot topics block (uses /hot)
+
+hot_title:
+  type: string
+  default: "Sujets populaires"
+  description:
+    en: Title for the Hot topics block
+
+hot_count:
+  type: integer
+  default: 6
+  description:
+    en: Number of topics to show in Hot topics block
+
+enable_latest_block:
+  type: bool
+  default: true
+  description:
+    en: Show an extra Latest topics block above the main list
+
+latest_title:
+  type: string
+  default: "Derniers sujets"
+  description:
+    en: Title for the Latest topics block
+
+latest_count:
+  type: integer
+  default: 6
+  description:
+    en: Number of topics to show in Latest topics block
+

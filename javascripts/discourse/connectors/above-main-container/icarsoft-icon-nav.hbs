@@ -1,0 +1,27 @@
+{{#if this.showIconNav}}
+  <nav class="icarsoft-icon-nav">
+    <div class="icarsoft-icon-nav__inner wrap">
+      <a href="{{theme-setting \"nav_infos_url\"}}" class="nav-item">
+        <img alt="{{theme-setting \"nav_infos_label\"}}" width="24" height="24" src={{theme-asset-path "assets/infos.svg"}}>
+        <span>{{theme-setting "nav_infos_label"}}</span>
+      </a>
+      <a href="{{theme-setting \"nav_product_url\"}}" class="nav-item">
+        <img alt="{{theme-setting \"nav_product_label\"}}" width="24" height="24" src={{theme-asset-path "assets/product.svg"}}>
+        <span>{{theme-setting "nav_product_label"}}</span>
+      </a>
+      <a href="{{theme-setting \"nav_brands_url\"}}" class="nav-item">
+        <img alt="{{theme-setting \"nav_brands_label\"}}" width="24" height="24" src={{theme-asset-path "assets/brands.svg"}}>
+        <span>{{theme-setting "nav_brands_label"}}</span>
+      </a>
+      <a href="{{theme-setting \"nav_videos_url\"}}" class="nav-item">
+        <img alt="{{theme-setting \"nav_videos_label\"}}" width="24" height="24" src={{theme-asset-path "assets/videos.svg"}}>
+        <span>{{theme-setting "nav_videos_label"}}</span>
+      </a>
+      <a href="{{theme-setting \"nav_community_url\"}}" class="nav-item">
+        <img alt="{{theme-setting \"nav_community_label\"}}" width="24" height="24" src={{theme-asset-path "assets/community.svg"}}>
+        <span>{{theme-setting "nav_community_label"}}</span>
+      </a>
+    </div>
+  </nav>
+{{/if}}
+
