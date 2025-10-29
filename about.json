@@ -11,6 +11,8 @@
     "banner_bg_category": "assets/bg-category.svg",
     "banner_bg_tag": "assets/bg-tag.svg",
     "banner_bg_extra": "assets/bg-extra.svg",
+    "banner_bg_home": "assets/bg-home.png",
+    "banner_search": "assets/bg-search.png",
     "icons-sprite": "assets/icons-sprite.svg"
   },
   "modifiers": {},

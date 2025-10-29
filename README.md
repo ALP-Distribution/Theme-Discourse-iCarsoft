@@ -31,12 +31,16 @@ Notes:
 - `enable_home_nav`: show/hide the category nav strip on /latest
 
 4) Configure the nav links (5 items)
-Set label, path, and icon id for each `nav1..nav5`. Icon ids must exist in your sprite. Defaults are:
-- Bienvenue → `/c/bienvenue/4`
-- Nos produits → `/c/nos-produits/5`
-- Par marques → `/c/par-marques/6`
-- Videos & tutos → `/c/videos-tutos/7`
-- Communauté → `/c/communaute/77`
+Use the `home_nav` list setting. Enter one item per line in the form:
+`Label|/path|icon_id`
+Defaults:
+```
+Bienvenue|/c/bienvenue/4|bienvenue
+Nos produits|/c/nos-produits/5|produits
+Par marques|/c/par-marques/6|marques
+Videos & tutos|/c/videos-tutos/7|videos
+Communauté|/c/communaute/77|communaute
+```
 
 5) Canvas blocks for topics
 - In the Canvas component UI, add two blocks:
