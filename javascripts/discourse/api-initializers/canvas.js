@@ -1,43 +1,17 @@
 import { apiInitializer } from "discourse/lib/api";
 import getURLWithCDN from "discourse-common/lib/get-url";
 
-export default apiInitializer("1.8.0", () => {
+export default apiInitializer("1.8.0", (api) => {
   const spritePath = settings.icons_sprite;
   if (!spritePath) {
     return;
   }
 
   const spriteUrl = getURLWithCDN(spritePath);
-  const containerId = "icarsoft-theme-icons-sprite";
-
-  if (document.getElementById(containerId)) {
-    return;
+  try {
+    // Register the sprite so its <symbol> ids are recognized by the icon library
+    api.addIconSprite(spriteUrl);
+  } catch (e) {
+    // fail silently; theme still works without custom sprite
   }
-
-  fetch(spriteUrl)
-    .then((response) => response.text())
-    .then((svgText) => {
-      if (document.getElementById(containerId)) {
-        return;
-      }
-
-      const wrapper = document.createElement("div");
-      wrapper.id = containerId;
-      wrapper.style.display = "none";
-
-      const hasOuterSvgTag = /<svg[\s>]/i.test(svgText);
-      if (hasOuterSvgTag) {
-        wrapper.innerHTML = svgText;
-      } else {
-        wrapper.innerHTML =
-          '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">' +
-          svgText +
-          "</svg>";
-      }
-
-      document.body.insertBefore(wrapper, document.body.firstChild);
-    })
-    .catch(() => {
-      // fail silently; theme still works without custom sprite
-    });
 });
