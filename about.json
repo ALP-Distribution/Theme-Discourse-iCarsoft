@@ -8,13 +8,13 @@
   "minimum_discourse_version": null,
   "maximum_discourse_version": null,
   "assets": {
-    "banner_bg_home": "assets/bg-home.png",
-    "banner_search": "assets/bg-search.png",
+    "banner-bg-home": "assets/bg-home.png",
+    "banner-search": "assets/bg-search.png",
     "icons-sprite": "assets/icons-sprite.svg",
-    "icon_latest": "assets/latest.svg",
-    "icon_latest_red": "assets/latest-red.svg",
-    "icon_hot": "assets/hot.svg",
-    "icon_hot_red": "assets/hot-red.svg"
+    "icon-latest": "assets/latest.svg",
+    "icon-latest-red": "assets/latest-red.svg",
+    "icon-hot": "assets/hot.svg",
+    "icon-hot-red": "assets/hot-red.svg"
   },
   "modifiers": {},
   "color_schemes": {
