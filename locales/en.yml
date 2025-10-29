@@ -3,3 +3,18 @@ en:
     description: ''
     settings:
       example_setting: A description of a setting.
+      overlay_enabled: Enable Home Hub overlay on / and /latest.
+      use_search_banner: Use official Search Banner above Home Hub.
+      popular_period: Period for Popular topics list.
+      popular_limit: Max Popular topics shown.
+      latest_limit: Max Latest topics shown.
+      quick_nav: Quick navigation tiles configuration.
+      contributors_enabled: Enable Top contributors sidebar section.
+      contributors_period: Time period for Top contributors.
+      contributors_metric: Ranking metric for Top contributors.
+      contributors_limit: Number of contributors to display.
+  home_hub:
+    popular_heading: "Most viewed posts"
+    latest_heading: "All topics"
+    top_contributors: "Top contributors"
+    view_all: "View all"

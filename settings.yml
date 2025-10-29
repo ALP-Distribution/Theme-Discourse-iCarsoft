@@ -4,3 +4,74 @@ icons_sprite:
   description:
     en: Upload an SVG sprite file containing <symbol> icons to register globally.
 
+# Home Hub settings
+overlay_enabled:
+  type: bool
+  default: true
+  description:
+    en: Enable the Home Hub overlay on / and /latest.
+
+use_search_banner:
+  type: bool
+  default: true
+  description:
+    en: Use the official Search Banner component above the Home Hub.
+
+popular_period:
+  type: enum
+  default: weekly
+  choices:
+    - daily
+    - weekly
+    - monthly
+    - yearly
+  description:
+    en: Time period for the Popular list.
+
+popular_limit:
+  type: integer
+  default: 10
+  min: 1
+  max: 50
+
+latest_limit:
+  type: integer
+  default: 10
+  min: 1
+  max: 50
+
+quick_nav:
+  type: list
+  default: "Général|comment|/categories,Nos produits|discourse-fade|/c/nos-produits,Par marques|car|/c/par-marques,Vidéos tutoriels|play|/c/videos-tutos,Informations|info-circle|/c/informations"
+  description:
+    en: "List of tiles formatted as 'Label|icon|url|color?|bgColor?'. Icons use Discourse icon names or FontAwesome aliases. Colors optional."
+
+contributors_enabled:
+  type: bool
+  default: true
+
+contributors_period:
+  type: enum
+  default: monthly
+  choices:
+    - weekly
+    - monthly
+    - quarterly
+    - yearly
+    - all
+
+contributors_metric:
+  type: enum
+  default: likes_received
+  choices:
+    - likes_received
+    - posts
+    - likes_given
+    - solutions
+
+contributors_limit:
+  type: integer
+  default: 5
+  min: 1
+  max: 10
+
