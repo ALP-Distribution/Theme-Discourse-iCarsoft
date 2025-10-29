@@ -27,7 +27,9 @@ body .topic-card.topic-list-item.visited {
 /* Homepage hero banner */
 .homepage-hero {
   display: none;
-  background-image: var(--canvas-banner-home-image);
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  background-image: var(--canvas-banner-home-image, url(#{$banner_bg_home}));
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
