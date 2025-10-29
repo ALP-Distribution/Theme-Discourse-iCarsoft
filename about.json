@@ -8,9 +8,9 @@
   "minimum_discourse_version": null,
   "maximum_discourse_version": null,
   "assets": {
-    "banner_bg_category": "assets/bg-home.svg",
-    "banner_bg_tag": "assets/bg-home.svg",
-    "banner_bg_extra": "assets/bg-home.svg",
+    "banner_bg_category": "assets/bg-home.png",
+    "banner_bg_tag": "assets/bg-home.png",
+    "banner_bg_extra": "assets/bg-home.png",
     "icons-sprite": "assets/icons-sprite.svg"
   },
   "modifiers": {},
