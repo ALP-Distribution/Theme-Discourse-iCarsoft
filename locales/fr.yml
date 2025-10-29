@@ -1,21 +1,5 @@
 fr:
-  theme_metadata:
-    description: ''
-    settings:
-      overlay_enabled: Activer Home Hub sur / et /latest.
-      use_search_banner: Utiliser le composant officiel "Search Banner" au‑dessus.
-      popular_period: Période pour la liste Populaire.
-      popular_limit: Nombre de sujets Populaire à afficher.
-      latest_limit: Nombre de sujets Récents à afficher.
-      quick_nav: Configuration des tuiles de navigation rapide.
-      contributors_enabled: Activer la section "Top contributeur" dans la barre latérale.
-      contributors_period: Période pour les contributeurs.
-      contributors_metric: Métrique de classement des contributeurs.
-      contributors_limit: Nombre de contributeurs à afficher.
   home_hub:
-    popular_heading: "Les posts les plus vus"
-    latest_heading: "Tous les sujets"
-    top_contributors: "Top contributeur"
-    view_all: "Tout voir"
+    title: "Home Hub"
 
 
