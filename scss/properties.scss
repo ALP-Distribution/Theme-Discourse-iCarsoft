@@ -59,7 +59,6 @@ $banner_search: theme-asset-url("banner_search");
   // --canvas-banner-radius: var(--d-border-radius-large);
   // --canvas-banner-border: none;
   // --canvas-banner-shadow: var(--shadow-header);
-  /* Provide URLs as CSS vars for ease of reuse in future posts */
   --canvas-banner-home-image: url(#{$banner_bg_home});
   --canvas-banner-search-image: url(#{$banner_search});
 
