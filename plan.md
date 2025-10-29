@@ -33,7 +33,7 @@ Goal: Ensure a clean base using the Canvas template and organize files for itera
   - [ ] Changes in `scss/properties.scss` reflect correctly
   - [ ] No regressions in default pages
 
-### Working Post 1 — Homepage Hero Banner
+### Working Post 1 — Homepage Hero Banner **DONE**
 Goal: Add a custom homepage-only banner using our image and a minimal custom component.
 - Build a small custom theme/component that injects a banner at the top of the homepage (`/latest`) only
 - Image: `assets/bg-home.png`

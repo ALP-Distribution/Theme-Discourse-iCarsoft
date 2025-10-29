@@ -29,7 +29,7 @@ body .topic-card.topic-list-item.visited {
   display: none;
   width: 100%;
   aspect-ratio: 3 / 1;
-  background-image: var(--canvas-banner-home-image, url(#{$banner_bg_home}));
+  background-image: var(--canvas-banner-home-image);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -39,5 +39,14 @@ body .topic-card.topic-list-item.visited {
 /* Show only on /latest (homepage) */
 body.navigation-topics .homepage-hero {
   display: block;
+}
+
+/* Search hero banner background */
+.welcome-banner.--location-above-topic-content {
+  background-image: var(--canvas-banner-search-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: var(--d-border-radius-large);
 }
 
