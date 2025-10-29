@@ -2,12 +2,6 @@
   display: none;
 }
 
-body div[class^="category-title-header"] {
-  background-image: url($banner_bg_category);
-}
-body .tag-title-header {
-  background-image: url($banner_bg_tag);
-}
 body .sidebar-wrapper .sidebar-container#d-sidebar {
   border-right: 1px solid var(--primary-200);
 }
