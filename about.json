@@ -39,7 +39,6 @@
     "https://gitlab.com/manuelkostka/discourse/canvas/component.git",
     "https://github.com/discourse/discourse-category-banners.git",
     "https://github.com/discourse/discourse-tag-banners.git",
-    "https://github.com/discourse/discourse-topic-cards.git",
-    "https://github.com/discourse/discourse-search-banner"
+    "https://github.com/discourse/discourse-topic-cards.git"
   ]
 }
