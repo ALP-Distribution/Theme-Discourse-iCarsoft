@@ -4,3 +4,9 @@ icons_sprite:
   description:
     en: Upload an SVG sprite file containing <symbol> icons to register globally.
 
+homepage_hero_image:
+  type: upload
+  default: assets/bg-home.png
+  description:
+    en: Homepage hero background image. Upload a wide image.
+
