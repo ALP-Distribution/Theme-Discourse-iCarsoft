@@ -68,7 +68,27 @@ body.navigation-topics .homepage-hero {
 }
 
 .welcome-banner.--location-above-topic-content  .welcome-banner__title {
-  font-size: clamp(1.25rem, 2.5vw + 1rem, 2rem);
-  white-space: nowrap;
+  font-size: clamp(0.85rem, 2.5vw, 1.25rem);
   width: 100%;
+}
+
+/* All and Hot topics icon */
+li a:is([href$="/latest"], [href$="/hot"])::before {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-inline-end: 0.5em;
+}
+li a[href$="/latest"]::before {
+  background-image: var(--canvas-icon-latest);
+}
+li a[href$="/hot"]::before {
+  background-image: var(--canvas-icon-hot);
+}
+li a[href$="/latest"].active::before {
+  background-image: var(--canvas-icon-latest-red);
+}
+li a[href$="/hot"].active::before {
+  background-image: var(--canvas-icon-hot-red);
 }

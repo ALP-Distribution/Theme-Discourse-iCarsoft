@@ -71,4 +71,10 @@ $banner_search: theme-asset-url("banner_search");
   --topic-card-border-radius: var(--d-border-radius-medium);
   --topic-card-shadow: rgba(0, 0, 0, 0.075) 0px 0px 5px 0px, rgba(0, 0, 0, 0.075) 0px 0px 1px 0px;
   --topic-card-background-visited: var(--primary-50);
+
+  /* Icons */
+  --canvas-icon-latest: url('assets/latest.svg');
+  --canvas-icon-latest-red: url('assets/latest-red.svg');
+  --canvas-icon-hot: url('assets/hot.svg');
+  --canvas-icon-hot-red: url('assets/hot-red.svg');
 }
