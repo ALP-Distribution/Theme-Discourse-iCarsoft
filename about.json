@@ -21,9 +21,7 @@
     "icon-hot": "assets/hot.svg",
     "icon-hot-red": "assets/hot-red.svg"
   },
-  "modifiers": {
-    "custom_homepage": true
-  },
+  "modifiers": {},
   "color_schemes": {
     "iCarsoft": {
       "primary": "221f20",

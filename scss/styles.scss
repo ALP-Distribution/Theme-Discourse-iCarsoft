@@ -28,7 +28,7 @@ body .topic-card.topic-list-item.visited {
 
 /* Homepage hero banner */
 .homepage-hero {
-  display: block;
+  display: none;
   width: 100%;
   aspect-ratio: 3 / 1;
   background-image: var(--canvas-banner-home-image);
@@ -39,7 +39,10 @@ body .topic-card.topic-list-item.visited {
   margin-block-end: 1.5rem;
 }
 
-/* Rendered only on the custom homepage via connector */
+/* Show only on /latest (homepage) */
+body.navigation-topics .homepage-hero {
+  display: block;
+}
 
 /* Search hero banner background */
 .welcome-banner.--location-above-topic-content {
@@ -64,7 +67,7 @@ body .topic-card.topic-list-item.visited {
   margin-inline-end: clamp(1rem, 7vw, 7%);
 }
 
-.welcome-banner.--location-above-topic-content .welcome-banner__title {
+.welcome-banner.--location-above-topic-content  .welcome-banner__title {
   font-size: clamp(0.85rem, 2.5vw, 1.25rem);
   width: 100%;
 }
@@ -131,7 +134,7 @@ body .topic-card.topic-list-item.visited {
       display: block;
       width: 140px;
       height: 140px;
-      margin-inline-end: 0.5em;
+      margin-block-end: 1rem;
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
