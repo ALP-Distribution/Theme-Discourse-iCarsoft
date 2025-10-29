@@ -1,37 +1,28 @@
 <section class="icarsoft-home" aria-label="Accueil personnalisé iCarsoft">
   <div class="homepage-hero" aria-label="Forum iCarsoft France dédié aux particuliers et professionnels"></div>
 
-  <div class="welcome-banner --location-above-topic-content">
-    <div class="custom-search-banner-wrap welcome-banner__wrap">
-      <div class="welcome-banner__title">Recherchez un sujet, un model de voiture, un type de panne....</div>
-      <div class="search-menu welcome-banner__search-menu">
-        <a href="/search?expanded=true" class="btn no-text btn-icon search-icon" title="{{i18n 'search.open_advanced'}}">
-          <svg class="fa d-icon d-icon-magnifying-glass svg-icon svg-string" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="#magnifying-glass"></use></svg>
-          <span aria-hidden="true">&ZeroWidthSpace;</span>
-        </a>
-        <div class="search-menu-container menu-panel-results">
-          <div class="search-input-wrapper">
-            <div class="search-input search-input--welcome-banner">
-              <form action="/search" method="get">
-                <input id="welcome-banner-search-input" class="search-term__input" name="q" autocomplete="off" enterkeyhint="search" placeholder="{{i18n 'search.search'}}" aria-label="{{i18n 'search.search'}}" type="search" />
-              </form>
-              <div class="searching">
-                <a href="/search?expanded=true" class="btn no-text btn-icon show-advanced-search btn-transparent" title="{{i18n 'search.open_advanced'}}">
-                  <svg class="fa d-icon d-icon-sliders svg-icon svg-string" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="#sliders"></use></svg>
-                  <span aria-hidden="true">&ZeroWidthSpace;</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <section class="welcome-banner --location-above-topic-content" role="search" aria-label="Rechercher sur le forum">
+    <div class="welcome-banner__wrap">
+      <h1 class="welcome-banner__title">Rechercher</h1>
+      <form class="welcome-banner__form" action="/search" method="get">
+        <input
+          type="search"
+          name="q"
+          class="search-query"
+          placeholder="{{i18n "search.search"}}"
+          aria-label="{{i18n "search.search"}}"
+        />
+        <button type="submit" class="btn btn-primary">{{i18n "search.search"}}</button>
+      </form>
     </div>
-  </div>
+  </section>
 
   <nav class="icarsoft-nav" aria-label="Navigation principale">
     <ul class="icarsoft-nav__list">
       <li class="icarsoft-nav__item">
-        <a class="icarsoft-nav__link" href="/c/bienvenue/4">Bienvenue</a>
+        <a class="icarsoft-nav__link" href="/c/bienvenue/4">
+          <img class="icarsoft-nav__icon" src="{{theme-asset 'infos.svg'}}" alt="" aria-hidden="true">
+        Bienvenue</a>
       </li>
       <li class="icarsoft-nav__item">
         <a class="icarsoft-nav__link" href="/c/nos-produits/5">Nos produits</a>
