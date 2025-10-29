@@ -2,6 +2,9 @@
 $banner_bg_category: theme-asset-url("banner_bg_category");
 $banner_bg_tag: theme-asset-url("banner_bg_tag");
 $banner_bg_extra: theme-asset-url("banner_bg_extra");
+/* Homepage/Search assets for upcoming banner work */
+$banner_bg_home: theme-asset-url("banner_bg_home");
+$banner_search: theme-asset-url("banner_search");
 
 /* Custom properties and their default values */
 :root {
@@ -60,6 +63,9 @@ $banner_bg_extra: theme-asset-url("banner_bg_extra");
   // --canvas-banner-radius: var(--d-border-radius-large);
   // --canvas-banner-border: none;
   // --canvas-banner-shadow: var(--shadow-header);
+  /* Provide URLs as CSS vars for ease of reuse in future posts */
+  --canvas-banner-home-image: url(#{$banner_bg_home});
+  --canvas-banner-search-image: url(#{$banner_search});
 
   /* Header Search */
   // --canvas-header-search-border: 1px solid var(--primary-400);

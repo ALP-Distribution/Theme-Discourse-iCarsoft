@@ -1,32 +1,115 @@
-We're working on a custom theme for the iCarsoft community using Discourse.
-We'll aim to recreate the homepage using as much core/vanilla Discourse as possible, using any tools necessary to achieve the desired look and feel. Keep it scalable, upgradable, and easy to iterate.
+We're building a custom theme for the iCarsoft community using Discourse.
+We'll recreate the homepage using core/vanilla Discourse wherever possible, keeping the solution scalable, upgradable, and easy to iterate.
 
-We're using the Canvas theme template as a starting point.
+We will start from the Canvas theme template and assemble the homepage via existing theme components and the custom homepage feature.
 
-What will change on the homepage :
-- A hero banner with an image (only on homepage)
-- A search hero bar with a background image (using discourse search block) (every page that display the search block will have this banner in BG)
-- A nav menu with the following sections : /c/bienvenue/4, /c/nos-produits/5, /c/par-marques/6, /c/videos-tutos/7 and c/communaute/77. Using the svg icon. This will be full custom.
-- A topics list with the most viewed topics (the current /hot topics list but on the homepage)
-- Another topics list with the latest topics (the current /latest topics list)
+High-level homepage changes:
+- A hero banner with an image (homepage only)
+- A search hero bar with a background image (where the search block renders)
+- A custom nav menu with links: `/c/bienvenue/4`, `/c/nos-produits/5`, `/c/par-marques/6`, `/c/videos-tutos/7`, `/c/communaute/77` using SVG icons
+- A topics list for most viewed topics (hot topics)
+- A topics list for latest topics
 
-For the banner, we'll use the bg-home.png file. And the currently in place extra-banners https://gitlab.com/manuelkostka/discourse/components/extra-banners.git 
-For the search hero bar, we'll use the bg-search.png file and the discourse search search-menu. https://meta.discourse.org/t/advanced-search-banner/122939/10
-The most viewed topics are basically the current /hot topics.
+Assets to use:
+- `assets/bg-home.png` for the homepage banner
+- `assets/bg-search.png` for the search hero background
 
-The idea is to enhance current /latest page (the homepage).
+Guiding principles:
+- Prefer configuration and components over custom code when possible
+- Keep it administrable: expose settings via components or theme settings
+- Avoid fragile overrides; extend cleanly without breaking core functionality
 
-So let's thinks of a modern way to implement this via this theme.
-It should be administrable, easy to update and maintain. Try and use as much core/vanilla Discourse as possible, and any tools necessary to achieve the desired look and feel.
-Overide existing stuff cleanly, without breaking existing functionality.
+We're using the latest Discourse version.
 
-Ressources :
-- https://meta.discourse.org/t/canvas-theme-template/352730  
-- https://meta.discourse.org/t/using-the-new-custom-homepage-feature/302496
-- https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966 
-- https://meta.discourse.org/t/customizing-your-site-with-existing-theme-components/312297 
-- https://meta.discourse.org/t/creating-a-banner-to-display-at-the-top-of-your-site/153718 Banners
+Breakdown into working posts (modular, step-by-step):
 
-We're using latest Discourse version.
+### Working Post 0 — Theme Template and Foundation
+Goal: Ensure a clean base using the Canvas template and organize files for iterative work.
+- Install/sync the Canvas theme template as the starting point [Canvas Theme Template](https://meta.discourse.org/t/canvas-theme-template/352730)
+- Confirm theme structure: `scss/styles.scss`, `scss/properties.scss`, `settings.yml`, `about.json`, and any necessary `javascripts/` initializers
+- Define initial custom properties in `scss/properties.scss` for spacing, colors, and layout hooks
+- Acceptance criteria:
+  - [ ] Theme loads without errors
+  - [ ] Changes in `scss/properties.scss` reflect correctly
+  - [ ] No regressions in default pages
 
-Break the plan in small manageable phase. Do not try to do everything at once, it should be modular and implemented step by step.
+### Working Post 1 — Homepage Hero Banner
+Goal: Add a banner on the homepage only, using our image and a proven component.
+- Use the Extra Banners component and configure a homepage-only banner
+- Image: `assets/bg-home.png`
+- Configure visibility: show on homepage only; hide on admin/search pages
+- Reference guidance: [Creating a banner at the top of your site](https://meta.discourse.org/t/creating-a-banner-to-display-at-the-top-of-your-site/153718) and Extra Banners component ([GitLab repo](https://gitlab.com/manuelkostka/discourse/components/extra-banners.git))
+- Acceptance criteria:
+  - [ ] Banner shows on `/latest` (or custom homepage) only
+  - [ ] Scales on mobile and high-DPI
+  - [ ] No overlap with header; respects safe areas
+
+### Working Post 2 — Search Hero Banner
+Goal: Add a search-focused hero with background image where the advanced search block appears.
+- Use the Advanced Search Banner approach to render a prominent search UI with background
+- Image: `assets/bg-search.png`
+- Configure “show on” and “show for” according to the pages and audiences we want
+- Reference guidance: [Advanced Search Banner settings update](https://meta.discourse.org/t/advanced-search-banner/122939/10)
+- Acceptance criteria:
+  - [ ] Search hero renders only where the search block is present
+  - [ ] Background image loads efficiently and is accessible (contrast, labels)
+  - [ ] Keyboard navigation and focus states work
+
+### Working Post 3 — Custom Navigation Menu (SVG Icons)
+Goal: Add a bespoke nav menu with icons and links to key areas.
+- Links: `/c/bienvenue/4`, `/c/nos-produits/5`, `/c/par-marques/6`, `/c/videos-tutos/7`, `/c/communaute/77`
+- Use theme component slots or a simple connector to inject a menu bar; prefer styling via `scss/styles.scss`
+- Source icons from `assets/icons-sprite.svg` (or `assets/brands.svg` if appropriate) and ensure accessible labels
+- Acceptance criteria:
+  - [ ] Menu appears below the site header on homepage
+  - [ ] Icons render crisply; items have visible focus/active states
+  - [ ] Works on mobile (wraps or scrolls) without layout shifts
+
+### Working Post 4 — Topics Lists (Hot and Latest)
+Goal: Surface Most Viewed (hot topics) and Latest on the homepage.
+- Use the existing hot topics and latest topics lists; avoid bespoke queries if possible
+- Arrange the two lists in a responsive layout (stack on mobile)
+- Ensure infinite scroll/pagination behaviors remain intact
+- Acceptance criteria:
+  - [ ] Hot topics block loads and shows expected items
+  - [ ] Latest topics block loads and shows expected items
+  - [ ] No duplicate content, no layout shifts on load
+
+### Working Post 5 — Custom Homepage Assembly
+Goal: Assemble homepage sections using Discourse’s custom homepage feature.
+- Use the custom homepage feature to compose banner, search hero, custom nav, and topic lists on a single page
+- Keep components opt-in via settings so we can toggle visibility
+- Reference guidance: [Using the new custom homepage feature](https://meta.discourse.org/t/using-the-new-custom-homepage-feature/302496)
+- Acceptance criteria:
+  - [ ] Homepage loads with all sections in the intended order
+  - [ ] Each section can be individually toggled via theme/component settings
+  - [ ] No regressions on category, tag, or topic pages
+
+### Working Post 6 — Styling via Properties and Component Settings
+Goal: Centralize style control and minimize custom overrides.
+- Define/adjust custom properties in `scss/properties.scss` for spacing, colors, images, and component hooks
+- Leverage component settings where available to avoid hardcoding styles
+- Reference guidance: Canvas template usage and styles via settings [Canvas Theme Template](https://meta.discourse.org/t/canvas-theme-template/352730)
+- Acceptance criteria:
+  - [ ] Key style tokens adjustable from one place
+  - [ ] No !important overrides unless necessary
+  - [ ] Dark/light scheme compatibility is preserved
+
+### Working Post 7 — Admin UX, Accessibility, and QA
+Goal: Make the setup manageable for admins; validate accessibility and performance.
+- Document settings in `README.md` and within theme/component descriptions
+- Verify headings order, sufficient color contrast, focus outlines, and ARIA where applicable
+- Optimize images (size and format), lazy-load where appropriate
+- Acceptance criteria:
+  - [ ] Admins can enable/disable sections without code edits
+  - [ ] Axe (or similar) passes basic checks
+  - [ ] Core Lighthouse metrics unaffected or improved
+
+### References
+- Canvas Theme Template: [meta.discourse.org/t/canvas-theme-template/352730](https://meta.discourse.org/t/canvas-theme-template/352730)
+- Custom Homepage Feature: [meta.discourse.org/t/using-the-new-custom-homepage-feature/302496](https://meta.discourse.org/t/using-the-new-custom-homepage-feature/302496)
+- Beginner’s guide to using Discourse Themes: [meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966](https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966)
+- Customizing your site with existing theme components: [meta.discourse.org/t/customizing-your-site-with-existing-theme-components/312297](https://meta.discourse.org/t/customizing-your-site-with-existing-theme-components/312297)
+- Creating a banner to display at the top of your site: [meta.discourse.org/t/creating-a-banner-to-display-at-the-top-of-your-site/153718](https://meta.discourse.org/t/creating-a-banner-to-display-at-the-top-of-your-site/153718)
+- Extra Banners component: [gitlab.com/manuelkostka/discourse/components/extra-banners.git](https://gitlab.com/manuelkostka/discourse/components/extra-banners.git)
+- Advanced Search Banner (settings update): [meta.discourse.org/t/advanced-search-banner/122939/10](https://meta.discourse.org/t/advanced-search-banner/122939/10)
