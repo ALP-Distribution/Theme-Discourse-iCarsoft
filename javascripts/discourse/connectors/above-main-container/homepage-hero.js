@@ -1,12 +1,13 @@
-import templateOnly from "@ember/component/template-only";
+import Component from "@glimmer/component";
+import { service } from "@ember/service";
 
-export default Object.assign(templateOnly(), {
-  shouldRender() {
-    return (
-      typeof document !== "undefined" &&
-      document.body?.classList?.contains("navigation-topics")
-    );
-  },
-});
+export default class HomepageHero extends Component {
+@service router;
+
+get isOnTopicList() {
+const name = this.router?.currentRouteName || "";
+return name.startsWith("discovery.");
+}
+}
 
 
