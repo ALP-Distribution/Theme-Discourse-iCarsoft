@@ -1,5 +1,4 @@
 import { apiInitializer } from "discourse/lib/api";
-import { settings } from "discourse/lib/theme-settings";
 import getURLWithCDN from "discourse-common/lib/get-url";
 
 export default apiInitializer("1.8.0", () => {
