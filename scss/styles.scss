@@ -74,6 +74,7 @@ body.navigation-topics .homepage-hero {
 
 /* All and Hot topics icon */
 #navigation-bar {
+  margin-block-end: 0.25rem;
   li a:is([href$="/latest"], [href$="/hot"])::before {
     content: "";
     display: inline-block;
