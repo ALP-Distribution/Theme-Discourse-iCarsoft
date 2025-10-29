@@ -107,16 +107,20 @@ body .topic-card.topic-list-item.visited {
   padding: 0;
   margin: 0;
 
-  &>li>a {
+  li {
+    flex: 1;
+  }
+
+  li>a {
     display: flex;
     align-items: center;
     justify-content: center;
 
     &::before {
       content: "";
-      display: inline-block;
-      width: 1em;
-      height: 1em;
+      display: block;
+      width: 140px;
+      height: 140px;
       margin-inline-end: 0.5em;
       background-repeat: no-repeat;
       background-position: center;
