@@ -8,10 +8,6 @@ body div[class^="category-title-header"] {
 body .tag-title-header {
   background-image: url($banner_bg_tag);
 }
-body .extra-banner {
-  background-image: url($banner_bg_extra);
-  color: var(--secondary);
-}
 body .sidebar-wrapper .sidebar-container#d-sidebar {
   border-right: 1px solid var(--primary-200);
 }
@@ -34,21 +30,3 @@ body .topic-card.topic-list-item.visited {
   background-color: var(--topic-card-background-visited);
 }
 
-/* Homepage hero banner (Extra Banners) */
-body:not(.navigation-latest) .extra-banner {
-  display: none;
-}
-
-body.navigation-latest .extra-banner {
-  background-image: url($banner_bg_home);
-  background-size: cover;
-  background-position: center;
-  padding: var(--canvas-banner-padding);
-  border-radius: var(--d-border-radius-large);
-  color: var(--secondary);
-}
-
-body.navigation-latest .extra-banner .contents {
-  max-width: var(--d-max-width);
-  margin: 0 auto;
-}

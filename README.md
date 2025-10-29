@@ -17,12 +17,10 @@ Notes:
 ## Homepage setup (hero, search, nav, topic blocks)
 
 1) Install required theme components on this theme
-- Extra Banners (hero): `https://gitlab.com/manuelkostka/discourse/components/extra-banners.git`
 - Search Banner (official): `https://github.com/discourse/discourse-search-banner.git`
 - Canvas component (already included): `https://gitlab.com/manuelkostka/discourse/canvas/component.git`
 
 2) Upload assets
-- Upload `assets/bg-home.svg` (already in this theme) and select it inside your hero banner in Extra Banners.
 - Upload `assets/icons-sprite.svg` (or your own) to `icons_sprite` in theme settings.
 
 3) Configure homepage toggles in this theme's settings

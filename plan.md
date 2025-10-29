@@ -23,7 +23,7 @@ We're using the latest Discourse version.
 
 Breakdown into working posts (modular, step-by-step):
 
-### Working Post 0 — Theme Template and Foundation
+### Working Post 0 — Theme Template and Foundation **DONE**
 Goal: Ensure a clean base using the Canvas template and organize files for iterative work.
 - Install/sync the Canvas theme template as the starting point [Canvas Theme Template](https://meta.discourse.org/t/canvas-theme-template/352730)
 - Confirm theme structure: `scss/styles.scss`, `scss/properties.scss`, `settings.yml`, `about.json`, and any necessary `javascripts/` initializers
@@ -34,11 +34,15 @@ Goal: Ensure a clean base using the Canvas template and organize files for itera
   - [ ] No regressions in default pages
 
 ### Working Post 1 — Homepage Hero Banner
-Goal: Add a banner on the homepage only, using our image and a proven component.
-- Use the Extra Banners component and configure a homepage-only banner
+Goal: Add a custom homepage-only banner using our image and a minimal custom component.
+- Build a small custom theme/component that injects a banner at the top of the homepage (`/latest`) only
 - Image: `assets/bg-home.png`
-- Configure visibility: show on homepage only; hide on admin/search pages
-- Reference guidance: [Creating a banner at the top of your site](https://meta.discourse.org/t/creating-a-banner-to-display-at-the-top-of-your-site/153718) and Extra Banners component ([GitLab repo](https://gitlab.com/manuelkostka/discourse/components/extra-banners.git))
+- Only render the banner on the homepage; do **not** show on admin/search pages or elsewhere
+- Implementation guidance:
+  - Use a theme widget connector or custom plugin outlet to insert the banner at the appropriate place (above main content, below header)
+  - Use SCSS variables for sizing, spacing, and background image, so styles are centralized and easy to change
+  - Prefer a handlebars template, widget, or connector (not raw HTML override)
+  - Reference: [Creating a banner at the top of your site](https://meta.discourse.org/t/creating-a-banner-to-display-at-the-top-of-your-site/153718) for generic approach
 - Acceptance criteria:
   - [ ] Banner shows on `/latest` (or custom homepage) only
   - [ ] Scales on mobile and high-DPI
@@ -111,5 +115,4 @@ Goal: Make the setup manageable for admins; validate accessibility and performan
 - Beginner’s guide to using Discourse Themes: [meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966](https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966)
 - Customizing your site with existing theme components: [meta.discourse.org/t/customizing-your-site-with-existing-theme-components/312297](https://meta.discourse.org/t/customizing-your-site-with-existing-theme-components/312297)
 - Creating a banner to display at the top of your site: [meta.discourse.org/t/creating-a-banner-to-display-at-the-top-of-your-site/153718](https://meta.discourse.org/t/creating-a-banner-to-display-at-the-top-of-your-site/153718)
-- Extra Banners component: [gitlab.com/manuelkostka/discourse/components/extra-banners.git](https://gitlab.com/manuelkostka/discourse/components/extra-banners.git)
 - Advanced Search Banner (settings update): [meta.discourse.org/t/advanced-search-banner/122939/10](https://meta.discourse.org/t/advanced-search-banner/122939/10)
