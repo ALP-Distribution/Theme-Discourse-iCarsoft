@@ -48,7 +48,7 @@ Goal: Add a custom homepage-only banner using our image and a minimal custom com
   - [ ] Scales on mobile and high-DPI
   - [ ] No overlap with header; respects safe areas
 
-### Working Post 2 — Search Hero Banner
+### Working Post 2 — Search Hero Banner **DONE**
 Goal: Add a search-focused hero with background image where the advanced search block appears.
 - Use the Advanced Search Banner approach to render a prominent search UI with background
 - Image: `assets/bg-search.png`
@@ -63,7 +63,7 @@ Goal: Add a search-focused hero with background image where the advanced search 
 Goal: Add a bespoke nav menu with icons and links to key areas.
 - Links: `/c/bienvenue/4`, `/c/nos-produits/5`, `/c/par-marques/6`, `/c/videos-tutos/7`, `/c/communaute/77`
 - Use theme component slots or a simple connector to inject a menu bar; prefer styling via `scss/styles.scss`
-- Source icons from `assets/icons-sprite.svg` (or `assets/brands.svg` if appropriate) and ensure accessible labels
+- Source icons from ```"brands": "assets/brands.svg", "community": "assets/community.svg", "welcome": "assets/infos.svg", "product": "assets/product.svg", "videos": "assets/videos.svg",``` and ensure accessible labels and real labels
 - Acceptance criteria:
   - [ ] Menu appears below the site header on homepage
   - [ ] Icons render crisply; items have visible focus/active states
