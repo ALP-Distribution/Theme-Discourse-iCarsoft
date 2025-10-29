@@ -79,6 +79,9 @@ li a:is([href$="/latest"], [href$="/hot"])::before {
   width: 1em;
   height: 1em;
   margin-inline-end: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 li a[href$="/latest"]::before {
   background-image: var(--canvas-icon-latest);

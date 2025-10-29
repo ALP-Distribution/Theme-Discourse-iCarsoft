@@ -1,6 +1,10 @@
 /* SCSS variables for theme assets */
 $banner_bg_home: theme-asset-url("banner_bg_home");
 $banner_search: theme-asset-url("banner_search");
+$icon_latest: theme-asset-url("icon_latest");
+$icon_latest_red: theme-asset-url("icon_latest_red");
+$icon_hot: theme-asset-url("icon_hot");
+$icon_hot_red: theme-asset-url("icon_hot_red");
 
 /* Custom properties and their default values */
 :root {
@@ -73,8 +77,8 @@ $banner_search: theme-asset-url("banner_search");
   --topic-card-background-visited: var(--primary-50);
 
   /* Icons */
-  --canvas-icon-latest: url('assets/latest.svg');
-  --canvas-icon-latest-red: url('assets/latest-red.svg');
-  --canvas-icon-hot: url('assets/hot.svg');
-  --canvas-icon-hot-red: url('assets/hot-red.svg');
+  --canvas-icon-latest: url(#{$icon_latest});
+  --canvas-icon-latest-red: url(#{$icon_latest_red});
+  --canvas-icon-hot: url(#{$icon_hot});
+  --canvas-icon-hot-red: url(#{$icon_hot_red});
 }

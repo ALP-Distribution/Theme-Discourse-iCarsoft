@@ -10,7 +10,11 @@
   "assets": {
     "banner_bg_home": "assets/bg-home.png",
     "banner_search": "assets/bg-search.png",
-    "icons-sprite": "assets/icons-sprite.svg"
+    "icons-sprite": "assets/icons-sprite.svg",
+    "icon_latest": "assets/latest.svg",
+    "icon_latest_red": "assets/latest-red.svg",
+    "icon_hot": "assets/hot.svg",
+    "icon_hot_red": "assets/hot-red.svg"
   },
   "modifiers": {},
   "color_schemes": {
