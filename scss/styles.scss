@@ -15,11 +15,13 @@ body #sidebar-section-content-categories svg[class*="d-icon-icarsoft-"] {
   width: 1.5rem;
   height: 1.5rem;
 }
+
 body .topic-card.topic-list-item {
   background-color: var(--topic-card-background);
   border-radius: var(--topic-card-border-radius);
   box-shadow: var(--topic-card-shadow);
 }
+
 body .topic-card.topic-list-item.visited {
   background-color: var(--topic-card-background-visited);
 }
@@ -34,6 +36,7 @@ body .topic-card.topic-list-item.visited {
   background-position: center;
   background-size: cover;
   border-radius: var(--d-border-radius-large);
+  margin-block-end: 1.5rem;
 }
 
 /* Show only on /latest (homepage) */
@@ -43,10 +46,29 @@ body.navigation-topics .homepage-hero {
 
 /* Search hero banner background */
 .welcome-banner.--location-above-topic-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary);
+  width: 100%;
+  aspect-ratio: 6 / 1;
   background-image: var(--canvas-banner-search-image);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   border-radius: var(--d-border-radius-large);
+  margin-block-end: 1.5rem;
 }
 
+.welcome-banner.--location-above-topic-content .welcome-banner__wrap {
+  padding: 0;
+  max-width: 600px;
+  margin-inline-start: auto;
+  margin-inline-end: clamp(1rem, 7vw, 7%);
+}
+
+.welcome-banner.--location-above-topic-content  .welcome-banner__title {
+  font-size: clamp(1.25rem, 2.5vw + 1rem, 2rem);
+  white-space: nowrap;
+  width: 100%;
+}
