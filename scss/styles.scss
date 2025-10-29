@@ -3,13 +3,13 @@
 }
 
 body div[class^="category-title-header"] {
-  background-image: url($banner-bg-category);
+  background-image: url($banner_bg_category);
 }
 body .tag-title-header {
-  background-image: url($banner-bg-tag);
+  background-image: url($banner_bg_tag);
 }
 body .extra-banner {
-  background-image: url($banner-bg-extra);
+  background-image: url($banner_bg_extra);
   color: var(--secondary);
 }
 body .sidebar-wrapper .sidebar-container#d-sidebar {

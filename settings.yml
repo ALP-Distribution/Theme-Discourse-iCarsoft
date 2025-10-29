@@ -24,54 +24,13 @@ enable_home_nav:
   description:
     en: Show the category nav strip under the header on the homepage (/latest)
 
-# Homepage nav (five items)
-nav1_label:
-  type: text
-  default: Bienvenue
-nav1_path:
-  type: text
-  default: /c/bienvenue/4
-nav1_icon:
-  type: text
-  default: bienvenue
-
-nav2_label:
-  type: text
-  default: Nos produits
-nav2_path:
-  type: text
-  default: /c/nos-produits/5
-nav2_icon:
-  type: text
-  default: produits
-
-nav3_label:
-  type: text
-  default: Par marques
-nav3_path:
-  type: text
-  default: /c/par-marques/6
-nav3_icon:
-  type: text
-  default: marques
-
-nav4_label:
-  type: text
-  default: Videos & tutos
-nav4_path:
-  type: text
-  default: /c/videos-tutos/7
-nav4_icon:
-  type: text
-  default: videos
-
-nav5_label:
-  type: text
-  default: Communauté
-nav5_path:
-  type: text
-  default: /c/communaute/77
-nav5_icon:
-  type: text
-  default: communaute
+# Homepage nav items (one per line: Label|/path|icon_id)
+home_nav:
+  type: list
+  default: |
+    Bienvenue|/c/bienvenue/4|bienvenue
+    Nos produits|/c/nos-produits/5|produits
+    Par marques|/c/par-marques/6|marques
+    Videos & tutos|/c/videos-tutos/7|videos
+    Communauté|/c/communaute/77|communaute
 
