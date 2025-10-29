@@ -28,7 +28,7 @@ body .topic-card.topic-list-item.visited {
 
 /* Homepage hero banner */
 .homepage-hero {
-  display: none;
+  display: block;
   width: 100%;
   aspect-ratio: 3 / 1;
   background-image: var(--canvas-banner-home-image);
@@ -39,10 +39,7 @@ body .topic-card.topic-list-item.visited {
   margin-block-end: 1.5rem;
 }
 
-/* Show only on /latest (homepage) */
-body.navigation-topics .homepage-hero {
-  display: block;
-}
+/* Rendered only on the custom homepage via connector */
 
 /* Search hero banner background */
 .welcome-banner.--location-above-topic-content {

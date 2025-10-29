@@ -1,1 +1,39 @@
-Home page content
+<section class="icarsoft-home" aria-label="Accueil personnalisé iCarsoft">
+  <div class="homepage-hero" aria-label="Forum iCarsoft France dédié aux particuliers et professionnels"></div>
+
+  <section class="welcome-banner --location-above-topic-content" role="search" aria-label="Rechercher sur le forum">
+    <div class="welcome-banner__wrap">
+      <h1 class="welcome-banner__title">Rechercher</h1>
+      <form class="welcome-banner__form" action="/search" method="get">
+        <input
+          type="search"
+          name="q"
+          class="search-query"
+          placeholder="{{i18n "search.search"}}"
+          aria-label="{{i18n "search.search"}}"
+        />
+        <button type="submit" class="btn btn-primary">{{i18n "search.search"}}</button>
+      </form>
+    </div>
+  </section>
+
+  <nav class="icarsoft-nav" aria-label="Navigation principale">
+    <ul class="icarsoft-nav__list">
+      <li class="icarsoft-nav__item">
+        <a class="icarsoft-nav__link" href="/c/bienvenue/4">Bienvenue</a>
+      </li>
+      <li class="icarsoft-nav__item">
+        <a class="icarsoft-nav__link" href="/c/nos-produits/5">Nos produits</a>
+      </li>
+      <li class="icarsoft-nav__item">
+        <a class="icarsoft-nav__link" href="/c/par-marques/6">Par marques</a>
+      </li>
+      <li class="icarsoft-nav__item">
+        <a class="icarsoft-nav__link" href="/c/videos-tutos/7">Vidéos & tutos</a>
+      </li>
+      <li class="icarsoft-nav__item">
+        <a class="icarsoft-nav__link" href="/c/communaute/77">Communauté</a>
+      </li>
+    </ul>
+  </nav>
+</section>
