@@ -10,7 +10,8 @@
   "assets": {
     "banner_bg_category": "assets/bg-category.svg",
     "banner_bg_tag": "assets/bg-tag.svg",
-    "banner_bg_extra": "assets/bg-extra.svg"
+    "banner_bg_extra": "assets/bg-extra.svg",
+    "icons-sprite": "assets/icons-sprite.svg"
   },
   "modifiers": {},
   "color_schemes": {
