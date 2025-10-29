@@ -33,14 +33,3 @@ body .topic-card.topic-list-item {
 body .topic-card.topic-list-item.visited {
   background-color: var(--topic-card-background-visited);
 }
-
-// Home Hub Phase 1 placeholder styles
-.home-hub-mount {
-  margin: 0 auto;
-  max-width: var(--d-max-width, 1180px);
-}
-.home-hub .hh-placeholder {
-  padding: 2rem;
-  border-radius: 8px;
-  background: var(--secondary-very-low);
-}

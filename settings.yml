@@ -4,9 +4,3 @@ icons_sprite:
   description:
     en: Upload an SVG sprite file containing <symbol> icons to register globally.
 
-enable_home_hub:
-  default: true
-  client: true
-  description:
-    en: Enable rendering of the custom Home Hub layout on the Latest homepage.
-

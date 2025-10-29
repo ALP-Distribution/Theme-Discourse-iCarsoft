@@ -3,5 +3,3 @@ en:
     description: ''
     settings:
       example_setting: A description of a setting.
-  home_hub:
-    title: "Home Hub"
