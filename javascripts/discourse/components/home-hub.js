@@ -1,34 +1,56 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
 
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 export default class HomeHubComponent extends Component {
+  @service router;
   @tracked popularTopics = [];
   @tracked latestTopics = [];
   @tracked loadingPopular = true;
   @tracked loadingLatest = true;
   @tracked errorPopular = null;
   @tracked errorLatest = null;
+  @tracked active = false;
 
   #cache = new Map();
 
   constructor() {
     super(...arguments);
-    if (document.body.classList.contains("home-hub--active")) {
+    this.active = this.#isHome(this.router.currentURL || window.location.pathname);
+    // react to route changes
+    this._onRoute = (transition) => {
+      const url = transition?.to?.url ?? this.router.currentURL ?? window.location.pathname;
+      this.active = this.#isHome(url);
+      if (this.active && (this.popularTopics.length === 0 || this.latestTopics.length === 0)) {
+        this.loadData();
+      }
+    };
+    this.router.on("routeDidChange", this._onRoute);
+    if (this.active) {
       this.loadData();
     }
   }
 
   willDestroy() {
     super.willDestroy(...arguments);
-    // best-effort: nothing to clean up
+    if (this._onRoute) {
+      this.router.off("routeDidChange", this._onRoute);
+    }
   }
 
-  get isActive() {
-    return document.body.classList.contains("home-hub--active");
+  #isHome(url) {
+    try {
+      const u = new URL(String(url), window.location.origin);
+      const p = u.pathname;
+      return p === "/" || p.startsWith("/latest");
+    } catch {
+      const p = String(url || "");
+      return p === "/" || p.startsWith("/latest");
+    }
   }
 
   get quickNavItems() {

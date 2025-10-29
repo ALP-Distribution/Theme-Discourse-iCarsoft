@@ -31,6 +31,11 @@ export default apiInitializer("1.8.0", (api) => {
     }
   });
 
+  // Also set initial state on first load
+  try {
+    toggleBodyClass(isHomePath(window.location.pathname));
+  } catch {}
+
   // Optional: register a sidebar Top contributors section
   if (settings.contributors_enabled) {
     withPluginApi("1.8.0", (papi) => {
