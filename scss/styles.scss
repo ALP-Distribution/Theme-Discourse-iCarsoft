@@ -24,3 +24,19 @@ body .topic-card.topic-list-item.visited {
   background-color: var(--topic-card-background-visited);
 }
 
+/* Homepage hero banner */
+.homepage-hero {
+  display: none;
+  background-image: var(--canvas-banner-home-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: var(--canvas-banner-padding);
+  border-radius: var(--d-border-radius-large);
+}
+
+/* Show only on /latest (homepage) */
+body.navigation-latest .homepage-hero {
+  display: block;
+}
+
