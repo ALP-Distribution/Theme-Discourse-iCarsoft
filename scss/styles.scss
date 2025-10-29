@@ -18,3 +18,8 @@ body #sidebar-section-content-categories svg[class*="d-icon-icarsoft-"] {
   width: 1.5rem;
   height: 1.5rem;
 }
+body .topic-card {
+  background-color: var(--topic-card-background);
+  border-radius: var(--topic-card-border-radius);
+  box-shadow: var(--topic-card-shadow);
+}

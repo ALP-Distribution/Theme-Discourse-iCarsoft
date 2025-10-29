@@ -7,13 +7,14 @@
   --d-max-width: 1000px;
 
   /* Base Styles */
-  --canvas-background: var(--primary-50);
+  --canvas-background: white;
   --canvas-border: 1px solid var(--primary-200);
   // --canvas-border-light: 1px solid var(--primary-200);
 
   /* Border Radius */
   // --d-border-radius: 2px;
   --d-border-radius-large: 16px;
+  --d-border-radius-medium: 0.75rem;
   --d-button-border-radius: 8px;
   // --d-input-border-radius: var(--d-button-border-radius);
   // --d-nav-pill-border-radius: var(--d-button-border-radius);
@@ -37,7 +38,10 @@
   // --d-sidebar-highlight-background: var(--primary-low);
 
   /* Panels */
-  --canvas-panel-padding: 2rem;
+  --canvas-panel-padding: 0rem;
+  --canvas-panel-background: transparent;
+  --canvas-panel-border: none;
+  --canvas-panel-shadow: none;
   // --canvas-panel-radius: var(--d-border-radius-large);
   // --canvas-panel-border: none;
   // --canvas-panel-shadow: var(--shadow-header);
@@ -55,4 +59,9 @@
   /* Header Search */
   // --canvas-header-search-border: 1px solid var(--primary-400);
   // --canvas-header-search-padding: 0.5em;
+
+  /* Topic Cards */
+  --topic-card-background: var(--primary-50);
+  --topic-card-border-radius: var(--d-border-radius-medium);
+  --topic-card-shadow: box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;;
 }
