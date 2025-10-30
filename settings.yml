@@ -4,12 +4,6 @@ icons_sprite:
   description:
     en: Upload an SVG sprite file containing <symbol> icons to register globally.
 
-homepage_hero_image:
-  type: upload
-  default: assets/bg-home.png
-  description:
-    en: Homepage hero background image. Upload a wide image.
-
 search_banner_image:
   type: upload
   default: assets/bg-search.png
@@ -22,43 +16,28 @@ search_banner_title:
   description:
     en: Title text displayed in the search banner.
 
-
-# Custom Banners (Feature 1)
-enable_custom_banners:
+# Home Banner (simple, production-safe)
+enable_home_banner:
   type: bool
   default: true
   description:
-    en: Enable the custom banners system from this theme.
+    en: Enable the Home banner rendered above main content on selected pages.
 
-custom_banners_config:
-  type: json
-  default: |
-    [
-      {
-        "id": "home-top-hero",
-        "title": "Welcome to the community",
-        "image_url": "/theme-assets/default/assets/bg-home.png",
-        "link_url": "/",
-        "alt": "Community welcome banner",
-        "outlets": ["above-main-container"],
-        "pages": ["latest", "hot"],
-        "audience": "all",
-        "dismissible": false,
-        "enabled": false,
-        "priority": 10
-      }
-    ]
+home_banner_image:
+  type: upload
+  default: assets/bg-home.png
   description:
-    en: >-
-      JSON array of banner models. Fields per banner: id (string), title (string),
-      image_url (string URL), link_url (string URL, optional), alt (string), outlets (array
-      of outlet names like "above-main-container" or "before-topic-list"), pages (array of
-      route keys among: "root", "latest", "new", "unread", "top", "hot", "categories"),
-      audience ("all" | "anon" | "logged_in"), dismissible (bool), enabled (bool), priority (number).
+    en: Image for the Home banner.
 
-custom_banners_debug:
-  type: bool
-  default: false
+home_banner_alt:
+  type: string
+  default: "Home banner"
   description:
-    en: Log debug info for the custom banners system in the browser console.
+    en: Alt text for the Home banner image (for accessibility).
+
+home_banner_pages:
+  type: list
+  default: root|latest|hot
+  description:
+    en: Pages where the Home banner displays. Use keys like root, latest, new, unread, top, hot, categories.
 
