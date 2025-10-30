@@ -1,13 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
 import getURLWithCDN from "discourse-common/lib/get-url";
-// NOTE: We intentionally avoid extending Discourse sidebar base classes here.
-// The previous implementation caused runtime "not implemented" errors when
-// required getters were missing. Instead, we move the existing
-// `after-sidebar-sections` outlet inside the `.sidebar-sections` container so
-// it renders after the last section and scrolls with it.
 
 export default apiInitializer("1.8.0", (api) => {
-  // Register custom icon sprite if provided
   const spritePath = settings.icons_sprite;
   if (spritePath) {
     const spriteUrl = getURLWithCDN(spritePath);
@@ -17,22 +11,6 @@ export default apiInitializer("1.8.0", (api) => {
       // fail silently; theme still works without custom sprite
     }
   }
-
-  // Expose homepage hero background as a CSS variable from setting
-  const heroPath = settings.homepage_hero_image;
-  if (heroPath) {
-    const heroUrl = getURLWithCDN(heroPath);
-    try {
-      document.documentElement.style.setProperty(
-        "--canvas-banner-home-image",
-        `url(${heroUrl})`
-      );
-    } catch (e) {
-      // no-op
-    }
-  }
-
-  // Expose search banner background as a CSS variable and override title text
   const searchImagePath = settings.search_banner_image;
   const searchTitle = settings.search_banner_title;
 
@@ -58,7 +36,6 @@ export default apiInitializer("1.8.0", (api) => {
     }
   }
 
-  // Run now and on subsequent page changes (SPA navigation)
   applySearchBannerCustomizations();
   api.onPageChange(() => applySearchBannerCustomizations());
 });
