@@ -2,7 +2,7 @@ import Component from "@glimmer/component";
 import { inject as service } from "@ember/service";
 import getURLWithCDN from "discourse-common/lib/get-url";
 
-class HomeBannerConnector extends Component {
+export default class HomeBannerConnector extends Component {
   @service router;
 
   get pageKey() {
@@ -48,19 +48,19 @@ class HomeBannerConnector extends Component {
   get alt() {
     return settings.home_banner_alt || "Home banner";
   }
-}
 
-<template>
-  {{#if this.show}}
-    {{#if this.src}}
-      <div class="tc-banner">
-        <div class="tc-banner__inner wrap">
-          <img class="tc-banner__img" src={{this.src}} alt={{this.alt}} />
+  <template>
+    {{#if this.show}}
+      {{#if this.src}}
+        <div class="tc-banner">
+          <div class="tc-banner__inner wrap">
+            <img class="tc-banner__img" src={{this.src}} alt={{this.alt}} />
+          </div>
         </div>
-      </div>
+      {{/if}}
     {{/if}}
-  {{/if}}
-  {{yield}}
-</template>
+    {{yield}}
+  </template>
+}
 
 
