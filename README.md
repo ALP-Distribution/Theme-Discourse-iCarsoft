@@ -2,26 +2,19 @@
 
 A simple modern theme, based on the [Canvas Theme Template](https://gitlab.com/manuelkostka/discourse/canvas/theme).
 
-## Custom category icons
+## Custom category icon
 
-1. In this theme's settings, upload an SVG sprite to `icons_sprite`.
-   - The sprite should contain one or more `<symbol id="...">` definitions.
-   - Example symbol id: `category-icarsoft`.
-2. After upload, the theme injects the sprite into the page so its symbols are available site-wide.
-3. Use icons by id wherever Discourse accepts an icon name (e.g. Category → Settings → Icon). Enter the symbol id you defined.
+The theme provides a single custom icon named `icarsoft-category`.
 
-Notes:
-- If your sprite file wraps symbols directly (no outer `<svg>`), the theme will wrap it automatically.
-- Ensure any required icon names are also listed in the instance `SVG icon subset` setting so they are whitelisted.
+- It is registered automatically and appears in Discourse icon pickers.
+- It inherits color from its context (uses `currentColor`). In category contexts, it will adopt the category color.
+- If your site uses the "SVG icon subset" setting, add `icarsoft-category` there so it is whitelisted.
 
 ## Homepage setup (hero, search, nav, topic blocks)
 
 1) Install required theme components on this theme
 - Search Banner (official): `https://github.com/discourse/discourse-search-banner.git`
 - Canvas component (already included): `https://gitlab.com/manuelkostka/discourse/canvas/component.git`
-
-2) Upload assets
-- Upload `assets/icons-sprite.svg` (or your own) to `icons_sprite` in theme settings.
 
 3) Configure homepage toggles in this theme's settings
 - `enable_home_hero`: show/hide Extra Banner on /latest

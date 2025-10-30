@@ -2,15 +2,23 @@ import { apiInitializer } from "discourse/lib/api";
 import getURLWithCDN from "discourse-common/lib/get-url";
 
 export default apiInitializer("1.8.0", (api) => {
-  const spritePath = settings.icons_sprite;
-  if (spritePath) {
-    const spriteUrl = getURLWithCDN(spritePath);
-    try {
-      api.addIconSprite(spriteUrl);
-    } catch (e) {
-      // fail silently; theme still works without custom sprite
+  // Register single custom icon: icarsoft-category
+  try {
+    const icarsoftCategorySvg =
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\
+    <path d="M24 11.2767C24 17.8103 18.8044 22.2528 11.9988 22.8974C3.80647 23.6708 0 20.0781 0 13.5445C0 7.01085 5.66578 1 12.2885 1C18.9112 1 24 3.80252 24 11.2767Z" fill="currentColor"/>\
+    <path d="M13.6708 8C12.8634 8 12.208 9.64714 12.208 11.6786C12.208 13.7101 12.8634 15.3572 13.6708 15.3572C14.4781 15.3572 15.1335 13.7101 15.1335 11.6786C15.1335 9.64714 14.4781 8 13.6708 8Z" fill="white"/>\
+    <path d="M9.46275 8.98828C8.65539 8.98828 8 10.6354 8 12.6669C8 14.6984 8.65539 16.3455 9.46275 16.3455C10.2701 16.3455 10.9255 14.6984 10.9255 12.6669C10.9255 10.6354 10.2701 8.98828 9.46275 8.98828Z" fill="white"/>\
+  </svg>';
+    if (api.registerIcon) {
+      api.registerIcon("icarsoft-category", icarsoftCategorySvg);
+    } else if (api.replaceIcon) {
+      api.replaceIcon("icarsoft-category", icarsoftCategorySvg);
     }
+  } catch (e) {
+    // no-op if icon registration API changes
   }
+
   const searchImagePath = settings.search_banner_image;
   const searchTitle = settings.search_banner_title;
 

@@ -72,7 +72,7 @@ export default apiInitializer("1.8.0", (api) => {
     } catch (e) {
       return;
     }
-  });
+  }, { id: "icarsoft-home-banner" });
 
   api.onPageChange(() => {
     // relying on re-render behavior of outlets per navigation
