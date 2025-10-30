@@ -47,7 +47,7 @@ enable_tags_nav:
     en: Enable category-specific tags navigation block.
 
 banners_json:
-  type: json
+  type: string
   default: |
     [
       {"id":"home_hero","routes":["/","/latest"],"imageUrl":"/uploads/hero.jpg","linkUrl":"/about","dismissible":true,"priority":10},
@@ -57,7 +57,7 @@ banners_json:
     en: JSON array of banner configs with targeting rules.
 
 blocks_json:
-  type: json
+  type: string
   default: |
     [
       {"id":"homepage_cats_nav","kind":"cats-nav","routes":["/","/latest","/top"],"categoryScope":"top-level","layout":"grid"},
