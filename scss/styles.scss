@@ -190,19 +190,25 @@ body .topic-card.topic-list-item.visited {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 0.75rem;
-  &:not(:last-child)::after {
-    content: "";
-    display: block;
-    width: 1px;
-    height: 80%;
-    background: var(--primary-200);
-  }
+  gap: 1rem;
+  
 }
 
 .tc-discovery-nav__item {
-  display: inline-flex;
+  position: relative;
+  display: block;
   flex: 1;
+  &:not(:last-child)::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: -0.5rem;
+    top: 50%;
+    width: 1px;
+    height: 70%;
+    background: var(--primary-200);
+    transform: translateY(-50%);
+  }
 }
 
 a.tc-discovery-nav__link {
