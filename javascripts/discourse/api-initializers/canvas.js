@@ -6,8 +6,11 @@ import BaseCustomSidebarSectionLink from "discourse/lib/sidebar/base-custom-side
 class LeaderboardLink extends BaseCustomSidebarSectionLink {
   constructor() {
     super(...arguments);
-    this.name = "leaderboard";
     this.href = "/leaderboard";
+  }
+
+  get name() {
+    return "leaderboard";
   }
 
   get label() {
@@ -16,9 +19,8 @@ class LeaderboardLink extends BaseCustomSidebarSectionLink {
 }
 
 class LeaderboardSection extends BaseCustomSidebarSection {
-  constructor() {
-    super(...arguments);
-    this.name = "leaderboard";
+  get name() {
+    return "leaderboard";
   }
 
   get title() {
