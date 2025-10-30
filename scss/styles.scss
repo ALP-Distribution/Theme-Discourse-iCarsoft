@@ -147,3 +147,61 @@ body .topic-card.topic-list-item.visited {
     border-radius: 2rem;
   }
 }
+
+/* Theme Custom Banners */
+.tc-banner {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-block-end: 1.5rem;
+  color: var(--primary);
+}
+
+.tc-banner__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tc-banner__inner.wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: var(--d-border-radius-large);
+  background: var(--secondary-very-low);
+  overflow: hidden;
+}
+
+.tc-banner__img {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: cover;
+  grid-column: 1 / -1;
+  border-radius: var(--d-border-radius-large);
+}
+
+.tc-banner__content {
+  font-weight: 600;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+}
+
+.tc-banner__dismiss {
+  margin-inline-start: auto;
+  background: transparent;
+  border: 0;
+  color: var(--primary-medium);
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.tc-banner__dismiss:hover {
+  color: var(--primary-high);
+}
+
+.tc-banner-stack {
+  display: grid;
+  gap: 1rem;
+}

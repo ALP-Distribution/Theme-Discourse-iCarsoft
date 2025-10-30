@@ -22,3 +22,43 @@ search_banner_title:
   description:
     en: Title text displayed in the search banner.
 
+
+# Custom Banners (Feature 1)
+enable_custom_banners:
+  type: bool
+  default: true
+  description:
+    en: Enable the custom banners system from this theme.
+
+custom_banners_config:
+  type: json
+  default: |
+    [
+      {
+        "id": "home-top-hero",
+        "title": "Welcome to the community",
+        "image_url": "/theme-assets/default/assets/bg-home.png",
+        "link_url": "/",
+        "alt": "Community welcome banner",
+        "outlets": ["above-main-container"],
+        "pages": ["latest", "hot"],
+        "audience": "all",
+        "dismissible": false,
+        "enabled": false,
+        "priority": 10
+      }
+    ]
+  description:
+    en: >-
+      JSON array of banner models. Fields per banner: id (string), title (string),
+      image_url (string URL), link_url (string URL, optional), alt (string), outlets (array
+      of outlet names like "above-main-container" or "before-topic-list"), pages (array of
+      route keys among: "root", "latest", "new", "unread", "top", "hot", "categories"),
+      audience ("all" | "anon" | "logged_in"), dismissible (bool), enabled (bool), priority (number).
+
+custom_banners_debug:
+  type: bool
+  default: false
+  description:
+    en: Log debug info for the custom banners system in the browser console.
+
