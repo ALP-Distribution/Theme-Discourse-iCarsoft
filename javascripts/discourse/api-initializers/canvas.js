@@ -4,17 +4,16 @@ import BaseCustomSidebarSection from "discourse/lib/sidebar/base-custom-sidebar-
 import BaseCustomSidebarSectionLink from "discourse/lib/sidebar/base-custom-sidebar-section-link";
 
 class LeaderboardLink extends BaseCustomSidebarSectionLink {
-  constructor() {
-    super(...arguments);
-    this.href = "/leaderboard";
-  }
-
   get name() {
     return "leaderboard";
   }
 
   get label() {
     return "Voir le classement";
+  }
+
+  get href() {
+    return "/leaderboard";
   }
 }
 
