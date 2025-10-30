@@ -208,3 +208,15 @@ body .topic-card.topic-list-item.visited {
 .tc-discovery-nav__link:hover {
   background: var(--secondary-low);
 }
+
+.tc-discovery-nav__logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  margin-inline-end: 0.5rem;
+  vertical-align: middle;
+}
+
+.tc-discovery-nav__label {
+  vertical-align: middle;
+}

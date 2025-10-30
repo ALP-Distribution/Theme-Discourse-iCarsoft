@@ -44,11 +44,18 @@ export default class DiscoveryCategoriesNav extends Component {
     const cats = this.site.categories || [];
     return cats
       .filter((c) => !c.parent_category_id && !c.read_restricted)
+      // Remove uncategorized (French slug and id 1 safeguard)
+      .filter((c) => c.slug !== "sans-categorie" && c.id !== 1)
       .sort((a, b) => (a.position || 0) - (b.position || 0));
   }
 
   urlForCategory(cat) {
     return getURLWithCDN(`/c/${cat.slug}/${cat.id}`);
+  }
+
+  logoUrlForCategory(cat) {
+    const raw = cat.logo_url || (cat.uploaded_logo && cat.uploaded_logo.url);
+    return raw ? getURLWithCDN(raw) : null;
   }
 
   get hasCategories() {
@@ -68,7 +75,12 @@ export default class DiscoveryCategoriesNav extends Component {
                     href={{this.urlForCategory cat}}
                     data-category-id={{cat.id}}
                   >
-                    {{cat.name}}
+                    {{#let (this.logoUrlForCategory cat) as |logo|}}
+                      {{#if logo}}
+                        <img class="tc-discovery-nav__logo" src={{logo}} alt="" aria-hidden="true" />
+                      {{/if}}
+                    {{/let}}
+                    <span class="tc-discovery-nav__label">{{cat.name}}</span>
                   </a>
                 </li>
               {{/each}}
