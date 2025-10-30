@@ -15,7 +15,15 @@
     "icon-hot": "assets/hot.svg",
     "icon-hot-red": "assets/hot-red.svg",
     "icons-sprite": "assets/icons-sprite.svg",
-    "icarsoft-category": "assets/icarsoft-category.svg"
+    "icarsoft-category": "assets/icarsoft-category.svg",
+    "thumb-welcome": "assets/welcome.png",
+    "thumb-videos": "assets/videos.png",
+    "thumb-product": "assets/product.png",
+    "thumb-brands": "assets/brands.png",
+    "thumb-community": "assets/community.png",
+    "thumb-q&a": "assets/qa.png",
+    "thumb-notice": "assets/notice.png",
+    "thumb-update": "assets/update.png"
   },
   "modifiers": {},
   "color_schemes": {

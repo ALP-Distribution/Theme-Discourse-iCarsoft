@@ -41,3 +41,16 @@ home_banner_pages:
   description:
     en: Pages where the Home banner displays. Use keys like root, latest, new, unread, top, hot, categories.
 
+# Discovery Categories Nav (Feature 2)
+enable_discovery_nav:
+  type: bool
+  default: true
+  description:
+    en: Enable inline categories navigation on selected discovery pages.
+
+discovery_nav_pages:
+  type: list
+  default: root|latest|hot
+  description:
+    en: Pages where the discovery categories nav displays. Use keys like root, latest, new, unread, top, hot, categories.
+

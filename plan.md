@@ -60,7 +60,7 @@ Tip: You can validate choices by quickly prototyping with the official Versatile
 
 ---
 
-## Feature 1 — Configurable banner system
+## Feature 1 — Configurable banner system ** DONE **
 Goal: create multiple “banner models”, each with precise display rules.
 
 Ship in slices:
