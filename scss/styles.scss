@@ -199,10 +199,18 @@ body.navigation-topics .homepage-hero {
       font-size: 0.8rem;
     }
   }
+  .badge-category__wrapper {
+    padding: 2px 8px;
+    font-weight: 500;
+    background-color: var(--category-badge-color);
+    color: var(--category-badge-text-color);   
+    border-radius: 2rem;
+    svg.d-icon {
+      display: none;
+    }
+  }
   .discourse-tag.box {
-    background-color: var(--tertiary);
     border-radius: 2rem;
     color: white;
-
   }
 }
