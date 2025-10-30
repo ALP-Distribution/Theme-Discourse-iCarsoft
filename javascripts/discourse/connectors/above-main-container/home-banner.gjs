@@ -2,7 +2,7 @@ import Component from "@glimmer/component";
 import { inject as service } from "@ember/service";
 import getURLWithCDN from "discourse-common/lib/get-url";
 
-export default class HomeBannerConnector extends Component {
+class HomeBannerConnector extends Component {
   @service router;
 
   get pageKey() {

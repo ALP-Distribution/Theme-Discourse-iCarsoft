@@ -1,5 +1,4 @@
 import { apiInitializer } from "discourse/lib/api";
-import { iconLibrary } from "discourse-common/lib/icon-library";
 import getURLWithCDN from "discourse-common/lib/get-url";
 
 
