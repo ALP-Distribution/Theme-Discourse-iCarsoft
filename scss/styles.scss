@@ -210,17 +210,19 @@ a.tc-discovery-nav__link {
   &:hover {
     background: var(--primary-50);
   }
-}
-
-
-.tc-discovery-nav__logo {
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-  margin-block-end: 0.5rem;
-  vertical-align: middle;
-}
-
-.tc-discovery-nav__label {
-  vertical-align: middle;
+  .tc-discovery-nav__logo {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    margin-block-end: 0.5rem;
+    vertical-align: middle;
+  }
+  .tc-discovery-nav__label {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25;
+    text-align: center;
+    font-style: italic;
+  }
 }
