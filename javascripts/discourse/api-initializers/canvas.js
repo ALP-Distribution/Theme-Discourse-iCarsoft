@@ -1,5 +1,34 @@
 import { apiInitializer } from "discourse/lib/api";
 import getURLWithCDN from "discourse-common/lib/get-url";
+import BaseCustomSidebarSection from "discourse/lib/sidebar/base-custom-sidebar-section";
+import BaseCustomSidebarSectionLink from "discourse/lib/sidebar/base-custom-sidebar-section-link";
+
+class LeaderboardLink extends BaseCustomSidebarSectionLink {
+  constructor() {
+    super(...arguments);
+    this.name = "leaderboard";
+    this.href = "/leaderboard";
+  }
+
+  get label() {
+    return "Voir le classement";
+  }
+}
+
+class LeaderboardSection extends BaseCustomSidebarSection {
+  constructor() {
+    super(...arguments);
+    this.name = "leaderboard";
+  }
+
+  get title() {
+    return "Leaderboard";
+  }
+
+  get links() {
+    return [new LeaderboardLink()];
+  }
+}
 
 export default apiInitializer("1.8.0", (api) => {
   // Register custom icon sprite if provided
@@ -58,15 +87,5 @@ export default apiInitializer("1.8.0", (api) => {
   api.onPageChange(() => applySearchBannerCustomizations());
 
   // Add leaderboard section to sidebar
-  api.addSidebarSection({
-    name: "leaderboard",
-    title: "Leaderboard",
-    links: () => [
-      {
-        name: "leaderboard",
-        href: "/leaderboard",
-        label: "Voir le classement",
-      },
-    ],
-  });
+  api.addSidebarSection(() => LeaderboardSection);
 });
