@@ -18,7 +18,9 @@
     "icon-latest": "assets/latest.svg",
     "icon-latest-red": "assets/latest-red.svg",
     "icon-hot": "assets/hot.svg",
-    "icon-hot-red": "assets/hot-red.svg"
+    "icon-hot-red": "assets/hot-red.svg",
+    "icon-sprite": "assets/icons-sprite.svg",
+    "icarsoft-category": "assets/icarsoft-category.svg"
   },
   "modifiers": {},
   "color_schemes": {
