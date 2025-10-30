@@ -27,6 +27,10 @@ class LeaderboardSection extends BaseCustomSidebarSection {
     return "Leaderboard";
   }
 
+  get text() {
+    return "Leaderboard";
+  }
+
   get links() {
     return [new LeaderboardLink()];
   }
