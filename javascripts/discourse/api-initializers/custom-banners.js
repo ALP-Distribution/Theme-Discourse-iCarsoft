@@ -50,9 +50,7 @@ export default apiInitializer("1.8.0", (api) => {
   const allowedPages = normalizePages(settings.home_banner_pages);
   const imageUpload = settings.home_banner_image;
   const altText = settings.home_banner_alt || "Home banner";
-   console.log("allowedPages", allowedPages);
-   console.log("imageUpload", imageUpload);
-   console.log("altText", altText);
+
   function render(homeHelper) {
     if (!imageUpload) return;
     const page = currentPageKey(router);
@@ -77,9 +75,9 @@ export default apiInitializer("1.8.0", (api) => {
   //   }
   // }, { id: "icarsoft-home-banner" });
 
-  // api.onPageChange(() => {
-  //   // relying on re-render behavior of outlets per navigation
-  // });
+  api.onPageChange(() => {
+   // relying on re-render behavior of outlets per navigation
+  });
 });
 
 
