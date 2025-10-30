@@ -35,21 +35,21 @@ export default apiInitializer("1.8.0", (api) => {
   const router = api.container.lookup("service:router");
   console.log(router);
 
-  // function normalizePages(pagesSetting) {
-  //   if (!pagesSetting) return [];
-  //   if (Array.isArray(pagesSetting)) return pagesSetting;
-  //   if (typeof pagesSetting === "string") {
-  //     return pagesSetting
-  //       .split("|")
-  //       .map((s) => s.trim())
-  //       .filter(Boolean);
-  //   }
-  //   return [];
-  // }
+   function normalizePages(pagesSetting) {
+     if (!pagesSetting) return [];
+     if (Array.isArray(pagesSetting)) return pagesSetting;
+     if (typeof pagesSetting === "string") {
+       return pagesSetting
+         .split("|")
+         .map((s) => s.trim())
+         .filter(Boolean);
+     }
+     return [];
+   }
 
-  // const allowedPages = normalizePages(settings.home_banner_pages);
-  // const imageUpload = settings.home_banner_image;
-  // const altText = settings.home_banner_alt || "Home banner";
+  const allowedPages = normalizePages(settings.home_banner_pages);
+  const imageUpload = settings.home_banner_image;
+  const altText = settings.home_banner_alt || "Home banner";
 
   // function render(homeHelper) {
   //   if (!imageUpload) return;
