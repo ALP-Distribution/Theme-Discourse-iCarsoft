@@ -215,27 +215,3 @@ body.navigation-topics .homepage-hero {
     border-radius: 2rem;
   }
 }
-
-/* Leaderboard sidebar section */
-.sidebar-section-wrapper.sidebar-section[data-section-name="leaderboard"] {
-  .sidebar-section-header {
-    h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 0;
-    }
-  }
-  
-  .sidebar-section-link-wrapper {
-    a.sidebar-section-link {
-      color: var(--primary);
-      text-decoration: none;
-      padding: 0.5rem 0;
-      display: block;
-      
-      &:hover {
-        color: var(--tertiary);
-      }
-    }
-  }
-}
