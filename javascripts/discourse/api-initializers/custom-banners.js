@@ -33,7 +33,7 @@ export default apiInitializer("1.8.0", (api) => {
   }
 
   const router = api.container.lookup("service:router");
-  console.log(router);
+
 
    function normalizePages(pagesSetting) {
      if (!pagesSetting) return [];
@@ -50,22 +50,24 @@ export default apiInitializer("1.8.0", (api) => {
   const allowedPages = normalizePages(settings.home_banner_pages);
   const imageUpload = settings.home_banner_image;
   const altText = settings.home_banner_alt || "Home banner";
+   console.log("allowedPages", allowedPages);
+   console.log("imageUpload", imageUpload);
+   console.log("altText", altText);
+  function render(homeHelper) {
+    if (!imageUpload) return;
+    const page = currentPageKey(router);
+    if (allowedPages.length > 0 && !allowedPages.includes(page)) return;
 
-  // function render(homeHelper) {
-  //   if (!imageUpload) return;
-  //   const page = currentPageKey(router);
-  //   if (allowedPages.length > 0 && !allowedPages.includes(page)) return;
+    const src = getURLWithCDN(imageUpload);
 
-  //   const src = getURLWithCDN(imageUpload);
+    const img = homeHelper.h("img", {
+      attributes: { src, alt: altText },
+      className: "tc-banner__img",
+    });
 
-  //   const img = homeHelper.h("img", {
-  //     attributes: { src, alt: altText },
-  //     className: "tc-banner__img",
-  //   });
-
-  //   const inner = homeHelper.h("div", { className: "tc-banner__inner wrap" }, [img]);
-  //   return homeHelper.h("div", { className: "tc-banner" }, inner);
-  // }
+    const inner = homeHelper.h("div", { className: "tc-banner__inner wrap" }, [img]);
+    return homeHelper.h("div", { className: "tc-banner" }, inner);
+  }
 
   // api.renderInOutlet("above-main-container", (helper) => {
   //   try {
