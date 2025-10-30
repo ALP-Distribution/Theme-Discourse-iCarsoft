@@ -56,4 +56,17 @@ export default apiInitializer("1.8.0", (api) => {
   // Run now and on subsequent page changes (SPA navigation)
   applySearchBannerCustomizations();
   api.onPageChange(() => applySearchBannerCustomizations());
+
+  // Add leaderboard section to sidebar
+  api.addSidebarSection({
+    name: "leaderboard",
+    title: "Leaderboard",
+    links: [
+      {
+        name: "leaderboard",
+        route: "/leaderboard",
+        label: "Voir le classement",
+      },
+    ],
+  });
 });
