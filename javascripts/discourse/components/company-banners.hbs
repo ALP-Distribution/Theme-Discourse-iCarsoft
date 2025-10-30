@@ -1,0 +1,16 @@
+{{#each this.configs as |banner|}}
+  <section class="company-banner" data-id={{banner.id}}>
+    {{#if banner.linkUrl}}
+      <a href={{banner.linkUrl}} class="company-banner__link" aria-label="Banner">
+        <img src={{banner.imageUrl}} alt={{banner.alt}} loading="lazy">
+      </a>
+    {{else}}
+      <img src={{banner.imageUrl}} alt={{banner.alt}} loading="lazy">
+    {{/if}}
+    {{#if banner.dismissible}}
+      <button type="button" class="company-banner__dismiss" {{on "click" (fn this.dismiss banner.id)}} aria-label="Dismiss">×</button>
+    {{/if}}
+  </section>
+{{/each}}
+
+

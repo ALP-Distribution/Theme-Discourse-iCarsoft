@@ -22,3 +22,48 @@ search_banner_title:
   description:
     en: Title text displayed in the search banner.
 
+enable_banners:
+  type: bool
+  default: true
+  description:
+    en: Enable rendering of page-scoped image banners.
+
+enable_discovery_nav:
+  type: bool
+  default: true
+  description:
+    en: Enable discovery page categories navigation block.
+
+enable_subcats_nav:
+  type: bool
+  default: true
+  description:
+    en: Enable category-specific subcategories navigation block.
+
+enable_tags_nav:
+  type: bool
+  default: true
+  description:
+    en: Enable category-specific tags navigation block.
+
+banners_json:
+  type: json
+  default: |
+    [
+      {"id":"home_hero","routes":["/","/latest"],"imageUrl":"/uploads/hero.jpg","linkUrl":"/about","dismissible":true,"priority":10},
+      {"id":"top_promo","routes":["/top"],"imageUrl":"/uploads/top.jpg","priority":5}
+    ]
+  description:
+    en: JSON array of banner configs with targeting rules.
+
+blocks_json:
+  type: json
+  default: |
+    [
+      {"id":"homepage_cats_nav","kind":"cats-nav","routes":["/","/latest","/top"],"categoryScope":"top-level","layout":"grid"},
+      {"id":"big_parent_subcats_nav","kind":"subcats-nav","categories":["parent-slug-1","parent-slug-2"],"inject":"category-header"},
+      {"id":"tags_nav_for_specific_parents","kind":"tags-nav","categories":["parent-slug-1"],"tagsByParent":{"parent-slug-1":["tag-a","tag-b","tag-c"]},"inject":"category-header"}
+    ]
+  description:
+    en: JSON array of page/category blocks with targeting rules.
+

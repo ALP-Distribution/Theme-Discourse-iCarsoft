@@ -1,0 +1,9 @@
+{{#if this.cfg}}
+  <nav class="company-tags-nav">
+    {{#each this.tags as |t|}}
+      <a class="company-tags-nav__item" href={{concat "/tags/" t}}>#{{t}}</a>
+    {{/each}}
+  </nav>
+{{/if}}
+
+
