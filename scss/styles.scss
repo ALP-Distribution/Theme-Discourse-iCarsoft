@@ -201,10 +201,12 @@ body.navigation-topics .homepage-hero {
   }
   .badge-category__wrapper {
     padding: 2px 8px;
-    font-weight: 500;
     background-color: var(--category-badge-color);
-    color: var(--category-badge-text-color);   
     border-radius: 2rem;
+    .badge-category__name {
+      font-weight: 500;
+      color: var(--category-badge-text-color);   
+    }
     svg.d-icon {
       display: none;
     }
