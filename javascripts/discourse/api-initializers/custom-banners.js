@@ -67,13 +67,15 @@ export default apiInitializer("1.8.0", (api) => {
     return homeHelper.h("div", { className: "tc-banner" }, inner);
   }
 
-  // api.renderInOutlet("above-main-container", (helper) => {
-  //   try {
-  //     return render(helper);
-  //   } catch (e) {
-  //     return;
-  //   }
-  // }, { id: "icarsoft-home-banner" });
+  api.renderInOutlet("above-main-container", (helper) => {
+    try {
+      console.log("helper", helper);
+      return;
+      // return render(helper);
+    } catch (e) {
+      return;
+    }
+  }, { id: "icarsoft-home-banner" });
 
   api.onPageChange(() => {
    // relying on re-render behavior of outlets per navigation
