@@ -191,13 +191,14 @@ body .topic-card.topic-list-item.visited {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  
+
 }
 
 .tc-discovery-nav__item {
   position: relative;
   display: block;
   flex: 1;
+
   &:not(:last-child)::after {
     content: "";
     display: block;
@@ -221,9 +222,11 @@ a.tc-discovery-nav__link {
   text-decoration: none;
   color: var(--primary);
   background: transparent;
+
   &:hover {
     background: var(--primary-50);
   }
+
   .tc-discovery-nav__logo {
     width: 140px;
     height: 140px;
@@ -231,6 +234,7 @@ a.tc-discovery-nav__link {
     margin-block-end: 0.5rem;
     vertical-align: middle;
   }
+
   .tc-discovery-nav__label {
     color: var(--primary);
     font-weight: 600;
@@ -270,7 +274,15 @@ a.tc-discovery-nav__link {
   align-items: center;
   text-decoration: none;
   color: var(--primary);
+  background-color: var(--primary-50);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+
+  &:hover {
+    background-color: var(--primary-100);
+  }
 }
+
 
 .tc-subcats-nav__logo {
   width: 110px;
@@ -285,4 +297,20 @@ a.tc-discovery-nav__link {
   font-size: 0.95rem;
   line-height: 1.2;
   text-align: center;
+}
+
+.category-par-marques {
+  .tc-subcats-nav__list {
+    gap: 1rem 1.25rem;
+  }
+
+  .tc-subcats-nav__link {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .tc-subcats-nav__logo {
+    width: 2rem;
+    height: 2rem;
+  }
 }
