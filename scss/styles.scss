@@ -240,3 +240,49 @@ a.tc-discovery-nav__link {
     font-style: italic;
   }
 }
+
+/* Subcategories inline nav (Feature 3) */
+.tc-subcats-nav {
+  margin-block: 0.5rem 2rem;
+}
+
+.tc-subcats-nav__wrap {
+  display: block;
+}
+
+.tc-subcats-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tc-subcats-nav__item {
+  display: block;
+}
+
+.tc-subcats-nav__link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.tc-subcats-nav__logo {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  margin-block-end: 0.25rem;
+}
+
+.tc-subcats-nav__label {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  text-align: center;
+}

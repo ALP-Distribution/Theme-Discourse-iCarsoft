@@ -94,7 +94,7 @@ Acceptance criteria
 
 ---
 
-## Feature 2 — Custom navigation block on selected list pages (e.g., homepage, Latest, Hot)
+## Feature 2 — Custom navigation block on selected list pages (e.g., homepage, Latest, Hot) ** DONE **
 Goal: a block that re‑presents the category navigation (like the sidebar’s categories) but inline on specific pages.
 
 Ship in slices:
