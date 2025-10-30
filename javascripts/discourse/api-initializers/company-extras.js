@@ -5,10 +5,12 @@ export default {
   initialize() {
     withPluginApi("1.16.0", (api) => {
       const router = api.container.lookup("service:router");
-
       api.onPageChange(() => {
-        const name = router.currentRoute?.name || "";
-        document.body.dataset.route = name;
+        try {
+          document.body.dataset.route = router.currentRouteName || "";
+        } catch (_) {
+          // no-op
+        }
       });
     });
   },
