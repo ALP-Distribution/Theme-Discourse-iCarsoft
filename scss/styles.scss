@@ -111,6 +111,9 @@ body.navigation-topics .homepage-hero {
   list-style: none;
   padding: 0;
   margin-block: 1rem 3rem;
+  margin-inline: 0;
+    background-color: aliceblue;
+    border-radius: 1rem;
 
   li {
     flex: 1;
@@ -158,6 +161,26 @@ body.navigation-topics .homepage-hero {
 
     &.icon-community::before {
       background-image: var(--canvas-icon-community);
+    }
+  }
+}
+
+
+.topic-card {
+  .topic-card__op a {
+    position: relative;
+    margin-inline-start: 2.25rem;
+    img.avatar {
+    position: absolute;
+    left: -2.75rem;
+    height: 2.25rem;
+    width: 2.25rem;
+    }
+  }
+  .topic-card__metadata {
+    margin-inline-start: 2.25rem;
+    .topic-card__publish-date {
+      font-size: 0.8rem;
     }
   }
 }
