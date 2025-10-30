@@ -61,10 +61,10 @@ export default apiInitializer("1.8.0", (api) => {
   api.addSidebarSection({
     name: "leaderboard",
     title: "Leaderboard",
-    links: [
+    links: () => [
       {
         name: "leaderboard",
-        route: "/leaderboard",
+        href: "/leaderboard",
         label: "Voir le classement",
       },
     ],
