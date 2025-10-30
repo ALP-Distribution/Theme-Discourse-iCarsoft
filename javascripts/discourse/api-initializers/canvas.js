@@ -1,39 +1,10 @@
 import { apiInitializer } from "discourse/lib/api";
 import getURLWithCDN from "discourse-common/lib/get-url";
-import BaseCustomSidebarSection from "discourse/lib/sidebar/base-custom-sidebar-section";
-import BaseCustomSidebarSectionLink from "discourse/lib/sidebar/base-custom-sidebar-section-link";
-
-class LeaderboardLink extends BaseCustomSidebarSectionLink {
-  get name() {
-    return "leaderboard";
-  }
-
-  get label() {
-    return "Voir le classement";
-  }
-
-  get href() {
-    return "/leaderboard";
-  }
-}
-
-class LeaderboardSection extends BaseCustomSidebarSection {
-  get name() {
-    return "leaderboard";
-  }
-
-  get title() {
-    return "Leaderboard";
-  }
-
-  get text() {
-    return "Leaderboard";
-  }
-
-  get links() {
-    return [new LeaderboardLink()];
-  }
-}
+// NOTE: We intentionally avoid extending Discourse sidebar base classes here.
+// The previous implementation caused runtime "not implemented" errors when
+// required getters were missing. Instead, we move the existing
+// `after-sidebar-sections` outlet inside the `.sidebar-sections` container so
+// it renders after the last section and scrolls with it.
 
 export default apiInitializer("1.8.0", (api) => {
   // Register custom icon sprite if provided
@@ -91,6 +62,32 @@ export default apiInitializer("1.8.0", (api) => {
   applySearchBannerCustomizations();
   api.onPageChange(() => applySearchBannerCustomizations());
 
-  // Add leaderboard section to sidebar
-  api.addSidebarSection(() => LeaderboardSection);
+  // Ensure the `after-sidebar-sections` outlet is appended inside
+  // the main `.sidebar-sections` container so it scrolls with it
+  function moveLeaderboardIntoSidebarSections() {
+    try {
+      const sections = document.querySelector(".sidebar-sections");
+      if (!sections) return;
+
+      const outlet =
+        document.querySelector('[data-plugin-outlet="after-sidebar-sections"]') ||
+        document.querySelector('.plugin-outlet.after-sidebar-sections');
+      if (!outlet) return;
+
+      // Avoid repeatedly moving if already placed
+      if (outlet.dataset.movedIntoSections === "true") return;
+
+      sections.appendChild(outlet);
+      outlet.dataset.movedIntoSections = "true";
+    } catch (e) {
+      // no-op
+    }
+  }
+
+  // Run after initial render and on navigation
+  // Use rAF to let Glimmer finish the sidebar DOM first
+  requestAnimationFrame(() => moveLeaderboardIntoSidebarSections());
+  api.onPageChange(() => {
+    requestAnimationFrame(() => moveLeaderboardIntoSidebarSections());
+  });
 });
