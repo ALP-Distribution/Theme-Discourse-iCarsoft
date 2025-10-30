@@ -181,6 +181,7 @@ body .topic-card.topic-list-item.visited {
 
 .tc-discovery-nav__wrap {
   display: block;
+  padding: 0;
 }
 
 .tc-discovery-nav__list {
@@ -190,10 +191,18 @@ body .topic-card.topic-list-item.visited {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 0.75rem;
+  &:not(:last-child)::after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 80%;
+    background: var(--primary-200);
+  }
 }
 
 .tc-discovery-nav__item {
   display: inline-flex;
+  flex: 1;
 }
 
 a.tc-discovery-nav__link {
@@ -201,7 +210,6 @@ a.tc-discovery-nav__link {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
   padding: .375rem .75rem;
   border-radius: 1rem;
   text-decoration: none;
