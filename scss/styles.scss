@@ -327,3 +327,7 @@ body:is(.category-nos-produits, .category-par-marques) .container:has(.category-
     order: -1;
   }
 }
+
+.category-heading.--has-logo {
+  --category-header-logo-size: 5rem;
+}
