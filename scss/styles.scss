@@ -353,3 +353,8 @@ body:is(.category-nos-produits, .category-par-marques) .container:has(.category-
 .tc-tag-nav {
   margin-block: 0.5rem 3rem;
 }
+
+/* Disable core body background image on category pages; we render our own banner */
+body.is-category-page {
+  background-image: none !important;
+}
