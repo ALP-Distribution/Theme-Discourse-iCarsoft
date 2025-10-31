@@ -169,8 +169,9 @@ body .topic-card.topic-list-item.visited {
 .tc-banner__img {
   width: 100%;
   height: auto;
-  aspect-ratio: 5/2;
+  aspect-ratio: 3/1;
   object-fit: cover;
+  object-position: center;
   border-radius: var(--d-border-radius-large);
 }
 
