@@ -1,4 +1,4 @@
-.sidebar-section-wrapper.sidebar-section[data-section-name="tags"] {
+body:not(.staff) .sidebar-section-wrapper.sidebar-section[data-section-name="tags"] {
   display: none;
 }
 
