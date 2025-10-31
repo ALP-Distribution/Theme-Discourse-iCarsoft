@@ -78,7 +78,7 @@ enable_tag_nav:
 
 tag_nav_group_ids:
   type: list
-  default: 71
+  default: ""
   description:
     en: Pipe-separated list of tag group ids that trigger the tag nav on a category.
 
