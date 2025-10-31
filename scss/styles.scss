@@ -313,4 +313,17 @@ a.tc-discovery-nav__link {
     width: 2rem;
     height: 2rem;
   }
+  
+}
+.category-nos-produits {
+  .tc-subcats-nav__logo {
+    mix-blend-mode: multiply;
+  }
+}
+body:is(.category-nos-produits, .category-par-marques ) .container:has(.topic-list-heading) {
+  display: flex;
+  flex-direction: column;
+  .category-heading {
+    order: -1;
+  }
 }
