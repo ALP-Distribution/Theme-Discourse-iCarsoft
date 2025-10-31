@@ -320,7 +320,7 @@ a.tc-discovery-nav__link {
     mix-blend-mode: multiply;
   }
 }
-body:is(.category-nos-produits, .category-par-marques ) .container:has(.topic-list-heading) {
+body:is(.category-nos-produits, .category-par-marques) .container:has(.category-heading) {
   display: flex;
   flex-direction: column;
   .category-heading {
