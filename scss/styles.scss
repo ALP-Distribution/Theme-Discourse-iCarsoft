@@ -237,7 +237,7 @@ a.tc-discovery-nav__link {
 
   .tc-discovery-nav__label {
     color: var(--primary);
-    font-weight: 600;
+    font-weight: 900;
     font-size: 1rem;
     line-height: 1.25;
     text-align: center;
@@ -338,5 +338,5 @@ body:is(.category-nos-produits, .category-par-marques) .container:has(.category-
 
 /* Tag nav container spacing */
 .tc-tag-nav {
-  margin-block: 0.5rem 1rem;
+  margin-block: 0.5rem 3rem;
 }

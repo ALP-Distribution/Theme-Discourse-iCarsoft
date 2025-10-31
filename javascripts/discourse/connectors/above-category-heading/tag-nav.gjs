@@ -6,16 +6,10 @@ export default class TagNavConnector extends Component {
   @service site;
 
   get enable() {
-    const v = settings.enable_tag_nav;
-    try { console.log("[tag-nav] enable:", v); } catch (e) {}
-    return v;
+    return settings.enable_tag_nav;
   }
 
   get category() {
-    try {
-      console.log("[tag-nav] args keys:", Object.keys(this.args || {}));
-      console.log("[tag-nav] category arg:", this.args?.category);
-    } catch (e) {}
     return this.args?.category;
   }
 
@@ -31,15 +25,8 @@ export default class TagNavConnector extends Component {
     const onCatNames = (c.allowed_tag_groups || c.required_tag_groups || [])
       .map((s) => String(s).trim().toLowerCase())
       .filter(Boolean);
-    try {
-      console.log("[tag-nav] required groups from setting:", required);
-      console.log("[tag-nav] category allowed_tag_groups:", c.allowed_tag_groups);
-      console.log("[tag-nav] category required_tag_groups:", c.required_tag_groups);
-    } catch (e) {}
     if (onCatNames.length === 0) return false;
-    const match = required.some((name) => onCatNames.includes(name));
-    try { console.log("[tag-nav] hasRequiredGroup:", match); } catch (e) {}
-    return match;
+    return required.some((name) => onCatNames.includes(name));
   }
 
   get availableTagNames() {
@@ -53,14 +40,6 @@ export default class TagNavConnector extends Component {
       c.tags ||
       []
     );
-    try {
-      console.log("[tag-nav] category keys:", Object.keys(c));
-      console.log("[tag-nav] allowed_tags:", c.allowed_tags);
-      console.log("[tag-nav] available_tags:", c.available_tags);
-      console.log("[tag-nav] available_tag_names:", c.available_tag_names);
-      console.log("[tag-nav] tags:", c.tags);
-      console.log("[tag-nav] chosen tag list length:", Array.isArray(list) ? list.length : 0);
-    } catch (e) {}
     return list;
   }
 
@@ -95,23 +74,33 @@ export default class TagNavConnector extends Component {
   }
 
   get tags() {
-    if (!this.enable) { try { console.log("[tag-nav] disabled by setting"); } catch (e) {} return []; }
-    if (!this.hasRequiredGroup) { try { console.log("[tag-nav] category missing required tag group"); } catch (e) {} return []; }
+    if (!this.enable) { return []; }
+    if (!this.hasRequiredGroup) { return []; }
     let names = this.availableTagNames;
     const map = this.tagToImageUrl;
     if (!Array.isArray(names) || names.length === 0) {
       // Fallback: use keys from mapping setting
       names = Object.keys(map || {});
-      try { console.log("[tag-nav] available tags empty; falling back to mapping keys:", names); } catch (e) {}
     }
     if (!Array.isArray(names) || names.length === 0) return [];
     const items = names.map((slug) => ({
       slug,
+      label: this.prettyLabel(slug),
       url: this.tagUrl(slug),
       img: map[slug] || null,
     }));
-    try { console.log("[tag-nav] final tags:", items); } catch (e) {}
     return items;
+  }
+
+  prettyLabel(slug) {
+    const overrides = {
+      "questions-fréquentes": "Questions fréquentes",
+      "mise-à-jour": "Mise à jour",
+      notice: "Notice",
+    };
+    if (overrides[slug]) return overrides[slug];
+    const label = String(slug || "").replace(/-/g, " ");
+    return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
   get show() {
@@ -129,7 +118,7 @@ export default class TagNavConnector extends Component {
                   {{#if t.img}}
                     <img class="tc-discovery-nav__logo" src={{t.img}} alt="" aria-hidden="true" />
                   {{/if}}
-                  <span class="tc-discovery-nav__label">{{t.slug}}</span>
+                  <span class="tc-discovery-nav__label">{{t.label}}</span>
                 </a>
               </li>
             {{/each}}
