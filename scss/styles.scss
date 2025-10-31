@@ -355,6 +355,6 @@ body:is(.category-nos-produits, .category-par-marques) .container:has(.category-
 }
 
 /* Disable core body background image on category pages; we render our own banner */
-body.category:has(.tc-banner) {
+body.category {
   background-image: none !important;
 }

@@ -4,6 +4,12 @@ import getURLWithCDN from "discourse-common/lib/get-url";
 
 export default class CategoryBannerConnector extends Component {
   @service site;
+  @service router;
+
+  // Reactive token that changes on navigation to trigger recomputation
+  get routeSignature() {
+    return `${this.router.currentRouteName}:${this.router.currentURL}`;
+  }
 
   get enabled() {
     return settings.enable_category_banner;
@@ -11,6 +17,8 @@ export default class CategoryBannerConnector extends Component {
 
   get categoryFromUrl() {
     try {
+      // Access routeSignature to re-run on SPA navigation
+      const _sig = this.routeSignature;
       const path = window.location?.pathname || "";
       // Matches /c/<anything>/<id> with id as digits
       const m = path.match(/\/c\/.*\/(\d+)(?:[\/?#]|$)/);
