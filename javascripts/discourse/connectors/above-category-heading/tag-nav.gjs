@@ -9,6 +9,22 @@ export default class TagNavConnector extends Component {
     return settings.enable_tag_nav;
   }
 
+  get currentTag() {
+    // Parse URL query params to find currently selected tag
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const tags = params.get("tags");
+      if (tags) {
+        // Handle multiple tags (comma-separated) by taking the first one
+        const firstTag = tags.split(",")[0].trim();
+        return firstTag;
+      }
+    } catch (e) {
+      // fallback if URL parsing fails
+    }
+    return null;
+  }
+
   get category() {
     return this.args?.category;
   }
@@ -67,7 +83,13 @@ export default class TagNavConnector extends Component {
   tagUrl(tag) {
     const c = this.category;
     if (!c) return getURLWithCDN(`/tags/${encodeURIComponent(tag)}`);
-    // Link to category filtered by tag
+    
+    // If this tag is currently selected, toggle it off (return category URL)
+    if (this.currentTag && this.currentTag.toLowerCase() === tag.toLowerCase()) {
+      return getURLWithCDN(`/c/${c.slug}/${c.id}`);
+    }
+    
+    // Otherwise, link to category filtered by tag
     return getURLWithCDN(
       `/c/${c.slug}/${c.id}?tags=${encodeURIComponent(tag)}`
     );
@@ -83,11 +105,13 @@ export default class TagNavConnector extends Component {
       names = Object.keys(map || {});
     }
     if (!Array.isArray(names) || names.length === 0) return [];
+    const current = this.currentTag;
     const items = names.map((slug) => ({
       slug,
       label: this.prettyLabel(slug),
       url: this.tagUrl(slug),
       img: map[slug] || null,
+      isSelected: current && current.toLowerCase() === slug.toLowerCase(),
     }));
     return items;
   }
@@ -114,7 +138,7 @@ export default class TagNavConnector extends Component {
           <ul class="tc-discovery-nav__list">
             {{#each this.tags as |t|}}
               <li class="tc-discovery-nav__item">
-                <a class="tc-discovery-nav__link" href={{t.url}}>
+                <a class="tc-discovery-nav__link {{if t.isSelected 'is-selected'}}" href={{t.url}}>
                   {{#if t.img}}
                     <img class="tc-discovery-nav__logo" src={{t.img}} alt="" aria-hidden="true" />
                   {{/if}}

@@ -90,3 +90,10 @@ tag_nav_images:
       Mapping of tag to image URL. One per line in the form "tag-slug::https://.../image.png".
       Use full URLs or theme asset URLs.
 
+# Category Banner
+enable_category_banner:
+  type: bool
+  default: true
+  description:
+    en: Enable banner on category pages using the category background image.
+

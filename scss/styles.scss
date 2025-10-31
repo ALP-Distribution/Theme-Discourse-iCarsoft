@@ -227,6 +227,19 @@ a.tc-discovery-nav__link {
     background: var(--primary-50);
   }
 
+  &.is-selected {
+    background: var(--tertiary-50);
+    border: 2px solid var(--tertiary);
+
+    .tc-discovery-nav__label {
+      color: var(--tertiary);
+    }
+
+    &:hover {
+      background: var(--tertiary-100);
+    }
+  }
+
   .tc-discovery-nav__logo {
     width: 140px;
     height: 140px;
