@@ -10,7 +10,10 @@ export default class CategoryBannerConnector extends Component {
   }
 
   get category() {
+    console.log(this.args?.category);
+    
     if (this.args?.category) return this.args.category;
+
     try {
       const pathMatch = window.location.pathname.match(/\/c\/([^\/]+)\/(\d+)/);
       const id = pathMatch && pathMatch[2] ? parseInt(pathMatch[2], 10) : null;
