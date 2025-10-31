@@ -2,14 +2,13 @@ import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer("1.8.0", (api) => {
   const PRIMARY_CLASS = "primary-category";
-  const SECONDARY_CLASS = "secondary-category";
 
   function updateBodyClasses() {
     const body = document.body;
     if (!body) return;
 
-    // Remove existing classes first
-    body.classList.remove(PRIMARY_CLASS, SECONDARY_CLASS);
+    // Remove existing class first
+    body.classList.remove(PRIMARY_CLASS);
 
     // Check if we're on a category page by inspecting URL
     // Category pages have URLs like: /c/category-slug/category-id
@@ -35,15 +34,9 @@ export default apiInitializer("1.8.0", (api) => {
       return;
     }
 
-    // Add appropriate class based on category hierarchy
-    if (category) {
-      if (category.parent_category_id) {
-        // Secondary category (level 2 - has a parent)
-        body.classList.add(SECONDARY_CLASS);
-      } else {
-        // Primary category (level 1 - no parent)
-        body.classList.add(PRIMARY_CLASS);
-      }
+    // Add primary-category class only for primary categories (no parent)
+    if (category && !category.parent_category_id) {
+      body.classList.add(PRIMARY_CLASS);
     }
   }
 

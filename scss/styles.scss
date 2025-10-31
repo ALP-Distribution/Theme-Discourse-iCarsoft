@@ -331,3 +331,6 @@ body:is(.category-nos-produits, .category-par-marques) .container:has(.category-
 .category-heading.--has-logo {
   --category-header-logo-size: 5rem;
 }
+.category.primary-category .category-heading.--has-logo .badge-category svg.d-icon{
+  display: none;
+}
