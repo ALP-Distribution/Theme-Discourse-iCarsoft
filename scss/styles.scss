@@ -21,9 +21,9 @@ body .topic-card.topic-list-item {
   box-shadow: var(--topic-card-shadow);
 }
 
-body .topic-card.topic-list-item.visited {
+body .topic-card.topic-list-item.visited:not(.pinned) {
   background-color: var(--topic-card-background-visited);
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 /* Search hero banner background */
@@ -346,7 +346,7 @@ body:is(.category-nos-produits, .category-par-marques) .container:has(.category-
 .category-heading.--has-logo {
   --category-header-logo-size: 5rem;
 }
-.category.primary-category .category-heading.--has-logo .badge-category svg.d-icon{
+.category .category-heading.--has-logo .badge-category svg.d-icon{
   display: none;
 }
 
