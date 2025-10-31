@@ -45,8 +45,9 @@ export default class TagNavConnector extends Component {
   get availableTagNames() {
     const c = this.category;
     if (!c) return [];
-    // prefer available_tags if present, fall back to available_tag_names or tags
+    // Prefer allowed_tags (category-scoped); then available_tags, available_tag_names, tags
     const list = (
+      c.allowed_tags ||
       c.available_tags ||
       c.available_tag_names ||
       c.tags ||
@@ -54,6 +55,7 @@ export default class TagNavConnector extends Component {
     );
     try {
       console.log("[tag-nav] category keys:", Object.keys(c));
+      console.log("[tag-nav] allowed_tags:", c.allowed_tags);
       console.log("[tag-nav] available_tags:", c.available_tags);
       console.log("[tag-nav] available_tag_names:", c.available_tag_names);
       console.log("[tag-nav] tags:", c.tags);
