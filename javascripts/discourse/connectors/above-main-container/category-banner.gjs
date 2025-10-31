@@ -9,20 +9,21 @@ export default class CategoryBannerConnector extends Component {
     return settings.enable_category_banner;
   }
 
-  get category() {
-    console.log(this.args?.category);
-    
-    if (this.args?.category) return this.args.category;
-
+  get categoryFromUrl() {
     try {
-      const pathMatch = window.location.pathname.match(/\/c\/([^\/]+)\/(\d+)/);
-      const id = pathMatch && pathMatch[2] ? parseInt(pathMatch[2], 10) : null;
-      if (!id) return null;
-      const cats = this.site?.categories || [];
-      return cats.find((c) => c.id === id) || null;
+      const path = window.location?.pathname || "";
+      // Matches /c/<anything>/<id> with id as digits
+      const m = path.match(/\/c\/.*\/(\d+)(?:[\/?#]|$)/);
+      const id = m && m[1] ? parseInt(m[1], 10) : null;
+      if (!id || !this.site?.categories) return null;
+      return this.site.categories.find((c) => c.id === id) || null;
     } catch (e) {
       return null;
     }
+  }
+
+  get category() {
+    return this.args?.category || this.categoryFromUrl;
   }
 
   get imageUrl() {
