@@ -26,6 +26,8 @@ export default class TagNavConnector extends Component {
       .map((s) => String(s).trim().toLowerCase())
       .filter(Boolean);
     if (onCatNames.length === 0) return false;
+    console.log(required, onCatNames);
+    
     return required.some((name) => onCatNames.includes(name));
   }
 
