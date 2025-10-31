@@ -69,3 +69,24 @@ subcategory_nav_parents:
       Pipe-separated list of parent categories (id or slug) where the subcategory
       nav should appear. Example: cars|2|electronics. Matches on slug or id.
 
+# Tag Nav (Feature 4)
+enable_tag_nav:
+  type: bool
+  default: true
+  description:
+    en: Enable tag-centric navigation on categories that require specific tag groups.
+
+tag_nav_group_ids:
+  type: list
+  default: 71
+  description:
+    en: Pipe-separated list of tag group ids that trigger the tag nav on a category.
+
+tag_nav_images:
+  type: list
+  default: ""
+  description:
+    en: >-
+      Mapping of tag to image URL. One per line in the form "tag-slug::https://.../image.png".
+      Use full URLs or theme asset URLs.
+

@@ -334,3 +334,8 @@ body:is(.category-nos-produits, .category-par-marques) .container:has(.category-
 .category.primary-category .category-heading.--has-logo .badge-category svg.d-icon{
   display: none;
 }
+
+/* Tag nav container spacing */
+.tc-tag-nav {
+  margin-block: 0.5rem 1rem;
+}

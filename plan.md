@@ -119,7 +119,7 @@ Acceptance criteria
 
 ---
 
-## Feature 3 — Category‑specific subcategory navigation
+## Feature 3 — Category‑specific subcategory navigation ** DONE **
 Goal: on certain parent categories, render a custom nav “above category heading” that lists subcategories.
 
 Ship in slices:
