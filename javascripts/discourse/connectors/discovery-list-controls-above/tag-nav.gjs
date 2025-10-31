@@ -26,7 +26,6 @@ export default class TagNavConnector extends Component {
       .map((s) => String(s).trim().toLowerCase())
       .filter(Boolean);
     if (onCatNames.length === 0) return false;
-    console.log(required, onCatNames);
     
     return required.some((name) => onCatNames.includes(name));
   }
@@ -75,6 +74,7 @@ export default class TagNavConnector extends Component {
 
   get tags() {
     if (!this.enable || !this.hasRequiredGroup) return [];
+    console.log(this.availableTagNames);
     const names = this.availableTagNames;
     if (!Array.isArray(names) || names.length === 0) return [];
     const map = this.tagToImageUrl;
