@@ -6,10 +6,16 @@ export default class TagNavConnector extends Component {
   @service site;
 
   get enable() {
-    return settings.enable_tag_nav;
+    const v = settings.enable_tag_nav;
+    try { console.debug("[tag-nav] enable:", v); } catch (e) {}
+    return v;
   }
 
   get category() {
+    try {
+      console.debug("[tag-nav] args keys:", Object.keys(this.args || {}));
+      console.debug("[tag-nav] category arg:", this.args?.category);
+    } catch (e) {}
     return this.args?.category;
   }
 
@@ -22,24 +28,38 @@ export default class TagNavConnector extends Component {
       .map((s) => s.trim().toLowerCase())
       .filter(Boolean);
     if (required.length === 0) return false;
-    const onCatNames = (c.allowed_tag_groups || [])
+    const onCatNames = (c.allowed_tag_groups || c.required_tag_groups || [])
       .map((s) => String(s).trim().toLowerCase())
       .filter(Boolean);
+    try {
+      console.debug("[tag-nav] required groups from setting:", required);
+      console.debug("[tag-nav] category allowed_tag_groups:", c.allowed_tag_groups);
+      console.debug("[tag-nav] category required_tag_groups:", c.required_tag_groups);
+    } catch (e) {}
     if (onCatNames.length === 0) return false;
-    
-    return required.some((name) => onCatNames.includes(name));
+    const match = required.some((name) => onCatNames.includes(name));
+    try { console.debug("[tag-nav] hasRequiredGroup:", match); } catch (e) {}
+    return match;
   }
 
   get availableTagNames() {
     const c = this.category;
     if (!c) return [];
     // prefer available_tags if present, fall back to available_tag_names or tags
-    return (
+    const list = (
       c.available_tags ||
       c.available_tag_names ||
       c.tags ||
       []
     );
+    try {
+      console.debug("[tag-nav] category keys:", Object.keys(c));
+      console.debug("[tag-nav] available_tags:", c.available_tags);
+      console.debug("[tag-nav] available_tag_names:", c.available_tag_names);
+      console.debug("[tag-nav] tags:", c.tags);
+      console.debug("[tag-nav] chosen tag list length:", Array.isArray(list) ? list.length : 0);
+    } catch (e) {}
+    return list;
   }
 
   get tagToImageUrl() {
@@ -73,16 +93,18 @@ export default class TagNavConnector extends Component {
   }
 
   get tags() {
-    if (!this.enable || !this.hasRequiredGroup) return [];
-    console.log(this.availableTagNames);
+    if (!this.enable) { try { console.debug("[tag-nav] disabled by setting"); } catch (e) {} return []; }
+    if (!this.hasRequiredGroup) { try { console.debug("[tag-nav] category missing required tag group"); } catch (e) {} return []; }
     const names = this.availableTagNames;
     if (!Array.isArray(names) || names.length === 0) return [];
     const map = this.tagToImageUrl;
-    return names.map((slug) => ({
+    const items = names.map((slug) => ({
       slug,
       url: this.tagUrl(slug),
       img: map[slug] || null,
     }));
+    try { console.debug("[tag-nav] final tags:", items); } catch (e) {}
+    return items;
   }
 
   get show() {
