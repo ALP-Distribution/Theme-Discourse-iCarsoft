@@ -380,7 +380,7 @@ body.category {
       transition: padding-inline-start 0.2s ease-in-out;
     }
     &:hover {
-      border-left-width: 1rem;
+      border-left-width: calc(1rem + var(--d-category-border-accent-width));
       .category-box-inner {
         padding-inline-start: 1rem;
       }
