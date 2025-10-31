@@ -10,6 +10,7 @@ export default class TagNavConnector extends Component {
   }
 
   get category() {
+    console.log(this.args?.category);
     return this.args?.category;
   }
 
