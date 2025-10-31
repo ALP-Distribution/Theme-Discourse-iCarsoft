@@ -80,7 +80,7 @@ tag_nav_group_ids:
   type: list
   default: ""
   description:
-    en: Pipe-separated list of tag group ids that trigger the tag nav on a category.
+    en: Pipe-separated list of tag group NAMES that trigger the tag nav on a category.
 
 tag_nav_images:
   type: list

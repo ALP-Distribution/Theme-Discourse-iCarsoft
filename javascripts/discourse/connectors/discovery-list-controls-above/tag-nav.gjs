@@ -10,36 +10,23 @@ export default class TagNavConnector extends Component {
   }
 
   get category() {
-    console.log(this.args?.category);
     return this.args?.category;
   }
 
-  get groupIdsSetting() {
-    const raw = String(settings.tag_nav_group_ids || "");
-    return raw
-      .split("|")
-      .map((s) => s.trim())
-      .filter(Boolean)
-      .map((s) => String(s));
-  }
-
-  get categoryTagGroupIds() {
-    const c = this.category;
-    if (!c) return [];
-    // try several known fields that may exist in different versions
-    const ids =
-      c.required_tag_group_ids ||
-      c.allowed_tag_group_ids ||
-      c.tag_group_ids ||
-      [];
-    return (ids || []).map((i) => String(i));
-  }
-
   get hasRequiredGroup() {
-    const required = this.groupIdsSetting;
-    const onCat = this.categoryTagGroupIds;
-    if (!required.length || !onCat.length) return false;
-    return required.some((id) => onCat.includes(String(id)));
+    const c = this.category;
+    if (!c) return false;
+    // Settings contain group names (case-insensitive)
+    const required = String(settings.tag_nav_group_ids || "")
+      .split("|")
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    if (required.length === 0) return false;
+    const onCatNames = (c.allowed_tag_groups || [])
+      .map((s) => String(s).trim().toLowerCase())
+      .filter(Boolean);
+    if (onCatNames.length === 0) return false;
+    return required.some((name) => onCatNames.includes(name));
   }
 
   get availableTagNames() {
