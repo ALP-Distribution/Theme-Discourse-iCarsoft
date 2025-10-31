@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import getURLWithCDN from "discourse-common/lib/get-url";
 
 export default class SubcategoriesNavConnector extends Component {
