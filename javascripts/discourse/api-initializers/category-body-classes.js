@@ -2,7 +2,6 @@ import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer("1.8.0", (api) => {
   const PRIMARY_CLASS = "primary-category";
-  const CATEGORY_PAGE_CLASS = "is-category-page";
 
   function updateBodyClasses() {
     const body = document.body;
@@ -10,7 +9,6 @@ export default apiInitializer("1.8.0", (api) => {
 
     // Remove existing classes first
     body.classList.remove(PRIMARY_CLASS);
-    body.classList.remove(CATEGORY_PAGE_CLASS);
 
     // Check if we're on a category page by inspecting URL
     // Category pages have URLs like: /c/category-slug/category-id
@@ -35,9 +33,6 @@ export default apiInitializer("1.8.0", (api) => {
       // Service might not be available yet, will retry on next page change
       return;
     }
-
-    // Mark as category page
-    body.classList.add(CATEGORY_PAGE_CLASS);
 
     // Add primary-category class only for primary categories (no parent)
     if (category && !category.parent_category_id) {
