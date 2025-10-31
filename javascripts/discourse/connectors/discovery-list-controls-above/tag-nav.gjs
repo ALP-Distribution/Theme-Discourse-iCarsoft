@@ -97,9 +97,14 @@ export default class TagNavConnector extends Component {
   get tags() {
     if (!this.enable) { try { console.log("[tag-nav] disabled by setting"); } catch (e) {} return []; }
     if (!this.hasRequiredGroup) { try { console.log("[tag-nav] category missing required tag group"); } catch (e) {} return []; }
-    const names = this.availableTagNames;
-    if (!Array.isArray(names) || names.length === 0) return [];
+    let names = this.availableTagNames;
     const map = this.tagToImageUrl;
+    if (!Array.isArray(names) || names.length === 0) {
+      // Fallback: use keys from mapping setting
+      names = Object.keys(map || {});
+      try { console.log("[tag-nav] available tags empty; falling back to mapping keys:", names); } catch (e) {}
+    }
+    if (!Array.isArray(names) || names.length === 0) return [];
     const items = names.map((slug) => ({
       slug,
       url: this.tagUrl(slug),
