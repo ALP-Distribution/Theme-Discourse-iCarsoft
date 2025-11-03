@@ -262,6 +262,7 @@ a.tc-discovery-nav__link {
 /* Subcategories inline nav (Feature 3) */
 .tc-subcats-nav {
   margin-block: 0.5rem 2rem;
+  width: 100%;
 }
 
 .tc-subcats-nav__wrap {
@@ -272,8 +273,8 @@ a.tc-discovery-nav__link {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1rem;
 }
 
