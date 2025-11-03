@@ -171,7 +171,7 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
   height: auto;
   aspect-ratio: 3/1;
   object-fit: cover;
-  object-position: center;
+  object-position: center -4rem;
   border-radius: var(--d-border-radius-large);
 }
 
