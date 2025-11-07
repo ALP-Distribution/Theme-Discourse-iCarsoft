@@ -1,3 +1,7 @@
+.login-fullpage .signup-body, .login-fullpage .login-body, .signup-fullpage .signup-body, .signup-fullpage .login-body, .invites-show .signup-body, .invites-show .login-body, .password-reset-page .signup-body, .password-reset-page .login-body {
+  max-width: 1100px;
+}
+
 body:not(.staff) .sidebar-section-wrapper.sidebar-section[data-section-name="tags"] {
   display: none;
 }
