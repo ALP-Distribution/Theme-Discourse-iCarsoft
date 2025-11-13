@@ -51,6 +51,10 @@ export default class SubcategoriesNavConnector extends Component {
     return slug ? `${baseClass} tc-subcats-nav--${slug}` : baseClass;
   }
 
+  get isParMarques() {
+    return this.categorySlug === "par-marques";
+  }
+
   urlForCategory(cat) {
     return getURLWithCDN(`/c/${cat.slug}/${cat.id}`);
   }
@@ -62,24 +66,45 @@ export default class SubcategoriesNavConnector extends Component {
 
   <template>
     {{#if this.show}}
-      <nav class={{this.navClass}} aria-label="Subcategories navigation">
-        <div class="tc-subcats-nav__wrap wrap">
-          <ul class="tc-subcats-nav__list">
-            {{#each this.subcategories as |cat|}}
-              <li class="tc-subcats-nav__item">
-                <a class="tc-subcats-nav__link" href={{this.urlForCategory cat}}>
-                  {{#let (this.logoUrlForCategory cat) as |logo|}}
-                    {{#if logo}}
-                      <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
-                    {{/if}}
-                  {{/let}}
-                  <span class="tc-subcats-nav__label">{{cat.name}}</span>
-                </a>
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      </nav>
+      {{#if this.isParMarques}}
+        <nav class={{this.navClass}} aria-label="Subcategories navigation">
+          <div class="tc-subcats-nav__wrap wrap test-class">
+            <ul class="tc-subcats-nav__list">
+              {{#each this.subcategories as |cat|}}
+                <li class="tc-subcats-nav__item">
+                  <a class="tc-subcats-nav__link" href={{this.urlForCategory cat}}>
+                    {{#let (this.logoUrlForCategory cat) as |logo|}}
+                      {{#if logo}}
+                        <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
+                      {{/if}}
+                    {{/let}}
+                    <span class="tc-subcats-nav__label">{{cat.name}}</span>
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </nav>
+      {{else}}
+        <nav class={{this.navClass}} aria-label="Subcategories navigation">
+          <div class="tc-subcats-nav__wrap wrap">
+            <ul class="tc-subcats-nav__list">
+              {{#each this.subcategories as |cat|}}
+                <li class="tc-subcats-nav__item">
+                  <a class="tc-subcats-nav__link" href={{this.urlForCategory cat}}>
+                    {{#let (this.logoUrlForCategory cat) as |logo|}}
+                      {{#if logo}}
+                        <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
+                      {{/if}}
+                    {{/let}}
+                    <span class="tc-subcats-nav__label">{{cat.name}}</span>
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </nav>
+      {{/if}}
     {{/if}}
     {{yield}}
   </template>
