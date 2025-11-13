@@ -151,7 +151,7 @@ export default class SubcategoriesNavConnector extends Component {
                             <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
                           {{/if}}
                         {{/let}}
-                        <span class="tc-subcats-nav__label">{{cat.name}}</span>
+                        <span class="tc-subcats-nav__label">{{this.poidLourdSubcategorieName cat}}</span>
                       </a>
                     </li>
                   {{/each}}
