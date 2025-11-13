@@ -92,19 +92,20 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
 
 .tc-subcats-nav__icon {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: 1.5em;
+  height: 1.5em;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   margin-inline-end: 0.5em;
-  .icon-car {
+  vertical-align: -0.4em;
+  &.icon-car {
     background-image: var(--canvas-icon-car);
   }
-  .icon-motorbike {
+  &.icon-motorbike {
     background-image: var(--canvas-icon-motorbike);
   }
-  .icon-truck {
+  &.icon-truck {
     background-image: var(--canvas-icon-truck);
   }
 }
