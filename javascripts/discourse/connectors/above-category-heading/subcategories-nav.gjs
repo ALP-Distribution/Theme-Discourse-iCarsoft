@@ -55,6 +55,24 @@ export default class SubcategoriesNavConnector extends Component {
     return this.categorySlug === "par-marques";
   }
 
+  get automobileSubcategories() {
+    return this.subcategories;
+  }
+
+  get motoSubcategories() {
+    return this.subcategories.filter((cat) => {
+      const slug = String(cat.slug || "").toLowerCase();
+      return slug.endsWith("-moto");
+    });
+  }
+
+  get poidLourdSubcategories() {
+    return this.subcategories.filter((cat) => {
+      const slug = String(cat.slug || "").toLowerCase();
+      return slug.endsWith("-pl");
+    });
+  }
+
   urlForCategory(cat) {
     return getURLWithCDN(`/c/${cat.slug}/${cat.id}`);
   }
@@ -68,21 +86,67 @@ export default class SubcategoriesNavConnector extends Component {
     {{#if this.show}}
       {{#if this.isParMarques}}
         <nav class={{this.navClass}} aria-label="Subcategories navigation">
-          <div class="tc-subcats-nav__wrap wrap test-class">
-            <ul class="tc-subcats-nav__list">
-              {{#each this.subcategories as |cat|}}
-                <li class="tc-subcats-nav__item">
-                  <a class="tc-subcats-nav__link" href={{this.urlForCategory cat}}>
-                    {{#let (this.logoUrlForCategory cat) as |logo|}}
-                      {{#if logo}}
-                        <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
-                      {{/if}}
-                    {{/let}}
-                    <span class="tc-subcats-nav__label">{{cat.name}}</span>
-                  </a>
-                </li>
-              {{/each}}
-            </ul>
+          <div class="tc-subcats-nav__wrap wrap">
+            {{! Automobile list - all subcategories }}
+            <div class="tc-subcats-nav__section">
+              <h3 class="tc-subcats-nav__title">Automobile</h3>
+              <ul class="tc-subcats-nav__list">
+                {{#each this.automobileSubcategories as |cat|}}
+                  <li class="tc-subcats-nav__item">
+                    <a class="tc-subcats-nav__link" href={{this.urlForCategory cat}}>
+                      {{#let (this.logoUrlForCategory cat) as |logo|}}
+                        {{#if logo}}
+                          <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
+                        {{/if}}
+                      {{/let}}
+                      <span class="tc-subcats-nav__label">{{cat.name}}</span>
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+
+            {{! Moto list - subcategories ending with -moto }}
+            {{#if this.motoSubcategories.length}}
+              <div class="tc-subcats-nav__section">
+                <h3 class="tc-subcats-nav__title">Moto</h3>
+                <ul class="tc-subcats-nav__list">
+                  {{#each this.motoSubcategories as |cat|}}
+                    <li class="tc-subcats-nav__item">
+                      <a class="tc-subcats-nav__link" href={{this.urlForCategory cat}}>
+                        {{#let (this.logoUrlForCategory cat) as |logo|}}
+                          {{#if logo}}
+                            <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
+                          {{/if}}
+                        {{/let}}
+                        <span class="tc-subcats-nav__label">{{cat.name}}</span>
+                      </a>
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>
+            {{/if}}
+
+            {{! Poid-lourd list - subcategories ending with -pl }}
+            {{#if this.poidLourdSubcategories.length}}
+              <div class="tc-subcats-nav__section">
+                <h3 class="tc-subcats-nav__title">Poid-lourd</h3>
+                <ul class="tc-subcats-nav__list">
+                  {{#each this.poidLourdSubcategories as |cat|}}
+                    <li class="tc-subcats-nav__item">
+                      <a class="tc-subcats-nav__link" href={{this.urlForCategory cat}}>
+                        {{#let (this.logoUrlForCategory cat) as |logo|}}
+                          {{#if logo}}
+                            <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
+                          {{/if}}
+                        {{/let}}
+                        <span class="tc-subcats-nav__label">{{cat.name}}</span>
+                      </a>
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>
+            {{/if}}
           </div>
         </nav>
       {{else}}
