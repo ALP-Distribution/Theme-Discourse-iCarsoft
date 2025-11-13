@@ -40,6 +40,17 @@ export default class SubcategoriesNavConnector extends Component {
     return this.enable && this.parentMatches && this.subcategories.length > 0;
   }
 
+  get categorySlug() {
+    const cat = this.category;
+    return cat?.slug ? String(cat.slug).toLowerCase() : null;
+  }
+
+  get navClass() {
+    const baseClass = "tc-subcats-nav";
+    const slug = this.categorySlug;
+    return slug ? `${baseClass} tc-subcats-nav--${slug}` : baseClass;
+  }
+
   urlForCategory(cat) {
     return getURLWithCDN(`/c/${cat.slug}/${cat.id}`);
   }
@@ -51,7 +62,7 @@ export default class SubcategoriesNavConnector extends Component {
 
   <template>
     {{#if this.show}}
-      <nav class="tc-subcats-nav" aria-label="Subcategories navigation">
+      <nav class={{this.navClass}} aria-label="Subcategories navigation">
         <div class="tc-subcats-nav__wrap wrap">
           <ul class="tc-subcats-nav__list">
             {{#each this.subcategories as |cat|}}
