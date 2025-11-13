@@ -85,6 +85,13 @@ export default class SubcategoriesNavConnector extends Component {
     return raw ? getURLWithCDN(raw) : null;
   }
 
+  motoSubcategorieName(cat) {
+    if (!cat || !cat.name) return "";
+    let name = String(cat.name);
+    name = name.replace(/\b(moto|motos)\b/gi, "");
+    return name.trim();
+  }
+
   <template>
     {{#if this.show}}
       {{#if this.isParMarques}}
@@ -119,7 +126,7 @@ export default class SubcategoriesNavConnector extends Component {
                             <img class="tc-subcats-nav__logo" src={{logo}} alt="" aria-hidden="true" />
                           {{/if}}
                         {{/let}}
-                        <span class="tc-subcats-nav__label">{{cat.name.replace " Motos" ""}}</span>
+                        <span class="tc-subcats-nav__label">{{this.motoSubcategorieName cat}}</span>
                       </a>
                     </li>
                   {{/each}}
