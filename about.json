@@ -23,7 +23,10 @@
     "thumb-community": "assets/community.png",
     "thumb-qa": "assets/qa.png",
     "thumb-notice": "assets/notice.png",
-    "thumb-update": "assets/update.png"
+    "thumb-update": "assets/update.png",
+    "icon-car": "assets/car.svg",
+    "icon-motorbike": "assets/motorbike.svg",
+    "icon-truck": "assets/truck.svg"
   },
   "modifiers": {},
   "color_schemes": {
