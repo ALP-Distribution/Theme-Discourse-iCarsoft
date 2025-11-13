@@ -91,6 +91,12 @@ export default class SubcategoriesNavConnector extends Component {
     name = name.replace(/\b(moto|motos)\b/gi, "");
     return name.trim();
   }
+  poidLourdSubcategorieName(cat) {
+    if (!cat || !cat.name) return "";
+    let name = String(cat.name);
+    name = name.replace(/\b(pl|poid-lourd|poid-lourds)\b/gi, "");
+    return name.trim();
+  }
 
   <template>
     {{#if this.show}}
@@ -98,7 +104,7 @@ export default class SubcategoriesNavConnector extends Component {
         <nav class={{this.navClass}} aria-label="Subcategories navigation">
           <div class="tc-subcats-nav__wrap wrap">
             <div class="tc-subcats-nav__section">
-              <h3 class="tc-subcats-nav__title">Automobile</h3>
+              <h3 class="tc-subcats-nav__title">Automobiles</h3>
               <ul class="tc-subcats-nav__list">
                 {{#each this.automobileSubcategories as |cat|}}
                   <li class="tc-subcats-nav__item">
@@ -116,7 +122,7 @@ export default class SubcategoriesNavConnector extends Component {
             </div>
             {{#if this.motoSubcategories.length}}
               <div class="tc-subcats-nav__section">
-                <h3 class="tc-subcats-nav__title">Moto</h3>
+                <h3 class="tc-subcats-nav__title">Motos</h3>
                 <ul class="tc-subcats-nav__list">
                   {{#each this.motoSubcategories as |cat|}}
                     <li class="tc-subcats-nav__item">
@@ -135,7 +141,7 @@ export default class SubcategoriesNavConnector extends Component {
             {{/if}}
             {{#if this.poidLourdSubcategories.length}}
               <div class="tc-subcats-nav__section">
-                <h3 class="tc-subcats-nav__title">Poid-lourd</h3>
+                <h3 class="tc-subcats-nav__title">Poid-lourds</h3>
                 <ul class="tc-subcats-nav__list">
                   {{#each this.poidLourdSubcategories as |cat|}}
                     <li class="tc-subcats-nav__item">
