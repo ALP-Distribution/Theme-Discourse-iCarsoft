@@ -56,7 +56,10 @@ export default class SubcategoriesNavConnector extends Component {
   }
 
   get automobileSubcategories() {
-    return this.subcategories;
+    return this.subcategories.filter((cat) => {
+      const slug = String(cat.slug || "").toLowerCase();
+      return !slug.endsWith("-moto") && !slug.endsWith("-pl");
+    });
   }
 
   get motoSubcategories() {
@@ -87,7 +90,6 @@ export default class SubcategoriesNavConnector extends Component {
       {{#if this.isParMarques}}
         <nav class={{this.navClass}} aria-label="Subcategories navigation">
           <div class="tc-subcats-nav__wrap wrap">
-            {{! Automobile list - all subcategories }}
             <div class="tc-subcats-nav__section">
               <h3 class="tc-subcats-nav__title">Automobile</h3>
               <ul class="tc-subcats-nav__list">
@@ -105,8 +107,6 @@ export default class SubcategoriesNavConnector extends Component {
                 {{/each}}
               </ul>
             </div>
-
-            {{! Moto list - subcategories ending with -moto }}
             {{#if this.motoSubcategories.length}}
               <div class="tc-subcats-nav__section">
                 <h3 class="tc-subcats-nav__title">Moto</h3>
@@ -126,8 +126,6 @@ export default class SubcategoriesNavConnector extends Component {
                 </ul>
               </div>
             {{/if}}
-
-            {{! Poid-lourd list - subcategories ending with -pl }}
             {{#if this.poidLourdSubcategories.length}}
               <div class="tc-subcats-nav__section">
                 <h3 class="tc-subcats-nav__title">Poid-lourd</h3>

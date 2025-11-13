@@ -271,6 +271,9 @@ a.tc-discovery-nav__link {
 
 .tc-subcats-nav__wrap {
   display: block;
+  .tc-subcats-nav__section:not(:last-child) {
+    margin-block-end: 1rem;
+  }
 }
 
 .tc-subcats-nav__list {
