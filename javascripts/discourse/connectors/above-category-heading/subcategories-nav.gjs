@@ -104,7 +104,7 @@ export default class SubcategoriesNavConnector extends Component {
         <nav class={{this.navClass}} aria-label="Subcategories navigation">
           <div class="tc-subcats-nav__wrap wrap">
             <div class="tc-subcats-nav__section">
-              <h3 class="tc-subcats-nav__title">Automobiles</h3>
+              <h3 class="tc-subcats-nav__title"><img src="/images/car.svg" alt="Automobiles" aria-hidden="true" class="tc-subcats-nav__icon" /> Automobiles</h3>
               <ul class="tc-subcats-nav__list">
                 {{#each this.automobileSubcategories as |cat|}}
                   <li class="tc-subcats-nav__item">
@@ -122,7 +122,7 @@ export default class SubcategoriesNavConnector extends Component {
             </div>
             {{#if this.motoSubcategories.length}}
               <div class="tc-subcats-nav__section">
-                <h3 class="tc-subcats-nav__title">Motos</h3>
+                <h3 class="tc-subcats-nav__title"><img src="/images/motorbike.svg" alt="Motos" aria-hidden="true" class="tc-subcats-nav__icon" /> Motos</h3>
                 <ul class="tc-subcats-nav__list">
                   {{#each this.motoSubcategories as |cat|}}
                     <li class="tc-subcats-nav__item">
@@ -141,7 +141,7 @@ export default class SubcategoriesNavConnector extends Component {
             {{/if}}
             {{#if this.poidLourdSubcategories.length}}
               <div class="tc-subcats-nav__section">
-                <h3 class="tc-subcats-nav__title">Poid-lourds</h3>
+                <h3 class="tc-subcats-nav__title"><img src="/images/truck.svg" alt="Poid-lourds" aria-hidden="true" class="tc-subcats-nav__icon" /> Poid-lourds</h3>
                 <ul class="tc-subcats-nav__list">
                   {{#each this.poidLourdSubcategories as |cat|}}
                     <li class="tc-subcats-nav__item">
