@@ -53,22 +53,40 @@ export default class ParMarquesTagNavConnector extends Component {
     return null;
   }
 
-  /**
-   * Lookup the configured tag group on the site.
-   * Setting holds the tag group NAME (case-insensitive).
-   */
   get tagGroup() {
-    const raw = String(settings.par_marques_tag_group_name || "").trim();
-    if (!raw) {
+    const cat = this.category;
+    if (!cat) {
       return null;
     }
 
-    const wanted = raw.toLowerCase();
+    // Category-scoped tag group names (strings)
+    const names = (cat.allowed_tag_groups || cat.required_tag_groups || [])
+      .map((s) => String(s || "").trim())
+      .filter(Boolean);
+
+    if (names.length === 0) {
+      return null;
+    }
+
+    const lowerNames = names.map((n) => n.toLowerCase());
     const groups = this.site.tag_groups || this.site.tagGroups || [];
-    return groups.find((g) => {
-      const name = String(g.name || "").toLowerCase();
-      return name === wanted;
-    });
+
+    // Find the first tag group that:
+    // - is attached to this category, AND
+    // - its name contains "Modèles" (case-insensitive, accent tolerant).
+    return (
+      groups.find((g) => {
+        const name = String(g.name || "").trim();
+        if (!name) {
+          return false;
+        }
+        const lower = name.toLowerCase();
+        const inCategory = lowerNames.includes(lower);
+        const containsModeles =
+          lower.includes("modèles") || lower.includes("modeles");
+        return inCategory && containsModeles;
+      }) || null
+    );
   }
 
   /**
@@ -90,7 +108,10 @@ export default class ParMarquesTagNavConnector extends Component {
       return getURLWithCDN(`/tags/${encodeURIComponent(tag)}`);
     }
 
-    if (this.currentTag && this.currentTag.toLowerCase() === tag.toLowerCase()) {
+    if (
+      this.currentTag &&
+      this.currentTag.toLowerCase() === tag.toLowerCase()
+    ) {
       return getURLWithCDN(`/c/${c.slug}/${c.id}`);
     }
 
@@ -136,13 +157,17 @@ export default class ParMarquesTagNavConnector extends Component {
 
   <template>
     {{#if this.show}}
-      <nav class="tc-tag-nav tc-tag-nav--par-marques" aria-label="Tags navigation">
+      <nav
+        class="tc-tag-nav tc-tag-nav--par-marques"
+        aria-label="Tags navigation"
+      >
         <div class="wrap">
           <ul class="tc-discovery-nav__list">
             {{#each this.tags as |t|}}
               <li class="tc-discovery-nav__item">
                 <a
-                  class="tc-discovery-nav__link {{if t.isSelected 'is-selected'}}"
+                  class="tc-discovery-nav__link
+                    {{if t.isSelected 'is-selected'}}"
                   href={{t.url}}
                 >
                   <span class="tc-discovery-nav__label">{{t.label}}</span>
@@ -156,5 +181,3 @@ export default class ParMarquesTagNavConnector extends Component {
     {{yield}}
   </template>
 }
-
-

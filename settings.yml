@@ -97,12 +97,6 @@ enable_par_marques_tag_nav:
   description:
     en: Enable the tag navigation on subcategories of the par-marques category.
 
-par_marques_tag_group_name:
-  type: string
-  default: ""
-  description:
-    en: Name of the tag group whose tags should appear in the par-marques tag nav.
-
 # Category Banner
 enable_category_banner:
   type: bool
