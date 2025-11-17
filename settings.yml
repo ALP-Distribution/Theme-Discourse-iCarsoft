@@ -1,6 +1,6 @@
 icons_sprite:
   type: upload
-  default:
+  default: assets/icons-sprite.svg
   description:
     en: Upload a custom SVG sprite file containing <symbol> icons to register globally. If not set, the theme's default sprite will be used.
 
