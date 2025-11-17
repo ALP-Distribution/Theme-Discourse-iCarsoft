@@ -2,14 +2,18 @@ import { apiInitializer } from "discourse/lib/api";
 import getURLWithCDN from "discourse-common/lib/get-url";
 
 export default apiInitializer("1.8.0", (api) => {
-  const spritePath = settings.icons_sprite;
-  if (spritePath && typeof spritePath === "string" && spritePath.trim()) {
-    const spriteUrl = getURLWithCDN(spritePath);
-    if (!spriteUrl) {
-      return;
-    }
+  // Get custom sprite from settings, or use theme asset default
+  const customSprite = settings.icons_sprite;
+  
+  // Only proceed if a custom sprite is uploaded
+  if (customSprite && typeof customSprite === "string" && customSprite.trim()) {
     try {
-      api.addIconSprite(spriteUrl);
-    } catch (e) {}
+      const spriteUrl = getURLWithCDN(customSprite);
+      if (spriteUrl) {
+        api.addIconSprite(spriteUrl);
+      }
+    } catch (e) {
+      // Silently fail if sprite cannot be added
+    }
   }
 });

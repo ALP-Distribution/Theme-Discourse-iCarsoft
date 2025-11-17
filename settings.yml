@@ -1,8 +1,8 @@
 icons_sprite:
   type: upload
-  default: assets/icons-sprite.svg
+  default:
   description:
-    en: Upload an SVG sprite file containing <symbol> icons to register globally.
+    en: Upload a custom SVG sprite file containing <symbol> icons to register globally. If not set, the theme's default sprite will be used.
 
 search_banner_image:
   type: upload
@@ -96,4 +96,3 @@ enable_category_banner:
   default: true
   description:
     en: Enable banner on category pages using the category background image.
-
