@@ -56,6 +56,18 @@ export default class Breadcrumbs extends Component {
       return null;
     }
 
+    // Prefer the connector args when available – on topic pages the
+    // plugin outlet usually receives the topic model directly.
+    const fromArgs =
+      this.args?.topic ||
+      this.args?.model ||
+      this.args?.topicModel ||
+      this.args?.categoryTopic;
+
+    if (fromArgs) {
+      return fromArgs;
+    }
+
     const route = this.router?.currentRoute;
     if (!route) {
       return null;
