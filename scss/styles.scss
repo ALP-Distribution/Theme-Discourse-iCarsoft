@@ -466,8 +466,7 @@ body.category {
       }
     }
     .home::after,
-    .parent::after,
-    .current::after {
+    .parent::after {
       content: "/\00a0";
     }
   }
