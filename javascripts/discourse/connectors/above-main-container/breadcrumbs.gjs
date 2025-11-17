@@ -9,6 +9,20 @@ import i18n from "discourse-common/helpers/i18n";
 export default class Breadcrumbs extends Component {
   @service router;
 
+  // Should we render breadcrumbs on this route at all?
+  get shouldShowBreadcrumbs() {
+    const routeName = this.router?.currentRouteName || "";
+
+    // Never on admin
+    if (routeName.startsWith("admin")) {
+      return false;
+    }
+
+    // Show on topic + category routes (and any other route
+    // where we resolve a currentPage label)
+    return this.isTopicRoute || this.isCategoryRoute || !!this.currentPage;
+  }
+
   get homePage() {
     const routeName = this.router?.currentRouteName;
     if (!routeName) {
@@ -42,7 +56,29 @@ export default class Breadcrumbs extends Component {
       return null;
     }
 
-    return this.router?.currentRoute?.attributes;
+    const route = this.router?.currentRoute;
+    if (!route) {
+      return null;
+    }
+
+    // In most cases the topic itself is the route's attributes
+    const attrs = route.attributes;
+
+    // If attributes already look like a topic, use them directly
+    if (attrs?.fancy_title || attrs?.title || attrs?.category_id) {
+      return attrs;
+    }
+
+    // Some route setups nest the topic under `topic` or `model`
+    if (attrs?.topic) {
+      return attrs.topic;
+    }
+
+    if (attrs?.model) {
+      return attrs.model;
+    }
+
+    return null;
   }
 
   get topicTitle() {
@@ -139,7 +175,7 @@ export default class Breadcrumbs extends Component {
   }
 
   <template>
-    {{#if this.currentPage}}
+    {{#if this.shouldShowBreadcrumbs}}
       {{bodyClass "has-breadcrumbs"}}
       <div class="breadcrumbs">
         <div class="breadcrumbs__container">
