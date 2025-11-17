@@ -25,28 +25,28 @@ export default class Breadcrumbs extends Component {
   }
 
   get currentPage() {
-    switch (true) {
-      case this.router.currentRouteName.includes("userPrivateMessages"):
-        return i18n("js.groups.messages");
-      case this.router.currentRouteName.startsWith("admin"):
-        return i18n("js.admin_title");
+    const routeName = this.router?.currentRouteName || "";
+    if (routeName.startsWith("admin")) {
+      return null;
+    }
 
-      case this.router.currentRouteName === "userNotifications.responses" ||
-        this.router.currentRouteName === "userNotifications.mentions":
+    switch (true) {
+      case routeName.includes("userPrivateMessages"):
+        return i18n("js.groups.messages");
+      case routeName === "userNotifications.responses" ||
+        routeName === "userNotifications.mentions":
         return i18n("js.groups.mentions");
-      case this.router.currentRouteName === "userActivity.bookmarks":
+      case routeName === "userActivity.bookmarks":
         return i18n("js.user.bookmarks");
       case this.router?.currentRoute?.parent?.name === "docs":
         return i18n("js.docs.title");
       case this.router?.currentRoute?.parent?.name === "preferences":
         return i18n("js.user.preferences.title");
-      case this.router.currentRouteName ===
-        "discourse-post-event-upcoming-events.index":
+      case routeName === "discourse-post-event-upcoming-events.index":
         return i18n("js.discourse_post_event.upcoming_events.title");
-      case this.router?.currentRouteName === "tags.index":
+      case routeName === "tags.index":
         return i18n("js.tagging.all_tags");
-      case this.router.currentRouteName.includes("Category") ||
-        this.router.currentRouteName.includes("category"):
+      case routeName.includes("Category") || routeName.includes("category"):
         return this.categoryName;
       default:
         return null;

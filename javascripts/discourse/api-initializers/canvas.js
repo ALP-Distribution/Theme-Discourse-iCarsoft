@@ -61,6 +61,10 @@ export default apiInitializer("1.8.0", (api) => {
 
     resetBreadcrumbs();
 
+    if (url.includes("/admin")) {
+      return;
+    }
+
     if (url.includes("/t/")) {
       // If on a topic page
       const topicId = url.split("/")[2];
