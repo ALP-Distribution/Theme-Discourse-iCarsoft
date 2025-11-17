@@ -5,6 +5,9 @@ export default apiInitializer("1.8.0", (api) => {
   const spritePath = settings.icons_sprite;
   if (spritePath && typeof spritePath === "string" && spritePath.trim()) {
     const spriteUrl = getURLWithCDN(spritePath);
+    if (!spriteUrl) {
+      return;
+    }
     try {
       api.addIconSprite(spriteUrl);
     } catch (e) {}
