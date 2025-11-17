@@ -98,6 +98,7 @@ export default class SubcategoriesNavConnector extends Component {
     if (!cat || !cat.name) return "";
     let name = String(cat.name);
     name = name.replace(/\b(pl|poid-lourd|poid-lourds)\b/gi, "");
+    name = name.replace(/ \| ?P-?L/gi, "");
     return name.trim();
   }
 
