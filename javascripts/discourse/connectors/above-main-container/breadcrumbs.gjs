@@ -73,6 +73,24 @@ export default class Breadcrumbs extends Component {
       return null;
     }
 
+    // Try to get from route's parent attributes (common in Discourse topic routes)
+    const parentAttrs = route.parent?.attributes;
+    if (parentAttrs) {
+      if (
+        parentAttrs.fancy_title ||
+        parentAttrs.title ||
+        parentAttrs.category_id
+      ) {
+        return parentAttrs;
+      }
+      if (parentAttrs.topic) {
+        return parentAttrs.topic;
+      }
+      if (parentAttrs.model) {
+        return parentAttrs.model;
+      }
+    }
+
     // In most cases the topic itself is the route's attributes
     const attrs = route.attributes;
 
