@@ -90,6 +90,19 @@ tag_nav_images:
       Mapping of tag to image URL. One per line in the form "tag-slug::https://.../image.png".
       Use full URLs or theme asset URLs.
 
+# Par-marques Tag Nav (Feature 5)
+enable_par_marques_tag_nav:
+  type: bool
+  default: true
+  description:
+    en: Enable the tag navigation on subcategories of the par-marques category.
+
+par_marques_tag_group_name:
+  type: string
+  default: ""
+  description:
+    en: Name of the tag group whose tags should appear in the par-marques tag nav.
+
 # Category Banner
 enable_category_banner:
   type: bool
