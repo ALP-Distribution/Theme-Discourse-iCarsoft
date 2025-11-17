@@ -53,7 +53,7 @@ export default apiInitializer("1.8.0", (api) => {
                         <span class="breadcrumbs__title">
                             <svg class="fa d-icon d-icon-arrow-right svg-icon svg-string" xmlns="http://www.w3.org/2000/svg"><use href="#arrow-left"></use></svg>
                         </span>
-                    Home</a>
+                    Accueil</a>
                 </li>
             `);
       }
@@ -157,6 +157,7 @@ export default apiInitializer("1.8.0", (api) => {
   };
 
   applySearchBannerCustomizations();
+
   api.onPageChange((url) => {
     updateBreadcrumbs(url);
     applySearchBannerCustomizations();
