@@ -6,17 +6,6 @@ import Category from "discourse/models/category";
 import dIcon from "discourse-common/helpers/d-icon";
 import i18n from "discourse-common/helpers/i18n";
 
-const DISCOVERY_HOME_ROUTES = [
-  "discovery.latest",
-  "discovery.top",
-  "discovery.new",
-  "discovery.read",
-  "discovery.unread",
-  "discovery.unseen",
-  "discovery.posted",
-  "discovery.hot",
-];
-
 export default class Breadcrumbs extends Component {
   @service router;
 
@@ -43,6 +32,28 @@ export default class Breadcrumbs extends Component {
     );
   }
 
+  get isTopicRoute() {
+    const routeName = this.router?.currentRouteName || "";
+    return routeName.startsWith("topic");
+  }
+
+  get topic() {
+    if (!this.isTopicRoute) {
+      return null;
+    }
+
+    return this.router?.currentRoute?.attributes;
+  }
+
+  get topicTitle() {
+    const topic = this.topic;
+    if (!topic) {
+      return null;
+    }
+
+    return topic.fancy_title || topic.title || null;
+  }
+
   get currentPage() {
     const routeName = this.router?.currentRouteName || "";
     if (routeName.startsWith("admin")) {
@@ -65,6 +76,8 @@ export default class Breadcrumbs extends Component {
         return i18n("js.discourse_post_event.upcoming_events.title");
       case routeName === "tags.index":
         return i18n("js.tagging.all_tags");
+      case this.isTopicRoute:
+        return this.topicTitle;
       case this.isCategoryRoute:
         return this.categoryName;
       default:
@@ -72,18 +85,19 @@ export default class Breadcrumbs extends Component {
     }
   }
 
-  get parentPage() {
-    return this.isCategoryRoute ? this.parentCategoryName : null;
-  }
-
   get currentCategory() {
     const slugPathWithID =
       this.router?.currentRoute?.params?.category_slug_path_with_id;
-    if (!slugPathWithID) {
-      return null;
+    if (slugPathWithID) {
+      return Category.findBySlugPathWithID(slugPathWithID);
     }
 
-    return Category.findBySlugPathWithID(slugPathWithID);
+    const topicCategoryId = this.topic?.category_id;
+    if (topicCategoryId) {
+      return Category.findById(topicCategoryId);
+    }
+
+    return null;
   }
 
   get categoryName() {
@@ -109,6 +123,14 @@ export default class Breadcrumbs extends Component {
 
   get parentCategoryLink() {
     return this.parentCategory?.slug;
+  }
+
+  get categoryLink() {
+    return this.currentCategory?.url;
+  }
+
+  get showCategoryCrumb() {
+    return this.isTopicRoute && this.categoryName;
   }
 
   get isCategoryRoute() {
@@ -140,12 +162,22 @@ export default class Breadcrumbs extends Component {
               {{/if}}
             </li>
 
-            {{#if this.parentPage}}
-              <li class="parent">
+            {{#if this.parentCategoryName}}
+              <li class="parent parent-category">
                 <a href="/c/{{this.parentCategoryLink}}">
-                  {{this.parentPage}}</a>
+                  {{this.parentCategoryName}}
+                </a>
               </li>
             {{/if}}
+
+            {{#if this.showCategoryCrumb}}
+              <li class="parent category">
+                <a href="{{this.categoryLink}}">
+                  {{this.categoryName}}
+                </a>
+              </li>
+            {{/if}}
+
             {{#if this.currentPage}}
               <li class="current">
                 {{this.currentPage}}
