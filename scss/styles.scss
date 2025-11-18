@@ -56,13 +56,14 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
 
 .welcome-banner.--location-above-topic-content .welcome-banner__wrap {
   padding: 0;
+  width: 100%;
   max-width: 600px;
-  margin-inline-start: auto;
-  margin-inline-end: clamp(1rem, 7vw, 7%);
+  margin-inline: auto;
+  margin-block: 0.75rem;
 }
 
 .welcome-banner.--location-above-topic-content .welcome-banner__title {
-  font-size: clamp(0.85rem, 2.5vw, 1.25rem);
+  font-size: clamp(0.85rem, 2.5vw, 1.15rem);
   width: 100%;
 }
 
@@ -550,82 +551,6 @@ body.category {
   }
 }
 
-// #breadcrumbsContainer {
-//   z-index: 101;
-//   background: var(--primary-low);
-//   border-radius: var(--d-border-radius);
-//   margin-bottom: 0.5rem;
-
-//   &__container {
-//     min-height: 3em;
-//     display: flex;
-//     justify-content: flex-start;
-//     align-items: center;
-//     padding: 0 0.25em;
-//     overflow: hidden;
-//     color: var(--primary-medium);
-//     font-size: 0.9rem;
-//     gap: 0.5em;
-//   }
-//   &__title {
-//     .d-icon {
-//       font-size: 13px;
-//       padding-left: 0.25em;
-//     }
-//   }
-//   &__links {
-//     display: flex;
-//     flex-wrap: nowrap;
-//     list-style: none;
-//     margin: 0;
-//     flex: 1 1 auto;
-//     min-width: 0;
-//     overflow: hidden;
-//     li {
-//       display: flex;
-//       align-items: center;
-//       gap: 0.25rem;
-//     }
-//     a {
-//       display: inline-block;
-//       max-width: 100%;
-//       overflow: hidden;
-//       text-overflow: ellipsis;
-//       white-space: nowrap;
-//       color: var(--tertiary);
-//       &:hover {
-//         color: var(--tertiary);
-//       }
-//     }
-//     .home,
-//     .parent {
-//       flex: 0 0 auto;
-//       white-space: nowrap;
-//     }
-//     .current {
-//       flex: 1 1 auto;
-//       min-width: 0;
-//       white-space: nowrap;
-//       overflow: hidden;
-//       text-overflow: ellipsis;
-//     }
-//     .home::after,
-//     .parent::after,
-//     .current::after {
-//       content: "/\00a0";
-//     }
-//   }
-// }
-
-// body.has-breadcrumbs #breadcrumbsContainer,
-// li.current.topic,
-// .static-login #breadcrumbsContainer,
-// .has-full-page-chat #breadcrumbsContainer,
-// .chat-drawer-active #breadcrumbsContainer,
-// .chat-drawer-active .chat-drawer-expanded #breadcrumbsContainer {
-//   display: none;
-// }
-
 .breadcrumbs,
 .discourse-breadcrumb-links {
   position: sticky !important;
@@ -633,6 +558,9 @@ body.category {
 }
 
 @media (max-width: 768px) {
+  .welcome-banner.--location-above-topic-content .welcome-banner__title {
+    display: none;
+  }
   .breadcrumbs__links {
     .current {
       display: none;
