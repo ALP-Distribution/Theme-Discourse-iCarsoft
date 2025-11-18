@@ -17,7 +17,6 @@ export default class ParMarquesTagNavConnector extends Component {
 
   get parentCategory() {
     const cat = this.category;
-    console.log("cat", cat);
     if (!cat || !cat.parent_category_id) {
       return null;
     }
@@ -27,14 +26,12 @@ export default class ParMarquesTagNavConnector extends Component {
 
   get isParMarquesSubcategory() {
     const parent = this.parentCategory;
-    console.log("parent", parent);
     if (!parent) {
       return false;
     }
     const idStr = String(parent.id || "");
     const slug = String(parent.slug || "").toLowerCase();
     // Allow both explicit id and slug match for robustness
-    console.log("idStr", idStr);
     return idStr === "6" || slug === "par-marques";
   }
 
@@ -44,7 +41,6 @@ export default class ParMarquesTagNavConnector extends Component {
     try {
       const params = new URLSearchParams(window.location.search);
       const tags = params.get("tags");
-      console.log("tags", tags);
       if (tags) {
         // Handle multiple tags (comma-separated) by taking the first one
         const firstTag = tags.split(",")[0].trim();
@@ -63,13 +59,11 @@ export default class ParMarquesTagNavConnector extends Component {
       return [];
     }
     const groups = c.allowed_tag_groups || c.required_tag_groups || [];
-    console.log("groups", groups);
     return (groups || []).map((s) => String(s).trim()).filter(Boolean);
   }
 
   get modelesGroupNames() {
     const names = this.subcategoryTagGroupNames;
-    console.log("names", names);
     if (!names.length) {
       return [];
     }
@@ -81,45 +75,40 @@ export default class ParMarquesTagNavConnector extends Component {
     });
   }
 
-  get tagGroupsOnSite() {
-    // Support both snake_case and camelCase, depending on how the site service exposes tag groups
-    return this.site?.tag_groups || this.site?.tagGroups || [];
-  }
-
   get modelesTagSlugs() {
     const groupNames = this.modelesGroupNames;
-    console.log("groupNames", groupNames);
     if (!groupNames.length) {
       return [];
     }
-
-    const groups = this.tagGroupsOnSite;
-    if (!Array.isArray(groups) || groups.length === 0) {
+    const c = this.category;
+    if (!c) {
       return [];
     }
 
-    const wantedNames = groupNames.map((n) => String(n || "").toLowerCase());
+    // Approximation: when a Modèles* tag group is assigned to the subcategory,
+    // use that category's available tags as the source of tag slugs.
+    const source =
+      c.allowed_tags ||
+      c.available_tags ||
+      c.available_tag_names ||
+      c.tags ||
+      [];
+
+    if (!Array.isArray(source) || source.length === 0) {
+      return [];
+    }
+
     const set = new Set();
-
-    console.log("wantedNames", wantedNames);
-
-    groups.forEach((group) => {
-      const gName = String(group?.name || "").toLowerCase();
-      if (!wantedNames.includes(gName)) {
-        return;
+    source.forEach((tag) => {
+      if (typeof tag === "string") {
+        set.add(tag);
+      } else if (tag && typeof tag === "object") {
+        if (tag.name) {
+          set.add(String(tag.name));
+        } else if (tag.id) {
+          set.add(String(tag.id));
+        }
       }
-      const tags = group.tag_names || group.tags || [];
-      (tags || []).forEach((tag) => {
-        let slug = null;
-        if (typeof tag === "string") {
-          slug = tag;
-        } else if (tag && typeof tag === "object") {
-          slug = tag.name || tag.id;
-        }
-        if (slug) {
-          set.add(String(slug));
-        }
-      });
     });
 
     return Array.from(set);
@@ -127,32 +116,11 @@ export default class ParMarquesTagNavConnector extends Component {
 
   // --- Tag list for this subcategory ---------------------------------------
   get availableTagNames() {
-    const c = this.category;
-    if (!c) {
-      return [];
-    }
-
     const modeles = this.modelesTagSlugs;
     if (!modeles.length) {
       return [];
     }
-
-    const allowed =
-      c.allowed_tags ||
-      c.available_tags ||
-      c.available_tag_names ||
-      c.tags ||
-      [];
-
-    if (!Array.isArray(allowed) || allowed.length === 0) {
-      // If the category doesn't expose allowed tags, fall back to the full Modèles set
-      return modeles;
-    }
-
-    const allowedSet = new Set(allowed.map((t) => String(t)));
-    console.log("allowedSet", allowedSet);
-    // Only show tags that are both in Modèles groups AND available on this subcategory
-    return modeles.filter((slug) => allowedSet.has(String(slug)));
+    return modeles;
   }
 
   tagUrl(tag) {
