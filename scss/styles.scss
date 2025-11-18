@@ -320,6 +320,7 @@ a.tc-discovery-nav__link {
     padding-inline: 0.5rem;
     background: var(--primary-50);
     border-radius: 3px;
+
     &:hover {
       background: var(--primary-100);
     }
@@ -330,6 +331,13 @@ a.tc-discovery-nav__link {
     font-size: 0.9rem;
     font-style: normal;
     color: var(--primary);
+  }
+  a.tc-par-marques-tag-nav__link.is-selected {
+    background: var(--tertiary-50);
+    border: 1px solid var(--tertiary);
+    span.tc-par-marques-tag-nav__label {
+      color: var(--primary);
+    }
   }
 }
 

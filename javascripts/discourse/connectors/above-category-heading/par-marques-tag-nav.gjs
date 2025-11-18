@@ -236,26 +236,24 @@ export default class ParMarquesTagNavConnector extends Component {
         class="tc-tag-nav tc-par-marques-tag-nav"
         aria-label="Modèles navigation"
       >
-        <div class="wrap">
-          <h2 class="tc-par-marques-tag-nav__title">Filtre rapide</h2>
-          <ul class="tc-discovery-nav__list tc-par-marques-tag-nav__list">
-            {{#each this.tags as |t|}}
-              <li class="tc-discovery-nav__item tc-par-marques-tag-nav__item">
-                <a
-                  class="tc-discovery-nav__link tc-par-marques-tag-nav__link
-                    {{if t.isSelected 'is-selected'}}"
-                  href={{t.url}}
+        <h2 class="tc-par-marques-tag-nav__title">Filtre rapide</h2>
+        <ul class="tc-discovery-nav__list tc-par-marques-tag-nav__list">
+          {{#each this.tags as |t|}}
+            <li class="tc-discovery-nav__item tc-par-marques-tag-nav__item">
+              <a
+                class="tc-discovery-nav__link tc-par-marques-tag-nav__link
+                  {{if t.isSelected 'is-selected'}}"
+                href={{t.url}}
+              >
+                <span
+                  class="tc-discovery-nav__label tc-par-marques-tag-nav__label"
                 >
-                  <span
-                    class="tc-discovery-nav__label tc-par-marques-tag-nav__label"
-                  >
-                    {{t.label}}
-                  </span>
-                </a>
-              </li>
-            {{/each}}
-          </ul>
-        </div>
+                  {{t.label}}
+                </span>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
       </nav>
     {{/if}}
     {{yield}}
