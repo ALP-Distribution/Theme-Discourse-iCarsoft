@@ -202,6 +202,46 @@ export default class ParMarquesTagNavConnector extends Component {
     return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
+  navLabel(slug) {
+    const raw = String(slug || "");
+    const c = this.category;
+
+    if (!c || !c.slug) {
+      return this.prettyLabel(raw);
+    }
+
+    const catSlug = String(c.slug || "").toLowerCase();
+    const lowerRaw = raw.toLowerCase();
+
+    // Build a flexible brand pattern from the category slug:
+    // - treat "-" in the category as "[- ]" to allow both "-" and " " in tags
+    // - allow "-", "_" or " " between the brand and the rest of the tag
+    const brandPattern = catSlug.replace(/-/g, "[- ]");
+    const brandRegex = new RegExp(`^${brandPattern}[-_ ]*`, "i");
+
+    let stripped = raw.replace(brandRegex, "");
+
+    // If nothing changed (no brand prefix found), fall back to generic label
+    if (stripped === raw) {
+      return this.prettyLabel(raw);
+    }
+
+    // Normalise separators (underscore / hyphen) to spaces
+    let cleaned = stripped.replace(/[_-]+/g, " ").trim();
+
+    if (!cleaned) {
+      return this.prettyLabel(raw);
+    }
+
+    // Capitalise each word (keeps numbers intact, e.g. "serie 3" → "Serie 3")
+    cleaned = cleaned
+      .split(/\s+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+
+    return cleaned;
+  }
+
   get tags() {
     if (!this.enable) {
       return [];
@@ -218,7 +258,7 @@ export default class ParMarquesTagNavConnector extends Component {
     const current = this.currentTag;
     return names.map((slug) => ({
       slug,
-      label: this.prettyLabel(slug),
+      label: this.navLabel(slug),
       url: this.tagUrl(slug),
       isSelected:
         !!current && current.toLowerCase() === String(slug).toLowerCase(),
