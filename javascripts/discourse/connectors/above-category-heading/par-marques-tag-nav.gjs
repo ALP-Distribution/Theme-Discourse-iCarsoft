@@ -18,69 +18,42 @@ export default class ParMarquesTagNavConnector extends Component {
       return;
     }
     try {
-      console.log(
-        "[ParMarquesTagNav] loadTagGroups: fetching /tag_groups.json"
-      );
       const result = await ajax("/tag_groups.json");
       const groups = result?.tag_groups || result || [];
-      console.log("[ParMarquesTagNav] loadTagGroups: loaded", groups);
       this.loadedTagGroups = groups;
     } catch (e) {
-      console.log("[ParMarquesTagNav] loadTagGroups: error", e);
       this.loadedTagGroups = [];
     }
   }
 
   // --- Feature toggle -------------------------------------------------------
   get enable() {
-    const value = settings.enable_par_marques_tag_nav;
-    console.log("[ParMarquesTagNav] enable", value);
-    return value;
+    return settings.enable_par_marques_tag_nav;
   }
 
   // --- Category / hierarchy helpers ----------------------------------------
   get category() {
-    const cat = this.args?.category;
-    console.log("[ParMarquesTagNav] category", cat);
-    return cat;
+    return this.args?.category;
   }
 
   get parentCategory() {
     const cat = this.category;
-    console.log("[ParMarquesTagNav] parentCategory: category", cat);
     if (!cat || !cat.parent_category_id) {
-      console.log(
-        "[ParMarquesTagNav] parentCategory: no parent_category_id, returning null"
-      );
       return null;
     }
     const all = this.site.categories || [];
-    console.log("[ParMarquesTagNav] parentCategory: site.categories", all);
-    const parent = all.find((c) => c.id === cat.parent_category_id) || null;
-    console.log("[ParMarquesTagNav] parentCategory: resolved parent", parent);
-    return parent;
+    return all.find((c) => c.id === cat.parent_category_id) || null;
   }
 
   get isParMarquesSubcategory() {
     const parent = this.parentCategory;
-    console.log("[ParMarquesTagNav] isParMarquesSubcategory: parent", parent);
     if (!parent) {
-      console.log(
-        "[ParMarquesTagNav] isParMarquesSubcategory: parent missing -> false"
-      );
       return false;
     }
     const idStr = String(parent.id || "");
     const slug = String(parent.slug || "").toLowerCase();
     // Allow both explicit id and slug match for robustness
-    const result = idStr === "6" || slug === "par-marques";
-    console.log(
-      "[ParMarquesTagNav] isParMarquesSubcategory: idStr, slug, result",
-      idStr,
-      slug,
-      result
-    );
-    return result;
+    return idStr === "6" || slug === "par-marques";
   }
 
   // --- Current tag handling (mirrors tag-nav.gjs) ---------------------------
@@ -89,88 +62,55 @@ export default class ParMarquesTagNavConnector extends Component {
     try {
       const params = new URLSearchParams(window.location.search);
       const tags = params.get("tags");
-      console.log("[ParMarquesTagNav] currentTag: raw tags param", tags);
       if (tags) {
         // Handle multiple tags (comma-separated) by taking the first one
-        const firstTag = tags.split(",")[0].trim();
-        console.log("[ParMarquesTagNav] currentTag: firstTag", firstTag);
-        return firstTag;
+        return tags.split(",")[0].trim();
       }
     } catch (e) {
       // fallback if URL parsing fails
-      console.log("[ParMarquesTagNav] currentTag: error parsing URL", e);
     }
-    console.log("[ParMarquesTagNav] currentTag: none");
     return null;
   }
 
   // --- Resolve Modèles tag groups for this subcategory ---------------------
   get subcategoryTagGroupNames() {
     const c = this.category;
-    console.log("[ParMarquesTagNav] subcategoryTagGroupNames: category", c);
     if (!c) {
-      console.log(
-        "[ParMarquesTagNav] subcategoryTagGroupNames: no category -> []"
-      );
       return [];
     }
     const groups = c.allowed_tag_groups || c.required_tag_groups || [];
-    const result = (groups || []).map((s) => String(s).trim()).filter(Boolean);
-    console.log(
-      "[ParMarquesTagNav] subcategoryTagGroupNames: raw, normalized",
-      groups,
-      result
-    );
-    return result;
+    return (groups || []).map((s) => String(s).trim()).filter(Boolean);
   }
 
   get modelesGroupNames() {
     const names = this.subcategoryTagGroupNames;
-    console.log("[ParMarquesTagNav] modelesGroupNames: input names", names);
     if (!names.length) {
-      console.log("[ParMarquesTagNav] modelesGroupNames: no names -> []");
       return [];
     }
-    const filtered = names.filter((name) => {
+    return names.filter((name) => {
       const lower = String(name || "")
         .trim()
         .toLowerCase();
       return lower.startsWith("modèles") || lower.startsWith("modeles");
     });
-    console.log(
-      "[ParMarquesTagNav] modelesGroupNames: filtered Modèles* names",
-      filtered
-    );
-    return filtered;
   }
 
   get tagGroupsOnSite() {
     if (this.loadedTagGroups === null) {
       // Not yet loaded (or still loading); trigger fetch and return empty for now
       this.loadTagGroups();
-      console.log("[ParMarquesTagNav] tagGroupsOnSite: not loaded yet -> []");
       return [];
     }
-    console.log(
-      "[ParMarquesTagNav] tagGroupsOnSite: loaded",
-      this.loadedTagGroups
-    );
     return this.loadedTagGroups || [];
   }
 
   get modelesTagSlugs() {
     const groupNames = this.modelesGroupNames;
-    console.log("[ParMarquesTagNav] modelesTagSlugs: groupNames", groupNames);
     if (!groupNames.length) {
-      console.log(
-        "[ParMarquesTagNav] modelesTagSlugs: no Modèles groups -> []"
-      );
       return [];
     }
     const c = this.category;
-    console.log("[ParMarquesTagNav] modelesTagSlugs: category", c);
     if (!c) {
-      console.log("[ParMarquesTagNav] modelesTagSlugs: no category -> []");
       return [];
     }
 
@@ -179,10 +119,6 @@ export default class ParMarquesTagNavConnector extends Component {
     const set = new Set();
 
     if (Array.isArray(groups) && groups.length > 0) {
-      console.log(
-        "[ParMarquesTagNav] modelesTagSlugs: using site tagGroups",
-        groups
-      );
       groups.forEach((group) => {
         const gName = String(group?.name || "").toLowerCase();
         if (!wantedNames.includes(gName)) {
@@ -201,17 +137,10 @@ export default class ParMarquesTagNavConnector extends Component {
           }
         });
       });
-    } else {
-      console.log(
-        "[ParMarquesTagNav] modelesTagSlugs: no site tagGroups, will fall back to category tags"
-      );
     }
 
     // Fallback: if no tags resolved from tagGroups, approximate using category tag list
     if (set.size === 0) {
-      console.log(
-        "[ParMarquesTagNav] modelesTagSlugs: no slugs from tagGroups, falling back to category.available_tags"
-      );
       const source =
         c.allowed_tags ||
         c.available_tags ||
@@ -220,10 +149,6 @@ export default class ParMarquesTagNavConnector extends Component {
         [];
 
       if (!Array.isArray(source) || source.length === 0) {
-        console.log(
-          "[ParMarquesTagNav] modelesTagSlugs: fallback source tags empty -> []",
-          source
-        );
         return [];
       }
 
@@ -240,26 +165,15 @@ export default class ParMarquesTagNavConnector extends Component {
       });
     }
 
-    const result = Array.from(set);
-    console.log(
-      "[ParMarquesTagNav] modelesTagSlugs: final unique slugs",
-      result
-    );
-    return result;
+    return Array.from(set);
   }
 
   // --- Tag list for this subcategory ---------------------------------------
   get availableTagNames() {
     const modeles = this.modelesTagSlugs;
-    console.log(
-      "[ParMarquesTagNav] availableTagNames: modelesTagSlugs",
-      modeles
-    );
     if (!modeles.length) {
-      console.log("[ParMarquesTagNav] availableTagNames: no modeles -> []");
       return [];
     }
-    console.log("[ParMarquesTagNav] availableTagNames: returning", modeles);
     return modeles;
   }
 
@@ -274,75 +188,45 @@ export default class ParMarquesTagNavConnector extends Component {
       this.currentTag &&
       this.currentTag.toLowerCase() === String(tag).toLowerCase()
     ) {
-      const url = getURLWithCDN(`/c/${c.slug}/${c.id}`);
-      console.log(
-        "[ParMarquesTagNav] tagUrl: toggling off tag, returning category url",
-        tag,
-        url
-      );
-      return url;
+      return getURLWithCDN(`/c/${c.slug}/${c.id}`);
     }
 
     // Otherwise, link to category filtered by tag
-    const url = getURLWithCDN(
+    return getURLWithCDN(
       `/c/${c.slug}/${c.id}?tags=${encodeURIComponent(tag)}`
     );
-    console.log(
-      "[ParMarquesTagNav] tagUrl: toggling on tag, returning tag url",
-      tag,
-      url
-    );
-    return url;
   }
 
   prettyLabel(slug) {
     const label = String(slug || "").replace(/-/g, " ");
-    const pretty = label.charAt(0).toUpperCase() + label.slice(1);
-    console.log("[ParMarquesTagNav] prettyLabel", slug, "->", pretty);
-    return pretty;
+    return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
   get tags() {
-    console.log("[ParMarquesTagNav] tags: computing...");
     if (!this.enable) {
-      console.log("[ParMarquesTagNav] tags: feature disabled -> []");
       return [];
     }
     if (!this.isParMarquesSubcategory) {
-      console.log("[ParMarquesTagNav] tags: not par-marques subcategory -> []");
       return [];
     }
 
     const names = this.availableTagNames;
     if (!Array.isArray(names) || names.length === 0) {
-      console.log(
-        "[ParMarquesTagNav] tags: availableTagNames empty -> []",
-        names
-      );
       return [];
     }
 
     const current = this.currentTag;
-    const items = names.map((slug) => ({
+    return names.map((slug) => ({
       slug,
       label: this.prettyLabel(slug),
       url: this.tagUrl(slug),
       isSelected:
         !!current && current.toLowerCase() === String(slug).toLowerCase(),
     }));
-    console.log("[ParMarquesTagNav] tags: built items", items);
-    return items;
   }
 
   get show() {
-    const tags = this.tags;
-    const result = tags.length > 0;
-    console.log(
-      "[ParMarquesTagNav] show: tags length, result",
-      tags.length,
-      result
-    );
-    return result;
+    return this.tags.length > 0;
   }
 
   // --- Template -------------------------------------------------------------
