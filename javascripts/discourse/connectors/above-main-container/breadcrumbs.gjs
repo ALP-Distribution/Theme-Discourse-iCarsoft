@@ -220,7 +220,7 @@ export default class Breadcrumbs extends Component {
 
                 <a href="/">
                   <span class="breadcrumbs__title">
-                    {{dIcon "arrow-left"}}
+                    {{dIcon "icarsoft-house"}}
                   </span>
                   Accueil
                 </a>

@@ -290,6 +290,38 @@ a.tc-discovery-nav__link {
   }
 }
 
+/* Par-marques Modèles tag nav (subcategories) */
+.tc-par-marques-tag-nav {
+  margin-block: 0.5rem 2rem;
+}
+
+.tc-par-marques-tag-nav__list {
+  gap: 0.5rem;
+}
+
+.tc-par-marques-tag-nav__item {
+  flex: initial;
+  position: static;
+
+  &::after {
+    content: none;
+  }
+}
+
+.tc-par-marques-tag-nav__link {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-block: 0.25rem;
+  padding-inline: 0.75rem;
+}
+
+.tc-par-marques-tag-nav__label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  font-style: normal;
+}
+
 /* Subcategories inline nav (Feature 3) */
 .tc-subcats-nav {
   margin-block: 0.5rem 2rem;
