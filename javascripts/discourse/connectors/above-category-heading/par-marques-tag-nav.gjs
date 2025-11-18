@@ -17,6 +17,7 @@ export default class ParMarquesTagNavConnector extends Component {
 
   get parentCategory() {
     const cat = this.category;
+    console.log("cat", cat);
     if (!cat || !cat.parent_category_id) {
       return null;
     }
@@ -26,12 +27,14 @@ export default class ParMarquesTagNavConnector extends Component {
 
   get isParMarquesSubcategory() {
     const parent = this.parentCategory;
+    console.log("parent", parent);
     if (!parent) {
       return false;
     }
     const idStr = String(parent.id || "");
     const slug = String(parent.slug || "").toLowerCase();
     // Allow both explicit id and slug match for robustness
+    console.log("idStr", idStr);
     return idStr === "6" || slug === "par-marques";
   }
 
@@ -41,6 +44,7 @@ export default class ParMarquesTagNavConnector extends Component {
     try {
       const params = new URLSearchParams(window.location.search);
       const tags = params.get("tags");
+      console.log("tags", tags);
       if (tags) {
         // Handle multiple tags (comma-separated) by taking the first one
         const firstTag = tags.split(",")[0].trim();
@@ -59,11 +63,13 @@ export default class ParMarquesTagNavConnector extends Component {
       return [];
     }
     const groups = c.allowed_tag_groups || c.required_tag_groups || [];
+    console.log("groups", groups);
     return (groups || []).map((s) => String(s).trim()).filter(Boolean);
   }
 
   get modelesGroupNames() {
     const names = this.subcategoryTagGroupNames;
+    console.log("names", names);
     if (!names.length) {
       return [];
     }
@@ -82,6 +88,7 @@ export default class ParMarquesTagNavConnector extends Component {
 
   get modelesTagSlugs() {
     const groupNames = this.modelesGroupNames;
+    console.log("groupNames", groupNames);
     if (!groupNames.length) {
       return [];
     }
@@ -93,6 +100,8 @@ export default class ParMarquesTagNavConnector extends Component {
 
     const wantedNames = groupNames.map((n) => String(n || "").toLowerCase());
     const set = new Set();
+
+    console.log("wantedNames", wantedNames);
 
     groups.forEach((group) => {
       const gName = String(group?.name || "").toLowerCase();
@@ -141,6 +150,7 @@ export default class ParMarquesTagNavConnector extends Component {
     }
 
     const allowedSet = new Set(allowed.map((t) => String(t)));
+    console.log("allowedSet", allowedSet);
     // Only show tags that are both in Modèles groups AND available on this subcategory
     return modeles.filter((slug) => allowedSet.has(String(slug)));
   }

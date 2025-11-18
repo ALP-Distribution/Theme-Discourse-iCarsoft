@@ -477,11 +477,10 @@ body.category {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    overflow: hidden;
     color: var(--primary-medium);
     font-size: 15px;
     gap: 0.5em;
-    overflow: hidden;
-    min-width: 0;
   }
   &__title {
     .d-icon {
@@ -491,24 +490,34 @@ body.category {
   }
   &__links {
     display: flex;
+    flex-wrap: nowrap;
     list-style: none;
     margin: 0.2em;
-    overflow: hidden;
+    flex: 1 1 auto;
     min-width: 0;
-    white-space: nowrap;
-    li {
-      min-width: 0;
-      flex-shrink: 1;
-    }
+    overflow: hidden;
     a {
-      color: var(--tertiary);
-      white-space: nowrap;
+      display: inline-block;
+      max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: block;
+      white-space: nowrap;
+      color: var(--tertiary);
       &:hover {
         color: var(--tertiary);
       }
+    }
+    .home,
+    .parent {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+    .current {
+      flex: 1 1 auto;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .home::after,
     .parent::after {
@@ -529,11 +538,10 @@ body.category {
     justify-content: flex-start;
     align-items: center;
     padding: 0 0.25em;
+    overflow: hidden;
     color: var(--primary-medium);
     font-size: 0.9rem;
     gap: 0.5em;
-    overflow: hidden;
-    min-width: 0;
   }
   &__title {
     .d-icon {
@@ -543,24 +551,34 @@ body.category {
   }
   &__links {
     display: flex;
+    flex-wrap: nowrap;
     list-style: none;
     margin: 0;
-    overflow: hidden;
+    flex: 1 1 auto;
     min-width: 0;
-    white-space: nowrap;
-    li {
-      min-width: 0;
-      flex-shrink: 1;
-    }
+    overflow: hidden;
     a {
-      color: var(--tertiary);
-      white-space: nowrap;
+      display: inline-block;
+      max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: block;
+      white-space: nowrap;
+      color: var(--tertiary);
       &:hover {
         color: var(--tertiary);
       }
+    }
+    .home,
+    .parent {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+    .current {
+      flex: 1 1 auto;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .home::after,
     .parent::after,
