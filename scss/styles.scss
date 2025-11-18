@@ -293,6 +293,12 @@ a.tc-discovery-nav__link {
 /* Par-marques Modèles tag nav (subcategories) */
 .tc-par-marques-tag-nav {
   margin-block: 0.5rem 2rem;
+  h2.tc-par-marques-tag-nav__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-block-end: 0.5rem;
+    color: var(--primary);
+  }
   ul.tc-par-marques-tag-nav__list {
     gap: 0.5rem;
   }
@@ -311,13 +317,19 @@ a.tc-discovery-nav__link {
     justify-content: flex-start;
     align-items: center;
     padding-block: 0.25rem;
-    padding-inline: 0.75rem;
+    padding-inline: 0.5rem;
+    background: var(--primary-50);
+    border-radius: 3px;
+    &:hover {
+      background: var(--primary-100);
+    }
   }
 
   span.tc-par-marques-tag-nav__label {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.9rem;
     font-style: normal;
+    color: var(--primary);
   }
 }
 

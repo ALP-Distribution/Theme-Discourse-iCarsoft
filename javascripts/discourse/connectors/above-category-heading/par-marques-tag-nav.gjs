@@ -237,6 +237,7 @@ export default class ParMarquesTagNavConnector extends Component {
         aria-label="Modèles navigation"
       >
         <div class="wrap">
+          <h2 class="tc-par-marques-tag-nav__title">Filtre rapide</h2>
           <ul class="tc-discovery-nav__list tc-par-marques-tag-nav__list">
             {{#each this.tags as |t|}}
               <li class="tc-discovery-nav__item tc-par-marques-tag-nav__item">
