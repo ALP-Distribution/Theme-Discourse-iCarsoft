@@ -65,50 +65,50 @@ export default {
           open(...args) {
             log("composer.open: called with args =", args);
 
-            const result = super.open?.(...args);
-            const drafting = this.model;
-            log("composer.open: model =", drafting);
+            // The first argument is usually the options used to open the composer.
+            const [opts, ...rest] = args;
+            const options = opts || {};
+            log("composer.open: incoming options =", options);
 
-            if (!drafting) {
-              log("composer.open: no model, aborting");
-              return result;
-            }
-
-            log("composer.open: action =", drafting.action);
-            if (drafting.action !== "createTopic") {
-              log("composer.open: action is not createTopic, aborting");
-              return result;
+            // Only handle createTopic actions
+            if (options.action !== "createTopic") {
+              log(
+                "composer.open: options.action is not createTopic, calling super without changes"
+              );
+              return super.open?.(...args);
             }
 
             const currentTag = getCurrentTagFromUrl();
             log("composer.open: currentTag from URL =", currentTag);
             if (!currentTag) {
-              log("composer.open: no currentTag, aborting");
-              return result;
+              log(
+                "composer.open: no currentTag (not a /c/ page or no ?tags=), calling super without changes"
+              );
+              return super.open?.(...args);
             }
 
-            const existingTags = Array.isArray(drafting.tags)
-              ? drafting.tags
+            const existingTags = Array.isArray(options.tags)
+              ? options.tags
               : [];
-            log("composer.open: existingTags =", existingTags);
+            log("composer.open: existing tags in options =", existingTags);
 
             if (existingTags.length > 0) {
               log(
-                "composer.open: existing tags already present, will not override"
+                "composer.open: options already contain tags, will not override"
               );
-              return result;
+              return super.open?.(...args);
             }
 
-            try {
-              log("composer.open: setting tags to", [currentTag]);
-              drafting.set?.("tags", [currentTag]);
-            } catch (e) {
-              log("composer.open: error using drafting.set, falling back", e);
-              drafting.tags = [currentTag];
-            }
+            const newOptions = {
+              ...options,
+              tags: [currentTag],
+            };
+            log(
+              "composer.open: passing modified options to super.open =",
+              newOptions
+            );
 
-            log("composer.open: final tags on model =", drafting.tags);
-            return result;
+            return super.open?.(newOptions, ...rest);
           }
         }
     );
