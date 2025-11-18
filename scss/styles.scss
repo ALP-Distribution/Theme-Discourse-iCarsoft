@@ -552,6 +552,8 @@ body.category {
   &__links {
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.25rem;
     list-style: none;
     margin: 0;
     flex: 1 1 auto;

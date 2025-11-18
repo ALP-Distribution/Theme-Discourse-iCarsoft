@@ -118,6 +118,12 @@ export default class ParMarquesTagNavConnector extends Component {
     return filtered;
   }
 
+  get tagGroupsOnSite() {
+    const groups = this.site?.tag_groups || this.site?.tagGroups || [];
+    console.log("[ParMarquesTagNav] tagGroupsOnSite", groups);
+    return groups || [];
+  }
+
   get modelesTagSlugs() {
     const groupNames = this.modelesGroupNames;
     console.log("[ParMarquesTagNav] modelesTagSlugs: groupNames", groupNames);
@@ -134,39 +140,75 @@ export default class ParMarquesTagNavConnector extends Component {
       return [];
     }
 
-    // Approximation: when a Modèles* tag group is assigned to the subcategory,
-    // use that category's available tags as the source of tag slugs.
-    const source =
-      c.allowed_tags ||
-      c.available_tags ||
-      c.available_tag_names ||
-      c.tags ||
-      [];
+    const groups = this.tagGroupsOnSite;
+    const wantedNames = groupNames.map((n) => String(n || "").toLowerCase());
+    const set = new Set();
 
-    if (!Array.isArray(source) || source.length === 0) {
+    if (Array.isArray(groups) && groups.length > 0) {
       console.log(
-        "[ParMarquesTagNav] modelesTagSlugs: source tags empty -> []",
-        source
+        "[ParMarquesTagNav] modelesTagSlugs: using site tagGroups",
+        groups
       );
-      return [];
+      groups.forEach((group) => {
+        const gName = String(group?.name || "").toLowerCase();
+        if (!wantedNames.includes(gName)) {
+          return;
+        }
+        const tags = group.tag_names || group.tags || [];
+        (tags || []).forEach((tag) => {
+          let slug = null;
+          if (typeof tag === "string") {
+            slug = tag;
+          } else if (tag && typeof tag === "object") {
+            slug = tag.name || tag.id;
+          }
+          if (slug) {
+            set.add(String(slug));
+          }
+        });
+      });
+    } else {
+      console.log(
+        "[ParMarquesTagNav] modelesTagSlugs: no site tagGroups, will fall back to category tags"
+      );
     }
 
-    const set = new Set();
-    source.forEach((tag) => {
-      if (typeof tag === "string") {
-        set.add(tag);
-      } else if (tag && typeof tag === "object") {
-        if (tag.name) {
-          set.add(String(tag.name));
-        } else if (tag.id) {
-          set.add(String(tag.id));
-        }
+    // Fallback: if no tags resolved from tagGroups, approximate using category tag list
+    if (set.size === 0) {
+      console.log(
+        "[ParMarquesTagNav] modelesTagSlugs: no slugs from tagGroups, falling back to category.available_tags"
+      );
+      const source =
+        c.allowed_tags ||
+        c.available_tags ||
+        c.available_tag_names ||
+        c.tags ||
+        [];
+
+      if (!Array.isArray(source) || source.length === 0) {
+        console.log(
+          "[ParMarquesTagNav] modelesTagSlugs: fallback source tags empty -> []",
+          source
+        );
+        return [];
       }
-    });
+
+      source.forEach((tag) => {
+        if (typeof tag === "string") {
+          set.add(tag);
+        } else if (tag && typeof tag === "object") {
+          if (tag.name) {
+            set.add(String(tag.name));
+          } else if (tag.id) {
+            set.add(String(tag.id));
+          }
+        }
+      });
+    }
 
     const result = Array.from(set);
     console.log(
-      "[ParMarquesTagNav] modelesTagSlugs: from source -> unique slugs",
+      "[ParMarquesTagNav] modelesTagSlugs: final unique slugs",
       result
     );
     return result;
