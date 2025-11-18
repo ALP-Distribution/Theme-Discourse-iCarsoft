@@ -255,8 +255,23 @@ export default class ParMarquesTagNavConnector extends Component {
       return [];
     }
 
+    // Ensure any "autres-modeles" tags are always placed at the end
+    const lowerIncludesAutresModeles = (slug) =>
+      String(slug || "")
+        .toLowerCase()
+        .includes("autres-modeles");
+
+    const regularNames = names.filter(
+      (slug) => !lowerIncludesAutresModeles(slug)
+    );
+    const autresModelesNames = names.filter((slug) =>
+      lowerIncludesAutresModeles(slug)
+    );
+
+    const orderedNames = [...regularNames, ...autresModelesNames];
+
     const current = this.currentTag;
-    return names.map((slug) => ({
+    return orderedNames.map((slug) => ({
       slug,
       label: this.navLabel(slug),
       url: this.tagUrl(slug),
