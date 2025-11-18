@@ -1,9 +1,35 @@
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import { service } from "@ember/service";
 import getURLWithCDN from "discourse-common/lib/get-url";
+import { ajax } from "discourse/lib/ajax";
 
 export default class ParMarquesTagNavConnector extends Component {
   @service site;
+  @tracked loadedTagGroups = null;
+
+  constructor() {
+    super(...arguments);
+    this.loadTagGroups();
+  }
+
+  async loadTagGroups() {
+    if (this.loadedTagGroups !== null) {
+      return;
+    }
+    try {
+      console.log(
+        "[ParMarquesTagNav] loadTagGroups: fetching /tag_groups.json"
+      );
+      const result = await ajax("/tag_groups.json");
+      const groups = result?.tag_groups || result || [];
+      console.log("[ParMarquesTagNav] loadTagGroups: loaded", groups);
+      this.loadedTagGroups = groups;
+    } catch (e) {
+      console.log("[ParMarquesTagNav] loadTagGroups: error", e);
+      this.loadedTagGroups = [];
+    }
+  }
 
   // --- Feature toggle -------------------------------------------------------
   get enable() {
@@ -119,9 +145,17 @@ export default class ParMarquesTagNavConnector extends Component {
   }
 
   get tagGroupsOnSite() {
-    const groups = this.site?.tag_groups || this.site?.tagGroups || [];
-    console.log("[ParMarquesTagNav] tagGroupsOnSite", groups);
-    return groups || [];
+    if (this.loadedTagGroups === null) {
+      // Not yet loaded (or still loading); trigger fetch and return empty for now
+      this.loadTagGroups();
+      console.log("[ParMarquesTagNav] tagGroupsOnSite: not loaded yet -> []");
+      return [];
+    }
+    console.log(
+      "[ParMarquesTagNav] tagGroupsOnSite: loaded",
+      this.loadedTagGroups
+    );
+    return this.loadedTagGroups || [];
   }
 
   get modelesTagSlugs() {
