@@ -461,7 +461,7 @@ body:is(.category-nos-produits, .category-par-marques)
   }
 }
 
-.container:has(.category-heading.--has-logo) {
+body .container:has(.category-heading.--has-logo) {
   container-name: category-container;
   container-type: inline-size;
 }
