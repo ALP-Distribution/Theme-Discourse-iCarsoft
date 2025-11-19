@@ -460,7 +460,8 @@ body:is(.category-nos-produits, .category-par-marques)
     order: -1;
   }
 }
-body:has(.tc-tag-nav) .container:has(.category-heading) {
+
+.container:has(.category-heading.--has-logo) {
   container-name: category-container;
   container-type: inline-size;
 }
