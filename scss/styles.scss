@@ -460,6 +460,10 @@ body:is(.category-nos-produits, .category-par-marques)
     order: -1;
   }
 }
+body:has(.tc-tag-nav) .container:has(.category-heading) {
+  container-name: category-container;
+  container-type: inline-size;
+}
 
 .category-heading.--has-logo {
   --category-header-logo-size: 5rem;
@@ -469,6 +473,16 @@ body:is(.category-nos-produits, .category-par-marques)
   display: none;
 }
 
+@container category-container (max-width: 480px) {
+  .category-heading.--has-logo {
+    flex-direction: column;
+    gap: 0;
+  }
+  .category-heading__logo.category-logo.aspect-image {
+    width: 3rem;
+    height: 3rem;
+  }
+}
 /* Tag nav container spacing */
 .tc-tag-nav {
   margin-block: 0.5rem 3rem;
