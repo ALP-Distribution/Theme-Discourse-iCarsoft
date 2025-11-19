@@ -216,6 +216,8 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
 .tc-discovery-nav__wrap {
   display: block;
   padding: 0;
+  container-name: tc-discovery-nav__wrap;
+  container-type: inline-size;
 }
 
 .tc-discovery-nav__list {
@@ -225,8 +227,6 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  container-name: tc-discovery-nav__list;
-  container-type: inline-size;
 }
 
 .tc-discovery-nav__item {
@@ -293,20 +293,17 @@ a.tc-discovery-nav__link {
   }
 }
 
-@container tc-discovery-nav__list (max-width: 712px) {
+@container tc-discovery-nav__wrap (max-width: 712px) {
   .tc-discovery-nav__list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     .tc-discovery-nav__item:nth-child(2)::after {
-      content: "";
-      display: block;
-      position: absolute;
-      right: 50%;
+      left: 50%;
+      right: unset;
       top: unset;
-      bottom: 0;
+      bottom: -8px;
       width: 70%;
       height: 1px;
-      background: var(--primary-200);
       transform: translateX(-50%);
     }
     .tc-discovery-nav__item:nth-child(3)::before {
@@ -314,7 +311,7 @@ a.tc-discovery-nav__link {
       display: block;
       position: absolute;
       left: 50%;
-      top: 0;
+      top: -8px;
       width: 70%;
       height: 1px;
       background: var(--primary-200);
