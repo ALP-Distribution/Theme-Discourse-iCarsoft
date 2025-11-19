@@ -225,6 +225,8 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  container-name: tc-discovery-nav__list;
+  container-type: inline-size;
 }
 
 .tc-discovery-nav__item {
@@ -288,6 +290,36 @@ a.tc-discovery-nav__link {
     line-height: 1.25;
     text-align: center;
     font-style: italic;
+  }
+}
+
+@container tc-discovery-nav__list (max-width: 712px) {
+  .tc-discovery-nav__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    .tc-discovery-nav__item:nth-child(2)::after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 50%;
+      top: unset;
+      bottom: 0;
+      width: 70%;
+      height: 1px;
+      background: var(--primary-200);
+      transform: translateX(-50%);
+    }
+    .tc-discovery-nav__item:nth-child(3)::before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 70%;
+      height: 1px;
+      background: var(--primary-200);
+      transform: translateX(-50%);
+    }
   }
 }
 
