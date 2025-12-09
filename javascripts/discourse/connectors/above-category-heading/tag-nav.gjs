@@ -49,13 +49,12 @@ export default class TagNavConnector extends Component {
     const c = this.category;
     if (!c) return [];
     // Prefer allowed_tags (category-scoped); then available_tags, available_tag_names, tags
-    const list = (
+    const list =
       c.allowed_tags ||
       c.available_tags ||
       c.available_tag_names ||
       c.tags ||
-      []
-    );
+      [];
     return list;
   }
 
@@ -83,12 +82,15 @@ export default class TagNavConnector extends Component {
   tagUrl(tag) {
     const c = this.category;
     if (!c) return getURLWithCDN(`/tags/${encodeURIComponent(tag)}`);
-    
+
     // If this tag is currently selected, toggle it off (return category URL)
-    if (this.currentTag && this.currentTag.toLowerCase() === tag.toLowerCase()) {
+    if (
+      this.currentTag &&
+      this.currentTag.toLowerCase() === tag.toLowerCase()
+    ) {
       return getURLWithCDN(`/c/${c.slug}/${c.id}`);
     }
-    
+
     // Otherwise, link to category filtered by tag
     return getURLWithCDN(
       `/c/${c.slug}/${c.id}?tags=${encodeURIComponent(tag)}`
@@ -96,8 +98,12 @@ export default class TagNavConnector extends Component {
   }
 
   get tags() {
-    if (!this.enable) { return []; }
-    if (!this.hasRequiredGroup) { return []; }
+    if (!this.enable) {
+      return [];
+    }
+    if (!this.hasRequiredGroup) {
+      return [];
+    }
     let names = this.availableTagNames;
     const map = this.tagToImageUrl;
     if (!Array.isArray(names) || names.length === 0) {
@@ -119,7 +125,7 @@ export default class TagNavConnector extends Component {
   prettyLabel(slug) {
     const overrides = {
       "questions-fréquentes": "Questions fréquentes",
-      "mise-à-jour": "Mise à jour",
+      "mises-à-jour": "Mises à jour",
       notice: "Notice",
     };
     if (overrides[slug]) return overrides[slug];
@@ -153,5 +159,3 @@ export default class TagNavConnector extends Component {
     {{yield}}
   </template>
 }
-
-
