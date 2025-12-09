@@ -469,7 +469,9 @@ body .container:has(.category-heading.--has-logo) {
 .category-heading.--has-logo {
   --category-header-logo-size: 5rem;
 }
-
+.category-heading.--has-logo .category-heading__logo img {
+  object-fit: contain;
+}
 .category .category-heading.--has-logo .badge-category svg.d-icon {
   display: none;
 }
