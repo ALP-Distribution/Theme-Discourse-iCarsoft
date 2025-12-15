@@ -602,6 +602,13 @@ body.category {
   position: sticky !important;
   top: calc(var(--header-offset)) !important;
 }
+.above-main-container-outlet.welcome-link-banner-connectors .welcome-wrapper .welcome-content, .below-site-header-outlet.welcome-link-banner-connector .welcome-wrapper .welcome-content {
+  max-width: 450px;
+  flex: 1 1 60%
+}
+.above-main-container-outlet.welcome-link-banner-connectors .welcome-wrapper .featured-banner-link, .below-site-header-outlet.welcome-link-banner-connector .welcome-wrapper .featured-banner-link {
+  flex: 1 0 40%;
+}
 
 @media (max-width: 768px) {
   .welcome-banner.--location-above-topic-content .welcome-banner__title {
