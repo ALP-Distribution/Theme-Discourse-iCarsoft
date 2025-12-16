@@ -71,7 +71,7 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
 #navigation-bar {
   margin-block-end: 0.25rem;
 
-  li a:is([href$="/latest"], [href$="/hot"])::before {
+  li a:is([href$="/latest"], [href$="/hot"], [href$="/new"])::before {
     content: "";
     display: inline-block;
     width: 1em;
@@ -96,6 +96,12 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
 
   li a[href$="/hot"].active::before {
     background-image: var(--canvas-icon-hot-red);
+  }
+  li a[href$="/new"].active::before {
+    background-image: var(--canvas-icon-new-red);
+  }
+  li a[href$="/new"]::before {
+    background-image: var(--canvas-icon-new);
   }
 }
 
