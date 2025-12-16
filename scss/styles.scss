@@ -615,7 +615,12 @@ body.category {
 .above-main-container-outlet.welcome-link-banner-connectors .welcome-wrapper .featured-banner-link, .below-site-header-outlet.welcome-link-banner-connector .welcome-wrapper .featured-banner-link {
   flex: 1 0 40%;
 }
-
+.above-main-container-outlet.welcome-link-banner-connectors .welcome-link-banner-wrapper, .below-site-header-outlet.welcome-link-banner-connector .welcome-link-banner-wrapper {
+  border-radius: var(--d-border-radius-large);
+}
+.above-main-container-outlet.welcome-link-banner-connectors .welcome-wrapper, .below-site-header-outlet.welcome-link-banner-connector .welcome-wrapper {
+  border-radius: 0.25rem;
+}
 @media (max-width: 768px) {
   .welcome-banner.--location-above-topic-content .welcome-banner__title {
     display: none;
