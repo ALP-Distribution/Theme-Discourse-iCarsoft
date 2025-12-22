@@ -24,9 +24,23 @@ export default class IcarsoftComposerInstructionsPopup extends Component {
     this.instructions?.close();
   }
 
+  @action
+  onOverlayClick(event) {
+    // Click-outside-to-close: only close when clicking the overlay itself,
+    // not when interacting inside the panel content.
+    if (event?.target === event?.currentTarget) {
+      this.close();
+    }
+  }
+
   <template>
     {{#if this.shouldRender}}
-      <div class="icarsoft-composer-instructions" role="presentation">
+      <div
+        class="icarsoft-composer-instructions"
+        role="presentation"
+        {{on "click" this.onOverlayClick}}
+      >
+        <div class="icarsoft-composer-instructions__backdrop"></div>
         <div
           class="icarsoft-composer-instructions__panel"
           role="dialog"
