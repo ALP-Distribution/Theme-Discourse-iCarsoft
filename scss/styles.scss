@@ -631,3 +631,74 @@ body.category {
     }
   }
 }
+
+// Composer instructions popup (context-aware)
+// Uses Discourse core CSS variables for colors/borders/spacing.
+#reply-control {
+  position: relative;
+}
+
+#reply-control .icarsoft-composer-instructions {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#reply-control .icarsoft-composer-instructions__panel {
+  pointer-events: auto;
+  position: absolute;
+  top: var(--space-3, 0.75rem);
+  right: var(--space-3, 0.75rem);
+  width: min(36rem, 38vw);
+  max-width: calc(100% - (var(--space-3, 0.75rem) * 2));
+  max-height: min(32rem, 55vh);
+  overflow: hidden;
+  background: var(--secondary);
+  color: var(--primary);
+  border: 1px solid var(--primary-low);
+  border-radius: var(--d-border-radius, 0.25rem);
+  box-shadow: var(--shadow-card, var(--shadow));
+  display: flex;
+  flex-direction: column;
+}
+
+#reply-control .icarsoft-composer-instructions__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2, 0.5rem);
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  border-bottom: 1px solid var(--primary-low);
+}
+
+#reply-control .icarsoft-composer-instructions__title {
+  margin: 0;
+  font-size: var(--font-up-1, 1rem);
+  line-height: 1.2;
+}
+
+#reply-control .icarsoft-composer-instructions__close {
+  margin: 0;
+}
+
+#reply-control .icarsoft-composer-instructions__body {
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  overflow: auto;
+}
+
+#reply-control .icarsoft-composer-instructions__empty {
+  margin: 0;
+  color: var(--primary-medium);
+}
+
+@media (max-width: 768px) {
+  #reply-control .icarsoft-composer-instructions__panel {
+    left: var(--space-3, 0.75rem);
+    right: var(--space-3, 0.75rem);
+    width: auto;
+    top: auto;
+    bottom: var(--space-3, 0.75rem);
+    max-height: 55vh;
+  }
+}
