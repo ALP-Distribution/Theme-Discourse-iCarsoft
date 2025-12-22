@@ -103,10 +103,3 @@ enable_category_banner:
   default: true
   description:
     en: Enable banner on category pages using the category background image.
-
-# Composer Instructions Panel
-enable_composer_instructions_panel:
-  type: bool
-  default: true
-  description:
-    en: Enable category-based instructions panel in the topic composer (replaces preview by default when available).
