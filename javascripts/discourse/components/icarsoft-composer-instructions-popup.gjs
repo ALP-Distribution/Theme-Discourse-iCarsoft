@@ -36,7 +36,7 @@ export default class IcarsoftComposerInstructionsPopup extends Component {
             <h3 class="icarsoft-composer-instructions__title">Instructions</h3>
             <DButton
               class="btn-flat icarsoft-composer-instructions__close"
-              @icon="times"
+              @icon="xmark"
               @action={{this.close}}
               @title="Close"
             />

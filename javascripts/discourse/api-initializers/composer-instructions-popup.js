@@ -31,7 +31,7 @@ export default apiInitializer("1.8.0", (api) => {
     toolbar.addButton({
       id: "icarsoft-instructions",
       group: "extras",
-      icon: "question-circle",
+      icon: "circle-question",
       title: "Instructions",
       action: () => instructions.toggle(),
       // Hide outside the new-topic composer. If the host Discourse version
