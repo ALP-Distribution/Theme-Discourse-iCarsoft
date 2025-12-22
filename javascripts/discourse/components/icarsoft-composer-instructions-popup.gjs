@@ -1,6 +1,7 @@
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
+import { on } from "@ember/modifier";
 import CookText from "discourse/components/cook-text";
 import DButton from "discourse/components/d-button";
 
