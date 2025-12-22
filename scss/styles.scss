@@ -631,18 +631,20 @@ body.category {
     }
   }
 }
+.btn-icon.toolbar__button.icarsoft-instructions {
+  order: 1;
+  margin-inline: auto 0.5rem;
+}
 
-// Composer instructions popup (context-aware)
-// In-flow panel placed between `.composer-fields` and `.d-editor-textarea-wrapper`
-// inside `.d-editor-textarea-column`. No absolute positioning.
 #reply-control .d-editor-textarea-column .icarsoft-composer-instructions {
   width: 100%;
-  margin: var(--space-3, 0.75rem) 0;
-  background: var(--secondary);
-  color: var(--primary);
-  border: 1px solid var(--primary-low);
-  border-radius: var(--d-border-radius, 0.25rem);
-  box-shadow: var(--shadow-card, var(--shadow));
+  margin-block-end: var(--space-3, 0.75rem);
+  color: var(--d-input-text-color);
+  background-color: var(--d-input-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0);
+  border: var(--d-input-border);
+  border-radius: var(--d-input-border-radius);
+  color-scheme: var(--scheme-type);
   overflow: hidden;
 }
 
@@ -651,7 +653,7 @@ body.category {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2, 0.5rem);
-  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  padding: var(--space-1, 0.25rem) var(--space-4, 1rem);
   border-bottom: 1px solid var(--primary-low);
 }
 
@@ -666,9 +668,8 @@ body.category {
 }
 
 #reply-control .icarsoft-composer-instructions__body {
-  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  padding: var(--space-2, 0.75rem) var(--space-4, 1rem);
   overflow: auto;
-  // Prevent the box from squishing the textarea too much; scroll inside instead.
   max-height: min(18rem, 30vh);
 }
 
