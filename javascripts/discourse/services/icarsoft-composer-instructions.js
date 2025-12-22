@@ -40,6 +40,8 @@ export default class IcarsoftComposerInstructionsService extends Service {
 
   @tracked isOpen = false;
 
+  _dismissedByCategory = new Set();
+
   // We keep a tracked mirror of categoryId so the popup updates immediately
   // when the user changes it via the dropdown (even if the composer model
   // is not tracked in Glimmer).
@@ -48,22 +50,37 @@ export default class IcarsoftComposerInstructionsService extends Service {
   // Also track action so we can enforce "createTopic only" and auto-close on change.
   @tracked _action = null;
 
+  constructor(...args) {
+    super(...args);
+    this._dismissedByCategory = this._loadDismissedByCategory();
+  }
+
   syncFromComposerModel(model) {
     const m = model || this.composer?.model;
     if (!m) {
       this._categoryId = null;
       this._action = null;
+      this.isOpen = false;
       return;
     }
 
     // Support common composer model shapes across Discourse versions.
-    this._categoryId = m.categoryId ?? m.category_id ?? m.category?.id ?? null;
+    const nextCategoryId =
+      m.categoryId ?? m.category_id ?? m.category?.id ?? null;
     this._action = m.action ?? null;
 
     // If we’re not creating a topic, force-close.
     if (!this.isCreateTopic) {
       this.isOpen = false;
+      this._categoryId = nextCategoryId;
+      return;
     }
+
+    const prevCategoryId = this._categoryId;
+    this._categoryId = nextCategoryId;
+
+    // Apply default-open behavior on open and on category changes.
+    this._applyDefaultOpenForCategory(prevCategoryId);
   }
 
   get isCreateTopic() {
@@ -110,8 +127,75 @@ export default class IcarsoftComposerInstructionsService extends Service {
     return !!this.resolvedTemplateMarkdown;
   }
 
-  get emptyStateText() {
-    return "No instructions for this category.";
+  get dismissedForCurrentCategory() {
+    const id = this.selectedCategoryId;
+    if (!id) {
+      return false;
+    }
+    return this._dismissedByCategory.has(String(id));
+  }
+
+  _applyDefaultOpenForCategory(prevCategoryId) {
+    const categoryChanged = prevCategoryId !== this.selectedCategoryId;
+    if (!categoryChanged) {
+      return;
+    }
+
+    // If no instruction template exists, don't render/open anything.
+    if (!this.hasTemplate) {
+      this.isOpen = false;
+      return;
+    }
+
+    // Open by default unless user has dismissed this category once.
+    if (this.dismissedForCurrentCategory) {
+      this.isOpen = false;
+      return;
+    }
+
+    this.isOpen = true;
+  }
+
+  _storageKey() {
+    return "icarsoft_composer_instructions_dismissed_by_category_v1";
+  }
+
+  _loadDismissedByCategory() {
+    try {
+      const raw = window?.localStorage?.getItem(this._storageKey());
+      if (!raw) {
+        return new Set();
+      }
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") {
+        return new Set();
+      }
+      return new Set(Object.keys(parsed).filter((k) => parsed[k] === true));
+    } catch {
+      return new Set();
+    }
+  }
+
+  _saveDismissedByCategory() {
+    try {
+      const obj = {};
+      for (const k of this._dismissedByCategory) {
+        obj[k] = true;
+      }
+      window?.localStorage?.setItem(this._storageKey(), JSON.stringify(obj));
+    } catch {
+      // ignore
+    }
+  }
+
+  dismiss() {
+    // User-initiated close that should be remembered per category.
+    const id = this.selectedCategoryId;
+    if (id) {
+      this._dismissedByCategory.add(String(id));
+      this._saveDismissedByCategory();
+    }
+    this.isOpen = false;
   }
 
   toggle() {
@@ -119,11 +203,23 @@ export default class IcarsoftComposerInstructionsService extends Service {
       this.isOpen = false;
       return;
     }
-    this.isOpen = !this.isOpen;
+    if (!this.hasTemplate) {
+      this.isOpen = false;
+      return;
+    }
+    if (this.isOpen) {
+      this.dismiss();
+      return;
+    }
+    this.isOpen = true;
   }
 
   open() {
     if (!this.isCreateTopic) {
+      this.isOpen = false;
+      return;
+    }
+    if (!this.hasTemplate) {
       this.isOpen = false;
       return;
     }

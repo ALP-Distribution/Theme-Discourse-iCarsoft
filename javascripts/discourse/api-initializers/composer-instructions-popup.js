@@ -18,6 +18,7 @@ export default apiInitializer("1.8.0", (api) => {
   });
 
   api.onAppEvent("composer:closed", () => {
+    // Do not persist dismissal on composer close; only user-initiated close.
     instructions.close();
     instructions.syncFromComposerModel(null);
   });

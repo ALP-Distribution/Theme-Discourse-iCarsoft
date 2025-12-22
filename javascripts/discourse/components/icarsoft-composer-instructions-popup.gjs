@@ -15,13 +15,14 @@ export default class IcarsoftComposerInstructionsPopup extends Component {
     return (
       this.enabled &&
       this.instructions?.isOpen &&
-      this.instructions?.isCreateTopic
+      this.instructions?.isCreateTopic &&
+      this.instructions?.hasTemplate
     );
   }
 
   @action
   close() {
-    this.instructions?.close();
+    this.instructions?.dismiss?.();
   }
 
   <template>
