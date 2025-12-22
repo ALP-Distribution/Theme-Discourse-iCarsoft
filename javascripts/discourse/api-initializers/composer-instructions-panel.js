@@ -1,5 +1,4 @@
 import { apiInitializer } from "discourse/lib/api";
-import { cook } from "discourse/lib/text";
 import {
   DEFAULT_INSTRUCTION_TEMPLATE,
   INSTRUCTION_TEMPLATES,
@@ -17,7 +16,10 @@ function isMobileViewport() {
 }
 
 function getComposerDEditorEl() {
-  return document.querySelector(".composer-container .d-editor");
+  return (
+    document.querySelector(".composer-container .d-editor") ||
+    document.querySelector(".d-editor")
+  );
 }
 
 function ensurePanelEl(dEditorEl, controller) {
@@ -46,8 +48,7 @@ function ensurePanelEl(dEditorEl, controller) {
     );
     closeBtn?.addEventListener("click", (e) => {
       e.preventDefault();
-      controller?.set?.("showInstructionsPanel", false);
-      controller?._renderInstructionsPanel?.();
+      controller?.send?.("toggleComposerInstructions", false);
     });
     panel.dataset.boundClose = "1";
   }
@@ -88,19 +89,39 @@ function resolveTemplateMarkdown(api, categoryId) {
   return DEFAULT_INSTRUCTION_TEMPLATE;
 }
 
-function cookMarkdown(markdown) {
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+async function cookMarkdown(api, markdown) {
   if (!markdown || typeof markdown !== "string") return "";
   try {
-    return cook(markdown, { sanitize: true });
+    // Prefer Discourse's cooking service (stable across versions)
+    const cookText = api.container.lookup("service:cook-text");
+    if (cookText?.cook) {
+      const result = await cookText.cook(markdown);
+      // service:cook-text may return a string or an object with `.cooked`
+      if (typeof result === "string") return result;
+      if (result?.cooked && typeof result.cooked === "string") return result.cooked;
+    }
   } catch {
-    return "";
+    // ignore
   }
+  // Fallback: show readable plain text (still better than failing entirely)
+  return `<p>${escapeHtml(markdown).replaceAll("\n", "<br>")}</p>`;
 }
 
 export default apiInitializer("1.8.0", (api) => {
   if (!settings.enable_composer_instructions_panel) {
     return;
   }
+
+  const appEvents = api.container.lookup("service:app-events");
 
   api.modifyClass(
     "controller:composer",
@@ -116,7 +137,18 @@ export default apiInitializer("1.8.0", (api) => {
             this.addObserver?.(
               "model.categoryId",
               this,
-              this._updateInstructionsForCategory
+              "_updateInstructionsForCategory"
+            );
+          } catch {
+            // ignore
+          }
+
+          try {
+            // Some Discourse versions track the actual category object instead.
+            this.addObserver?.(
+              "model.category",
+              this,
+              "_updateInstructionsForCategory"
             );
           } catch {
             // ignore
@@ -158,13 +190,30 @@ export default apiInitializer("1.8.0", (api) => {
           return result;
         }
 
-        _updateInstructionsForCategory() {
-          const categoryId = this.get?.("model.categoryId");
+        _getSelectedCategoryId() {
+          const byId = this.get?.("model.categoryId");
+          if (byId) return byId;
+
+          const categoryObj = this.get?.("model.category");
+          if (typeof categoryObj === "number") return categoryObj;
+          if (categoryObj?.id) return categoryObj.id;
+
+          const nested = this.get?.("model.category.id");
+          if (nested) return nested;
+
+          return null;
+        }
+
+        async _updateInstructionsForCategory() {
+          const categoryId = this._getSelectedCategoryId?.();
           const markdown = resolveTemplateMarkdown(api, categoryId);
           const hasTemplate = !!(markdown && markdown.trim().length > 0);
 
           this.set?.("instructionTemplateExists", hasTemplate);
-          this.set?.("instructionCookedHtml", hasTemplate ? cookMarkdown(markdown) : "");
+          this.set?.(
+            "instructionCookedHtml",
+            hasTemplate ? await cookMarkdown(api, markdown) : ""
+          );
 
           // Replace preview by default on desktop when a template exists
           if (hasTemplate) {
@@ -214,8 +263,28 @@ export default apiInitializer("1.8.0", (api) => {
       icon: "question-circle",
       title: "Toggle instructions",
       action: "toggleComposerInstructions",
+      perform: () => {
+        // Newer toolbar APIs prefer `perform` over string actions.
+        try {
+          const composer = api.container.lookup("controller:composer");
+          composer?.send?.("toggleComposerInstructions");
+        } catch {
+          // ignore
+        }
+      },
     });
   });
+
+  // Extra safety: update when Discourse emits category change events
+  try {
+    appEvents?.on?.("composer:category-changed", () => {
+      const composer = api.container.lookup("controller:composer");
+      composer?._updateInstructionsForCategory?.();
+    });
+  } catch {
+    // ignore
+  }
 });
+
 
 

@@ -674,7 +674,10 @@ body.category {
   // Desktop/tablet: place panel where the preview normally is and hide preview.
   @media (min-width: 768px) {
     .d-editor.icarsoft-instructions-open {
-      .d-editor-preview {
+      .d-editor-preview,
+      .d-editor-preview-wrapper,
+      .d-editor-preview-container,
+      .d-editor-preview-pane {
         display: none !important;
       }
 
