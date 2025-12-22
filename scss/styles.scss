@@ -631,3 +631,75 @@ body.category {
     }
   }
 }
+
+// ------------------------------------------------------------
+// Composer: Category-based Instructions Panel (replaces preview)
+// ------------------------------------------------------------
+
+.composer-container {
+  .d-editor {
+    position: relative;
+  }
+
+  .icarsoft-composer-instructions-panel {
+    background: var(--secondary);
+    border-left: 1px solid var(--primary-low);
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .icarsoft-composer-instructions-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--primary-low);
+    flex: 0 0 auto;
+  }
+
+  .icarsoft-composer-instructions-panel__title {
+    margin: 0;
+    font-size: var(--font-up-1);
+  }
+
+  .icarsoft-composer-instructions-panel__body {
+    padding: 0.75rem;
+    overflow: auto;
+    flex: 1 1 auto;
+  }
+
+  // Desktop/tablet: place panel where the preview normally is and hide preview.
+  @media (min-width: 768px) {
+    .d-editor.icarsoft-instructions-open {
+      .d-editor-preview {
+        display: none !important;
+      }
+
+      .icarsoft-composer-instructions-panel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+      }
+    }
+  }
+
+  // Mobile: overlay panel (hidden by default; opened via toolbar help button)
+  @media (max-width: 767px) {
+    .d-editor.icarsoft-instructions-open {
+      .icarsoft-composer-instructions-panel {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        z-index: 2000;
+        width: auto;
+        height: auto;
+      }
+    }
+  }
+}
