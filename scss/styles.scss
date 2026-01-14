@@ -526,6 +526,13 @@ body.category {
   }
 }
 
+a.sidebar-section-link[href*="www.icarsoft"] {
+  color: var(--tertiary);
+   svg {
+    color: var(--tertiary);
+   }
+}
+
 /* Breadcrumbs */
 
 .discourse-breadcrumb-links {
