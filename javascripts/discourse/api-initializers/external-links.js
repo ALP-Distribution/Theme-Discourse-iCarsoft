@@ -30,8 +30,15 @@ export default apiInitializer("1.8.0", (api) => {
 
   // Specifically handle cooked content (posts) where Discourse might reconstruct DOM
   api.decorateCooked(
-    (element) => {
-      const links = element.querySelectorAll("a");
+    (element) => { 
+      // Handle jQuery object if passed
+      const domElement = element && element.jquery ? element[0] : element;
+
+      if (!domElement || typeof domElement.querySelectorAll !== "function") {
+        return;
+      }
+
+      const links = domElement.querySelectorAll("a");
       links.forEach((anchor) => {
         handleExternalLink(anchor);
       });
