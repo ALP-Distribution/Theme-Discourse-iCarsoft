@@ -1,8 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer("1.8.0", (api) => {
-  document.addEventListener("click", (event) => {
-    const anchor = event.target.closest("a");
+  const handleExternalLink = (anchor) => {
     if (!anchor) {
       return;
     }
@@ -17,5 +16,26 @@ export default apiInitializer("1.8.0", (api) => {
       // It is an external link
       anchor.setAttribute("target", "_blank");
     }
-  });
+  };
+
+  // Global click listener with capture to ensure we catch events before they are stopped
+  document.addEventListener(
+    "click",
+    (event) => {
+      const anchor = event.target.closest("a");
+      handleExternalLink(anchor);
+    },
+    { capture: true }
+  );
+
+  // Specifically handle cooked content (posts) where Discourse might reconstruct DOM
+  api.decorateCooked(
+    (element) => {
+      const links = element.querySelectorAll("a");
+      links.forEach((anchor) => {
+        handleExternalLink(anchor);
+      });
+    },
+    { id: "external-links-decorator" }
+  );
 });
