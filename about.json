@@ -40,7 +40,7 @@
       "primary": "221f20",
       "secondary": "ffffff",
       "tertiary": "de1a00",
-      "quaternary": "DE0055",
+      "quaternary": "ed2e15",
       "header_background": "ffffff",
       "header_primary": "333333",
       "highlight": "ffff4d",
@@ -50,11 +50,11 @@
       "success": "009900",
       "love": "fa6c8d"
     },
-    "Dark": {
+    "iCarsoft - Dark": {
       "primary": "dddddd",
       "secondary": "221f20",
       "tertiary": "de1a00",
-      "quaternary": "DE0055",
+      "quaternary": "ed2e15",
       "header_background": "111111",
       "header_primary": "eeeeee",
       "highlight": "a87137",

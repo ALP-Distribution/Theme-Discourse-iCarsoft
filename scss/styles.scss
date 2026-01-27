@@ -80,6 +80,7 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    filter: var(--icon-filter);
   }
 
   li a[href$="/latest"]::before {
@@ -92,13 +93,16 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
 
   li a[href$="/latest"].active::before {
     background-image: var(--canvas-icon-latest-red);
+    filter: none;
   }
 
   li a[href$="/hot"].active::before {
     background-image: var(--canvas-icon-hot-red);
+    filter: none;
   }
   li a[href$="/new"].active::before {
     background-image: var(--canvas-icon-new-red);
+    filter: none;
   }
   li a[href$="/new"]::before {
     background-image: var(--canvas-icon-new);
@@ -114,6 +118,7 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
   background-size: contain;
   margin-inline-end: 0.5em;
   vertical-align: -0.4em;
+  filter: var(--icon-filter);
   &.icon-car {
     background-image: var(--canvas-icon-car);
   }

@@ -20,4 +20,6 @@ $custom-button-padding-dark: 0.65rem 0.75rem;
   --topic-card-background-visited: #{dark-light-choose($custom-visit-light, $custom-visit-dark)};
   
   --canvas-button-primary-padding: #{dark-light-choose($custom-button-padding-light, $custom-button-padding-dark)};
+
+  --icon-filter: #{dark-light-choose(none, brightness(0) invert(1))};
 }
