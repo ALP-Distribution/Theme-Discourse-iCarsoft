@@ -22,4 +22,11 @@ $custom-button-padding-dark: 0.65rem 0.75rem;
   --canvas-button-primary-padding: #{dark-light-choose($custom-button-padding-light, $custom-button-padding-dark)};
 
   --icon-filter: #{dark-light-choose(none, brightness(0) invert(1))};
+
+  --subcats-logo-blend-mode: #{dark-light-choose(multiply, normal)};
+  --subcats-logo-radius: #{dark-light-choose(0, 8px)};
+  --subcats-logo-margin: #{dark-light-choose(0 0.25rem, 0.5rem 0.5rem)};
+  --subcats-logo-opacity: #{dark-light-choose(1, 0.8)};
 }
+
+

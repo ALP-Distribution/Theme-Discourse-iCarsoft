@@ -457,7 +457,10 @@ a.tc-discovery-nav__link {
 
 .category-nos-produits {
   .tc-subcats-nav__logo {
-    mix-blend-mode: multiply;
+    mix-blend-mode: var(--subcats-logo-blend-mode);
+    border-radius: var(--subcats-logo-radius);
+    margin-block: var(--subcats-logo-margin);
+    opacity: var(--subcats-logo-opacity);
   }
 }
 
