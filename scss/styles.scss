@@ -552,7 +552,7 @@ a.sidebar-section-link[href*="www.icarsoft"] {
 .breadcrumbs {
   order: -1;
   z-index: 101;
-  background: white;
+  background: var(--canvas-background);
   border-bottom-left-radius: var(--d-border-radius);
   border-bottom-right-radius: var(--d-border-radius);
   margin-bottom: 0.5rem;

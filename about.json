@@ -44,8 +44,25 @@
       "header_background": "ffffff",
       "header_primary": "333333",
       "highlight": "ffff4d",
-      "selected": "d1f0ff",
-      "hover": "f2f2f2"
+      "selected": "FFE0D1",
+      "hover": "f2f2f2",
+      "danger": "e45735",
+      "success": "009900",
+      "love": "fa6c8d"
+    },
+    "Dark": {
+      "primary": "dddddd",
+      "secondary": "221f20",
+      "tertiary": "de1a00",
+      "quaternary": "cfae00",
+      "header_background": "111111",
+      "header_primary": "eeeeee",
+      "highlight": "a87137",
+      "selected": "FFE0D1",
+      "hover": "f2f2f2",
+      "danger": "e45735",
+      "success": "009900",
+      "love": "fa6c8d"
     }
   },
   "components": [

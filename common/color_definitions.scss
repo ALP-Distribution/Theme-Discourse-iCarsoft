@@ -1,0 +1,23 @@
+// Custom color definitions for Dark Mode compatibility
+
+// Colors
+$custom-bg-light: #ffffff;
+$custom-bg-dark: #222222;
+
+$custom-panel-bg-light: #F9F7F6;
+$custom-panel-bg-dark: #111111; // Lighter than bg for contrast
+
+$custom-visit-light: var(--primary-50);
+$custom-visit-dark: var(--primary-low);
+
+// Button padding
+$custom-button-padding-light: 0.65rem 0.75rem;
+$custom-button-padding-dark: 0.65rem 0.75rem;
+
+:root {
+  --canvas-background: #{dark-light-choose($custom-bg-light, $custom-bg-dark)};
+  --topic-card-background: #{dark-light-choose($custom-panel-bg-light, $custom-panel-bg-dark)};
+  --topic-card-background-visited: #{dark-light-choose($custom-visit-light, $custom-visit-dark)};
+  
+  --canvas-button-primary-padding: #{dark-light-choose($custom-button-padding-light, $custom-button-padding-dark)};
+}

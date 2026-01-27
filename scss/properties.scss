@@ -7,7 +7,7 @@
   --d-max-width: 1120px;
 
   /* Base Styles */
-  --canvas-background: white;
+  // --canvas-background is defined in common/color_definitions.scss
   --canvas-border: 1px solid var(--primary-200);
   // --canvas-border-light: 1px solid var(--primary-200);
 
@@ -21,7 +21,7 @@
 
   /* Button Styles */
   // --canvas-button-padding: 0.5rem 0.75rem;
-  --canvas-button-primary-padding: 0.65rem 0.75rem;
+  // --canvas-button-primary-padding is defined in common/color_definitions.scss
 
   /* Header */
   // --canvas-header-height: 4rem;
@@ -63,10 +63,10 @@
   // --canvas-header-search-padding: 0.5em;
 
   /* Topic Cards */
-  --topic-card-background: #F9F7F6;
+  // --topic-card-background is defined in common/color_definitions.scss
   --topic-card-border-radius: var(--d-border-radius-medium);
   --topic-card-shadow: rgba(0, 0, 0, 0.075) 0px 0px 5px 0px, rgba(0, 0, 0, 0.075) 0px 0px 1px 0px;
-  --topic-card-background-visited: var(--primary-50);
+  // --topic-card-background-visited is defined in common/color_definitions.scss
 
   /* Icons */
   --canvas-icon-latest: url(#{$icon-latest});
