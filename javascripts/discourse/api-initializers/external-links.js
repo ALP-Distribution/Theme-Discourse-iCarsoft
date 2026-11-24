@@ -1,6 +1,6 @@
 import { apiInitializer } from "discourse/lib/api";
 
-export default apiInitializer("1.8.0", (api) => {
+export default apiInitializer((api) => {
   const handleExternalLink = (anchor) => {
     if (!anchor) {
       return;
@@ -11,35 +11,40 @@ export default apiInitializer("1.8.0", (api) => {
       return;
     }
 
-    // Check if the link uses the current hostname (internal)
+    if (anchor.protocol !== "http:" && anchor.protocol !== "https:") {
+      return;
+    }
+
     if (anchor.hostname && anchor.hostname !== window.location.hostname) {
-      // It is an external link
       anchor.setAttribute("target", "_blank");
+      const relTokens = new Set(
+        (anchor.getAttribute("rel") || "").split(/\s+/).filter(Boolean)
+      );
+      relTokens.add("noopener");
+      relTokens.add("noreferrer");
+      anchor.setAttribute("rel", Array.from(relTokens).join(" "));
     }
   };
 
-  // Global click listener with capture to ensure we catch events before they are stopped
   document.addEventListener(
     "click",
     (event) => {
+      if (!(event.target instanceof Element)) {
+        return;
+      }
       const anchor = event.target.closest("a");
       handleExternalLink(anchor);
     },
     { capture: true }
   );
 
-  // Specifically handle cooked content (posts) where Discourse might reconstruct DOM
-  api.decorateCooked(
-    (element) => { 
-      // Handle jQuery object if passed
-      const domElement = element && element.jquery ? element[0] : element;
-
-      if (!domElement || typeof domElement.querySelectorAll !== "function") {
+  api.decorateCookedElement(
+    (element) => {
+      if (!element || typeof element.querySelectorAll !== "function") {
         return;
       }
 
-      const links = domElement.querySelectorAll("a");
-      links.forEach((anchor) => {
+      element.querySelectorAll("a").forEach((anchor) => {
         handleExternalLink(anchor);
       });
     },

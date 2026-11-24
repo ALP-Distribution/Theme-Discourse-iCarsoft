@@ -1,6 +1,6 @@
 import { apiInitializer } from "discourse/lib/api";
 
-export default apiInitializer("1.8.0", (api) => {
+export default apiInitializer((api) => {
   if (!settings?.enable_composer_instructions_popup) {
     return;
   }
@@ -33,13 +33,9 @@ export default apiInitializer("1.8.0", (api) => {
       id: "icarsoft-instructions",
       group: "extras",
       icon: "circle-question",
-      title: "Instructions",
+      title: themePrefix("composer_instructions.title"),
       action: () => instructions.toggle(),
-      // Hide outside the new-topic composer. If the host Discourse version
-      // doesn't support `condition`, the service will still refuse to open.
       condition: () => instructions.isCreateTopic,
     });
   });
 });
-
-

@@ -1,0 +1,9 @@
+fr:
+  theme_metadata:
+    description: "Thème Canvas personnalisé pour le forum communautaire iCarsoft France."
+  breadcrumbs:
+    aria_label: "Fil d'Ariane"
+    home: "Accueil"
+  composer_instructions:
+    title: "Instructions"
+    close: "Fermer"

@@ -1,8 +1,9 @@
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
-import CookText from "discourse/components/cook-text";
-import DButton from "discourse/components/d-button";
+import DButton from "discourse/ui-kit/d-button";
+import DCookText from "discourse/ui-kit/d-cook-text";
+import { i18n } from "discourse-i18n";
 
 export default class IcarsoftComposerInstructionsPopup extends Component {
   @service("icarsoft-composer-instructions") instructions;
@@ -27,29 +28,26 @@ export default class IcarsoftComposerInstructionsPopup extends Component {
 
   <template>
     {{#if this.shouldRender}}
-      <section class="icarsoft-composer-instructions" aria-label="Instructions">
+      <section
+        aria-label={{i18n (themePrefix "composer_instructions.title")}}
+        class="icarsoft-composer-instructions"
+      >
         <div class="icarsoft-composer-instructions__header">
-          <h3 class="icarsoft-composer-instructions__title">Instructions</h3>
+          <h3 class="icarsoft-composer-instructions__title">
+            {{i18n (themePrefix "composer_instructions.title")}}
+          </h3>
           <DButton
             class="btn-flat icarsoft-composer-instructions__close"
-            @icon="xmark"
             @action={{this.close}}
-            @title="Close"
+            @icon="xmark"
+            @title={{themePrefix "composer_instructions.close"}}
           />
         </div>
 
         <div class="icarsoft-composer-instructions__body">
-          {{#if this.instructions.hasTemplate}}
-            <CookText @rawText={{this.instructions.resolvedTemplateMarkdown}} />
-          {{else}}
-            <p class="icarsoft-composer-instructions__empty">
-              {{this.instructions.emptyStateText}}
-            </p>
-          {{/if}}
+          <DCookText @rawText={{this.instructions.resolvedTemplateMarkdown}} />
         </div>
       </section>
     {{/if}}
   </template>
 }
-
-

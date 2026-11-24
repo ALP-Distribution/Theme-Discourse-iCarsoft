@@ -1,15 +1,17 @@
 // External Biennale font family
-@import url("https://ressources.icarsoft-france.fr/polices/biennale/biennale.css");
+@import "https://ressources.icarsoft-france.fr/polices/biennale/biennale.css";
 
 // Apply Biennale site-wide with sensible fallbacks
 :root {
-  --font-family: "Biennale", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
-    --heading-font-family: "Biennale", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  --font-family:
+    "Biennale", system-ui, -apple-system, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Helvetica Neue", "Arial", sans-serif;
+  --heading-font-family:
+    "Biennale", system-ui, -apple-system, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Helvetica Neue", "Arial", sans-serif;
 }
+
 html,
 body {
-  font-family: "Biennale", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-family);
 }

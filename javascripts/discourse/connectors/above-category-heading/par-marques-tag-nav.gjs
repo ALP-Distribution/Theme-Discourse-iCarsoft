@@ -1,39 +1,46 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { service } from "@ember/service";
-import getURLWithCDN from "discourse-common/lib/get-url";
 import { ajax } from "discourse/lib/ajax";
+import getURL from "discourse/lib/get-url";
+
+let cachedSiteTagGroups = null;
+let siteTagGroupsPromise = null;
+
+function fetchSiteTagGroups() {
+  if (cachedSiteTagGroups !== null) {
+    return Promise.resolve(cachedSiteTagGroups);
+  }
+  if (!siteTagGroupsPromise) {
+    siteTagGroupsPromise = ajax("/tag_groups.json")
+      .then((result) => {
+        cachedSiteTagGroups = result?.tag_groups || result || [];
+        return cachedSiteTagGroups;
+      })
+      .catch(() => {
+        cachedSiteTagGroups = [];
+        return cachedSiteTagGroups;
+      });
+  }
+  return siteTagGroupsPromise;
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
 export default class ParMarquesTagNavConnector extends Component {
+  @service router;
   @service site;
-  @tracked loadedTagGroups = null;
 
-  constructor() {
-    super(...arguments);
-    this.loadTagGroups();
-  }
+  @tracked loadedTagGroups = cachedSiteTagGroups;
 
-  async loadTagGroups() {
-    if (this.loadedTagGroups !== null) {
-      return;
-    }
-    try {
-      const result = await ajax("/tag_groups.json");
-      const groups = result?.tag_groups || result || [];
-      this.loadedTagGroups = groups;
-    } catch (e) {
-      this.loadedTagGroups = [];
-    }
-  }
-
-  // --- Feature toggle -------------------------------------------------------
   get enable() {
     return settings.enable_par_marques_tag_nav;
   }
 
-  // --- Category / hierarchy helpers ----------------------------------------
   get category() {
-    return this.args?.category;
+    return this.args?.outletArgs?.category ?? this.args?.category;
   }
 
   get parentCategory() {
@@ -52,27 +59,26 @@ export default class ParMarquesTagNavConnector extends Component {
     }
     const idStr = String(parent.id || "");
     const slug = String(parent.slug || "").toLowerCase();
-    // Allow both explicit id and slug match for robustness
     return idStr === "6" || slug === "par-marques";
   }
 
-  // --- Current tag handling (mirrors tag-nav.gjs) ---------------------------
   get currentTag() {
-    // Parse URL query params to find currently selected tag
+    const currentUrl = this.router?.currentURL || "";
     try {
-      const params = new URLSearchParams(window.location.search);
+      const queryIndex = currentUrl.indexOf("?");
+      const search =
+        queryIndex >= 0 ? currentUrl.slice(queryIndex) : window.location.search;
+      const params = new URLSearchParams(search);
       const tags = params.get("tags");
       if (tags) {
-        // Handle multiple tags (comma-separated) by taking the first one
-        return tags.split(",")[0].trim();
+        return tags.split(",")[0].trim() || null;
       }
-    } catch (e) {
+    } catch {
       // fallback if URL parsing fails
     }
     return null;
   }
 
-  // --- Resolve Modèles tag groups for this subcategory ---------------------
   get subcategoryTagGroupNames() {
     const c = this.category;
     if (!c) {
@@ -97,8 +103,7 @@ export default class ParMarquesTagNavConnector extends Component {
 
   get tagGroupsOnSite() {
     if (this.loadedTagGroups === null) {
-      // Not yet loaded (or still loading); trigger fetch and return empty for now
-      this.loadTagGroups();
+      this.ensureTagGroupsLoaded();
       return [];
     }
     return this.loadedTagGroups || [];
@@ -168,7 +173,6 @@ export default class ParMarquesTagNavConnector extends Component {
     return Array.from(set);
   }
 
-  // --- Tag list for this subcategory ---------------------------------------
   get availableTagNames() {
     const modeles = this.modelesTagSlugs;
     if (!modeles.length) {
@@ -177,24 +181,70 @@ export default class ParMarquesTagNavConnector extends Component {
     return modeles;
   }
 
+  get tags() {
+    if (!this.enable || !this.isParMarquesSubcategory) {
+      return [];
+    }
+
+    const names = this.availableTagNames;
+    if (!Array.isArray(names) || names.length === 0) {
+      return [];
+    }
+
+    const lowerIncludesAutresModeles = (slug) =>
+      String(slug || "")
+        .toLowerCase()
+        .includes("autres-modeles");
+
+    const regularNames = names.filter(
+      (slug) => !lowerIncludesAutresModeles(slug)
+    );
+    const autresModelesNames = names.filter((slug) =>
+      lowerIncludesAutresModeles(slug)
+    );
+
+    const orderedNames = [...regularNames, ...autresModelesNames];
+    const current = this.currentTag;
+
+    return orderedNames.map((slug) => ({
+      slug,
+      label: this.navLabel(slug),
+      url: this.tagUrl(slug),
+      isSelected:
+        !!current && current.toLowerCase() === String(slug).toLowerCase(),
+    }));
+  }
+
+  get show() {
+    return this.tags.length > 0;
+  }
+
+  ensureTagGroupsLoaded() {
+    if (this.loadedTagGroups !== null) {
+      return;
+    }
+    Promise.resolve().then(async () => {
+      const groups = await fetchSiteTagGroups();
+      if (!this.isDestroying) {
+        this.loadedTagGroups = groups;
+      }
+    });
+  }
+
   tagUrl(tag) {
     const c = this.category;
     if (!c) {
-      return getURLWithCDN(`/tags/${encodeURIComponent(tag)}`);
+      return getURL(`/tags/${encodeURIComponent(tag)}`);
     }
 
-    // If this tag is currently selected, toggle it off (return category URL)
     if (
       this.currentTag &&
       this.currentTag.toLowerCase() === String(tag).toLowerCase()
     ) {
-      return getURLWithCDN(`/c/${c.slug}/${c.id}`);
+      return getURL(`/c/${c.slug}/${c.id}`);
     }
 
-    // Otherwise, link to category filtered by tag
-    return getURLWithCDN(
-      `/c/${c.slug}/${c.id}?tags=${encodeURIComponent(tag)}`
-    );
+    return getURL(`/c/${c.slug}/${c.id}?tags=${encodeURIComponent(tag)}`);
   }
 
   prettyLabel(slug) {
@@ -211,29 +261,19 @@ export default class ParMarquesTagNavConnector extends Component {
     }
 
     const catSlug = String(c.slug || "").toLowerCase();
-    const lowerRaw = raw.toLowerCase();
-
-    // Build a flexible brand pattern from the category slug:
-    // - treat "-" in the category as "[- ]" to allow both "-" and " " in tags
-    // - allow "-", "_" or " " between the brand and the rest of the tag
-    const brandPattern = catSlug.replace(/-/g, "[- ]");
+    const brandPattern = escapeRegExp(catSlug).replace(/-/g, "[- ]");
     const brandRegex = new RegExp(`^${brandPattern}[-_ ]*`, "i");
 
-    let stripped = raw.replace(brandRegex, "");
-
-    // If nothing changed (no brand prefix found), fall back to generic label
+    const stripped = raw.replace(brandRegex, "");
     if (stripped === raw) {
       return this.prettyLabel(raw);
     }
 
-    // Normalise separators (underscore / hyphen) to spaces
     let cleaned = stripped.replace(/[_-]+/g, " ").trim();
-
     if (!cleaned) {
       return this.prettyLabel(raw);
     }
 
-    // Capitalise each word (keeps numbers intact, e.g. "serie 3" → "Serie 3")
     cleaned = cleaned
       .split(/\s+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -242,60 +282,18 @@ export default class ParMarquesTagNavConnector extends Component {
     return cleaned;
   }
 
-  get tags() {
-    if (!this.enable) {
-      return [];
-    }
-    if (!this.isParMarquesSubcategory) {
-      return [];
-    }
-
-    const names = this.availableTagNames;
-    if (!Array.isArray(names) || names.length === 0) {
-      return [];
-    }
-
-    // Ensure any "autres-modeles" tags are always placed at the end
-    const lowerIncludesAutresModeles = (slug) =>
-      String(slug || "")
-        .toLowerCase()
-        .includes("autres-modeles");
-
-    const regularNames = names.filter(
-      (slug) => !lowerIncludesAutresModeles(slug)
-    );
-    const autresModelesNames = names.filter((slug) =>
-      lowerIncludesAutresModeles(slug)
-    );
-
-    const orderedNames = [...regularNames, ...autresModelesNames];
-
-    const current = this.currentTag;
-    return orderedNames.map((slug) => ({
-      slug,
-      label: this.navLabel(slug),
-      url: this.tagUrl(slug),
-      isSelected:
-        !!current && current.toLowerCase() === String(slug).toLowerCase(),
-    }));
-  }
-
-  get show() {
-    return this.tags.length > 0;
-  }
-
-  // --- Template -------------------------------------------------------------
   <template>
     {{#if this.show}}
       <nav
-        class="tc-tag-nav tc-par-marques-tag-nav"
         aria-label="Modèles navigation"
+        class="tc-tag-nav tc-par-marques-tag-nav"
       >
         <h2 class="tc-par-marques-tag-nav__title">Filtre rapide</h2>
         <ul class="tc-discovery-nav__list tc-par-marques-tag-nav__list">
           {{#each this.tags as |t|}}
             <li class="tc-discovery-nav__item tc-par-marques-tag-nav__item">
               <a
+                aria-current={{if t.isSelected "true"}}
                 class="tc-discovery-nav__link tc-par-marques-tag-nav__link
                   {{if t.isSelected 'is-selected'}}"
                 href={{t.url}}
@@ -311,6 +309,5 @@ export default class ParMarquesTagNavConnector extends Component {
         </ul>
       </nav>
     {{/if}}
-    {{yield}}
   </template>
 }

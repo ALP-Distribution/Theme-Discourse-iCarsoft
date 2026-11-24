@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import getURLWithCDN from "discourse-common/lib/get-url";
+import getURL, { getURLWithCDN } from "discourse/lib/get-url";
 
 export default class SubcategoriesNavConnector extends Component {
   @service site;
@@ -10,18 +10,22 @@ export default class SubcategoriesNavConnector extends Component {
   }
 
   get category() {
-    return this.args?.category;
+    return this.args?.outletArgs?.category ?? this.args?.category;
   }
 
   get parentMatches() {
     const parent = this.category;
-    if (!parent) return false;
+    if (!parent) {
+      return false;
+    }
     const raw = String(settings.subcategory_nav_parents || "");
     const tokens = raw
       .split("|")
       .map((s) => s.trim().toLowerCase())
       .filter(Boolean);
-    if (tokens.length === 0) return false;
+    if (tokens.length === 0) {
+      return false;
+    }
     const idStr = String(parent.id || "");
     const slug = String(parent.slug || "").toLowerCase();
     return tokens.includes(idStr) || tokens.includes(slug);
@@ -29,7 +33,9 @@ export default class SubcategoriesNavConnector extends Component {
 
   get subcategories() {
     const parent = this.category;
-    if (!parent) return [];
+    if (!parent) {
+      return [];
+    }
     const all = this.site.categories || [];
     return all
       .filter((c) => c.parent_category_id === parent.id && !c.read_restricted)
@@ -80,7 +86,7 @@ export default class SubcategoriesNavConnector extends Component {
   }
 
   urlForCategory(cat) {
-    return getURLWithCDN(`/c/${cat.slug}/${cat.id}`);
+    return getURL(`/c/${cat.slug}/${cat.id}`);
   }
 
   logoUrlForCategory(cat) {
@@ -89,13 +95,18 @@ export default class SubcategoriesNavConnector extends Component {
   }
 
   motoSubcategorieName(cat) {
-    if (!cat || !cat.name) return "";
+    if (!cat || !cat.name) {
+      return "";
+    }
     let name = String(cat.name);
     name = name.replace(/\b(moto|motos)\b/gi, "");
     return name.trim();
   }
+
   poidLourdSubcategorieName(cat) {
-    if (!cat || !cat.name) return "";
+    if (!cat || !cat.name) {
+      return "";
+    }
     let name = String(cat.name);
     name = name.replace(/\b(pl|poid-lourd|poid-lourds)\b/gi, "");
     name = name.replace(/ \| ?P-?L/gi, "");
@@ -105,7 +116,7 @@ export default class SubcategoriesNavConnector extends Component {
   <template>
     {{#if this.show}}
       {{#if this.isDividedBySubcategories}}
-        <nav class={{this.navClass}} aria-label="Subcategories navigation">
+        <nav aria-label="Subcategories navigation" class={{this.navClass}}>
           <div class="tc-subcats-nav__wrap wrap">
             <div class="tc-subcats-nav__section">
               <h3 class="tc-subcats-nav__title"><span
@@ -121,10 +132,12 @@ export default class SubcategoriesNavConnector extends Component {
                       {{#let (this.logoUrlForCategory cat) as |logo|}}
                         {{#if logo}}
                           <img
-                            class="tc-subcats-nav__logo"
-                            src={{logo}}
                             alt=""
                             aria-hidden="true"
+                            class="tc-subcats-nav__logo"
+                            decoding="async"
+                            loading="lazy"
+                            src={{logo}}
                           />
                         {{/if}}
                       {{/let}}
@@ -149,10 +162,12 @@ export default class SubcategoriesNavConnector extends Component {
                         {{#let (this.logoUrlForCategory cat) as |logo|}}
                           {{#if logo}}
                             <img
-                              class="tc-subcats-nav__logo"
-                              src={{logo}}
                               alt=""
                               aria-hidden="true"
+                              class="tc-subcats-nav__logo"
+                              decoding="async"
+                              loading="lazy"
+                              src={{logo}}
                             />
                           {{/if}}
                         {{/let}}
@@ -180,10 +195,12 @@ export default class SubcategoriesNavConnector extends Component {
                         {{#let (this.logoUrlForCategory cat) as |logo|}}
                           {{#if logo}}
                             <img
-                              class="tc-subcats-nav__logo"
-                              src={{logo}}
                               alt=""
                               aria-hidden="true"
+                              class="tc-subcats-nav__logo"
+                              decoding="async"
+                              loading="lazy"
+                              src={{logo}}
                             />
                           {{/if}}
                         {{/let}}
@@ -199,7 +216,7 @@ export default class SubcategoriesNavConnector extends Component {
           </div>
         </nav>
       {{else}}
-        <nav class={{this.navClass}} aria-label="Subcategories navigation">
+        <nav aria-label="Subcategories navigation" class={{this.navClass}}>
           <div class="tc-subcats-nav__wrap wrap">
             <ul class="tc-subcats-nav__list">
               {{#each this.subcategories as |cat|}}
@@ -211,10 +228,12 @@ export default class SubcategoriesNavConnector extends Component {
                     {{#let (this.logoUrlForCategory cat) as |logo|}}
                       {{#if logo}}
                         <img
-                          class="tc-subcats-nav__logo"
-                          src={{logo}}
                           alt=""
                           aria-hidden="true"
+                          class="tc-subcats-nav__logo"
+                          decoding="async"
+                          loading="lazy"
+                          src={{logo}}
                         />
                       {{/if}}
                     {{/let}}
@@ -227,6 +246,5 @@ export default class SubcategoriesNavConnector extends Component {
         </nav>
       {{/if}}
     {{/if}}
-    {{yield}}
   </template>
 }

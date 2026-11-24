@@ -1,7 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
-import getURLWithCDN from "discourse-common/lib/get-url";
+import { getURLWithCDN } from "discourse/lib/get-url";
 
-export default apiInitializer("1.8.0", (api) => {
+export default apiInitializer((api) => {
   const searchImagePath = settings.search_banner_image;
   const searchTitle = settings.search_banner_title;
 
@@ -22,7 +22,7 @@ export default apiInitializer("1.8.0", (api) => {
           titleEl.textContent = searchTitle;
         }
       }
-    } catch (e) {}
+    } catch {}
   }
 
   applySearchBannerCustomizations();

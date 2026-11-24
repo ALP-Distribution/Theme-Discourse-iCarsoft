@@ -88,13 +88,13 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   opacity: 0.95;
-  color: #ffffff!important;;
+  color: #ffffff!important;
 }
 
 .email-hero-stripe__separator {
   font-size: 11px;
   opacity: 0.95;
-  color: #ffffff!important;;
+  color: #ffffff!important;
 }
 
 .email-hero-stripe__tagline {
@@ -108,8 +108,8 @@
     Roboto, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.6;
-  color: #111827!important;;
-  background-color: #ffffff!important;;
+  color: #111827!important;
+  background-color: #ffffff!important;
 }
 
 .email-content h1,
@@ -207,9 +207,9 @@
     Roboto, Arial, sans-serif;
   font-size: 11px;
   line-height: 1.5;
-  color: #6b7280!important;;
-  background-color: #f9fafb!important;;
-  border-top: 1px solid #e5e7eb!important;;
+  color: #6b7280!important;
+  background-color: #f9fafb!important;
+  border-top: 1px solid #e5e7eb!important;
 }
 
 .email-footer__text {
@@ -217,7 +217,7 @@
 }
 
 .email-footer__text--muted {
-  color: #9ca3af!important;;
+  color: #9ca3af!important;
 }
 
 .email-footer .email-link {

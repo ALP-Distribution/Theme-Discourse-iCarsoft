@@ -1,12 +1,11 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import getURLWithCDN from "discourse-common/lib/get-url";
+import { getURLWithCDN } from "discourse/lib/get-url";
 
 export default class CategoryBannerConnector extends Component {
-  @service site;
   @service router;
+  @service site;
 
-  // Reactive token that changes on navigation to trigger recomputation
   get routeSignature() {
     return `${this.router.currentRouteName}:${this.router.currentURL}`;
   }
@@ -16,27 +15,35 @@ export default class CategoryBannerConnector extends Component {
   }
 
   get categoryFromUrl() {
+    if (!this.routeSignature) {
+      return null;
+    }
     try {
-      // Access routeSignature to re-run on SPA navigation
-      const _sig = this.routeSignature;
       const path = window.location?.pathname || "";
-      // Matches /c/<anything>/<id> with id as digits
-      const m = path.match(/\/c\/.*\/(\d+)(?:[\/?#]|$)/);
+      const m = path.match(/\/c\/(?:[^/]+\/)+(\d+)(?:[/?#]|$)/);
       const id = m && m[1] ? parseInt(m[1], 10) : null;
-      if (!id || !this.site?.categories) return null;
+      if (!id || !this.site?.categories) {
+        return null;
+      }
       return this.site.categories.find((c) => c.id === id) || null;
-    } catch (e) {
+    } catch {
       return null;
     }
   }
 
   get category() {
-    return this.args?.category || this.categoryFromUrl;
+    return (
+      this.args?.outletArgs?.category ||
+      this.args?.category ||
+      this.categoryFromUrl
+    );
   }
 
   get imageUrl() {
     const c = this.category;
-    if (!c) return null;
+    if (!c) {
+      return null;
+    }
     const raw = (c.uploaded_background && c.uploaded_background.url) || null;
     return raw ? getURLWithCDN(raw) : null;
   }
@@ -54,12 +61,14 @@ export default class CategoryBannerConnector extends Component {
     {{#if this.show}}
       <div class="tc-banner">
         <div class="tc-banner__inner wrap">
-          <img class="tc-banner__img" src={{this.imageUrl}} alt={{this.alt}} />
+          <img
+            alt={{this.alt}}
+            class="tc-banner__img"
+            fetchpriority="high"
+            src={{this.imageUrl}}
+          />
         </div>
       </div>
     {{/if}}
-    {{yield}}
   </template>
 }
-
-

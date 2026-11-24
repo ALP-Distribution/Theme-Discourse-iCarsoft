@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import getURLWithCDN from "discourse-common/lib/get-url";
+import { getURLWithCDN } from "discourse/lib/get-url";
 
 export default class HomeBannerConnector extends Component {
   @service router;
@@ -25,13 +25,15 @@ export default class HomeBannerConnector extends Component {
           if (window.location && window.location.pathname === "/") {
             return "root";
           }
-        } catch (e) {}
+        } catch {}
         return name || "";
     }
   }
 
   get show() {
-    if (!settings.enable_home_banner) return false;
+    if (!settings.enable_home_banner) {
+      return false;
+    }
     const pages = String(settings.home_banner_pages || "")
       .split("|")
       .map((s) => s.trim())
@@ -54,13 +56,15 @@ export default class HomeBannerConnector extends Component {
       {{#if this.src}}
         <div class="tc-banner">
           <div class="tc-banner__inner wrap">
-            <img class="tc-banner__img" src={{this.src}} alt={{this.alt}} />
+            <img
+              alt={{this.alt}}
+              class="tc-banner__img"
+              fetchpriority="high"
+              src={{this.src}}
+            />
           </div>
         </div>
       {{/if}}
     {{/if}}
-    {{yield}}
   </template>
 }
-
-

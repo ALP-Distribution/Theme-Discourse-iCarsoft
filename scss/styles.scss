@@ -100,10 +100,12 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
     background-image: var(--canvas-icon-hot-red);
     filter: none;
   }
+
   li a[href$="/new"].active::before {
     background-image: var(--canvas-icon-new-red);
     filter: none;
   }
+
   li a[href$="/new"]::before {
     background-image: var(--canvas-icon-new);
   }
@@ -119,12 +121,15 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
   margin-inline-end: 0.5em;
   vertical-align: -0.4em;
   filter: var(--icon-filter);
+
   &.icon-car {
     background-image: var(--canvas-icon-car);
   }
+
   &.icon-motorbike {
     background-image: var(--canvas-icon-motorbike);
   }
+
   &.icon-truck {
     background-image: var(--canvas-icon-truck);
   }
@@ -213,7 +218,7 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
 .tc-banner__img {
   width: 100%;
   height: auto;
-  aspect-ratio: 5/1;
+  aspect-ratio: 5 / 1;
   object-fit: cover;
   object-position: center;
   border-radius: var(--d-border-radius-large);
@@ -227,7 +232,7 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
 .tc-discovery-nav__wrap {
   display: block;
   padding: 0;
-  container-name: tc-discovery-nav__wrap;
+  container-name: tc-discovery-nav-wrap;
   container-type: inline-size;
 }
 
@@ -304,10 +309,11 @@ a.tc-discovery-nav__link {
   }
 }
 
-@container tc-discovery-nav__wrap (max-width: 712px) {
+@container tc-discovery-nav-wrap (width <= 712px) {
   .tc-discovery-nav__list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+
     .tc-discovery-nav__item:nth-child(2)::after {
       left: 50%;
       right: unset;
@@ -317,6 +323,7 @@ a.tc-discovery-nav__link {
       height: 1px;
       transform: translateX(-50%);
     }
+
     .tc-discovery-nav__item:nth-child(3)::before {
       content: "";
       display: block;
@@ -334,12 +341,14 @@ a.tc-discovery-nav__link {
 /* Par-marques Modèles tag nav (subcategories) */
 .tc-par-marques-tag-nav {
   margin-block: 0.5rem 2rem;
+
   h2.tc-par-marques-tag-nav__title {
     font-size: 1.25rem;
     font-weight: 600;
     margin-block-end: 0.5rem;
     color: var(--primary);
   }
+
   ul.tc-par-marques-tag-nav__list {
     gap: 0.5rem;
   }
@@ -373,9 +382,11 @@ a.tc-discovery-nav__link {
     font-style: normal;
     color: var(--primary);
   }
+
   a.tc-par-marques-tag-nav__link.is-selected {
     background: var(--tertiary-50);
     border: 1px solid var(--tertiary);
+
     span.tc-par-marques-tag-nav__label {
       color: var(--primary);
     }
@@ -390,6 +401,7 @@ a.tc-discovery-nav__link {
 
 .tc-subcats-nav__wrap {
   display: block;
+
   .tc-subcats-nav__section:not(:last-child) {
     margin-block-end: 1.5rem;
   }
@@ -483,23 +495,27 @@ body .container:has(.category-heading.--has-logo) {
 .category-heading.--has-logo {
   --category-header-logo-size: 5rem;
 }
+
 .category-heading.--has-logo .category-heading__logo img {
   object-fit: contain;
 }
+
 .category .category-heading.--has-logo .badge-category svg.d-icon {
   display: none;
 }
 
-@container category-container (max-width: 480px) {
+@container category-container (width <= 480px) {
   .category-heading.--has-logo {
     flex-direction: column;
     gap: 0;
   }
+
   .category-heading__logo.category-logo.aspect-image {
     width: 3rem;
     height: 3rem;
   }
 }
+
 /* Tag nav container spacing */
 .tc-tag-nav {
   margin-block: 0.5rem 3rem;
@@ -514,6 +530,7 @@ body.category {
   .category-boxes {
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     gap: 1rem;
+
     &.with-logos .category-logo {
       display: none;
     }
@@ -521,12 +538,15 @@ body.category {
 
   .category-box {
     transition: border-left-width 0.2s ease-in-out;
+
     .category-box-inner {
       padding-inline-start: 2rem;
       transition: padding-inline-start 0.2s ease-in-out;
     }
+
     &:hover {
       border-left-width: calc(1rem + var(--d-category-border-accent-width));
+
       .category-box-inner {
         padding-inline-start: 1rem;
       }
@@ -537,17 +557,18 @@ body.category {
 a.sidebar-section-link[href*="www.icarsoft"] {
   color: var(--tertiary);
   transition: 0.2s ease-in-out;
+
   &:hover {
     color: var(--tertiary);
     font-weight: 500;
-   }
-   svg {
+  }
+
+  svg {
     color: var(--tertiary);
-   }
+  }
 }
 
 /* Breadcrumbs */
-
 .discourse-breadcrumb-links {
   z-index: 101;
 }
@@ -564,8 +585,8 @@ a.sidebar-section-link[href*="www.icarsoft"] {
   border-bottom-left-radius: var(--d-border-radius);
   border-bottom-right-radius: var(--d-border-radius);
   margin-bottom: 0.5rem;
+
   &__container {
-    /* min-height: 3em; */
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -574,25 +595,38 @@ a.sidebar-section-link[href*="www.icarsoft"] {
     font-size: 15px;
     gap: 0.5em;
   }
+
   &__title {
     .d-icon {
       font-size: 13px;
       padding-left: 0.25em;
     }
   }
+
   &__links {
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.35rem;
     list-style: none;
     margin: 0.2em;
+    padding: 0;
     flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
+
     li {
       display: flex;
       align-items: center;
       gap: 0.25rem;
     }
+
+    li + li::before {
+      content: "/\00a0";
+      content: "/\00a0" / "";
+      color: var(--primary-medium);
+    }
+
     a {
       display: inline-block;
       max-width: 100%;
@@ -600,15 +634,35 @@ a.sidebar-section-link[href*="www.icarsoft"] {
       text-overflow: ellipsis;
       white-space: nowrap;
       color: var(--tertiary);
-      &:hover {
+      text-decoration: none;
+
+      &:hover,
+      &:focus-visible {
         color: var(--tertiary);
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        position: relative;
+        z-index: 1;
+        outline: 2px solid var(--tertiary);
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      &[aria-current="page"] {
+        color: var(--primary-medium);
+        font-weight: 600;
+        text-decoration: none;
       }
     }
+
     .home,
     .parent {
       flex: 0 0 auto;
       white-space: nowrap;
     }
+
     .current {
       flex: 1 1 auto;
       min-width: 0;
@@ -616,10 +670,12 @@ a.sidebar-section-link[href*="www.icarsoft"] {
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .home::after,
-    .parent::after {
-      content: "/\00a0";
-    }
+  }
+}
+
+@media (forced-colors: active) {
+  .breadcrumbs__links a[aria-current="page"] {
+    text-decoration: underline;
   }
 }
 
@@ -628,29 +684,50 @@ a.sidebar-section-link[href*="www.icarsoft"] {
   position: sticky !important;
   top: calc(var(--header-offset)) !important;
 }
-.above-main-container-outlet.welcome-link-banner-connectors .welcome-wrapper .welcome-content, .below-site-header-outlet.welcome-link-banner-connector .welcome-wrapper .welcome-content {
+
+.above-main-container-outlet.welcome-link-banner-connectors
+  .welcome-wrapper
+  .welcome-content,
+.below-site-header-outlet.welcome-link-banner-connector
+  .welcome-wrapper
+  .welcome-content {
   max-width: 450px;
-  flex: 1 1 60%
+  flex: 1 1 60%;
 }
-.above-main-container-outlet.welcome-link-banner-connectors .welcome-wrapper .featured-banner-link, .below-site-header-outlet.welcome-link-banner-connector .welcome-wrapper .featured-banner-link {
+
+.above-main-container-outlet.welcome-link-banner-connectors
+  .welcome-wrapper
+  .featured-banner-link,
+.below-site-header-outlet.welcome-link-banner-connector
+  .welcome-wrapper
+  .featured-banner-link {
   flex: 1 0 40%;
 }
-.above-main-container-outlet.welcome-link-banner-connectors .welcome-link-banner-wrapper, .below-site-header-outlet.welcome-link-banner-connector .welcome-link-banner-wrapper {
+
+.above-main-container-outlet.welcome-link-banner-connectors
+  .welcome-link-banner-wrapper,
+.below-site-header-outlet.welcome-link-banner-connector
+  .welcome-link-banner-wrapper {
   border-radius: var(--d-border-radius-large);
 }
-.above-main-container-outlet.welcome-link-banner-connectors .welcome-wrapper, .below-site-header-outlet.welcome-link-banner-connector .welcome-wrapper {
+
+.above-main-container-outlet.welcome-link-banner-connectors .welcome-wrapper,
+.below-site-header-outlet.welcome-link-banner-connector .welcome-wrapper {
   border-radius: 0.25rem;
 }
-@media (max-width: 768px) {
+
+@media (width <= 768px) {
   .welcome-banner.--location-above-topic-content .welcome-banner__title {
     display: none;
   }
+
   .breadcrumbs__links {
     .current {
       display: none;
     }
   }
 }
+
 .btn-icon.toolbar__button.icarsoft-instructions {
   order: 1;
   margin-inline: auto 0.5rem;
@@ -661,7 +738,6 @@ a.sidebar-section-link[href*="www.icarsoft"] {
   margin-block-end: var(--space-3, 0.75rem);
   color: var(--d-input-text-color);
   background-color: var(--d-input-bg-color);
-  border: 1px solid rgba(0, 0, 0, 0);
   border: var(--d-input-border);
   border-radius: var(--d-input-border-radius);
   color-scheme: var(--scheme-type);
@@ -699,7 +775,7 @@ a.sidebar-section-link[href*="www.icarsoft"] {
   color: var(--primary-medium);
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   #reply-control .d-editor-textarea-column .icarsoft-composer-instructions {
     margin: var(--space-2, 0.5rem) 0;
   }

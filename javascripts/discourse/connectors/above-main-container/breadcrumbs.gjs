@@ -1,25 +1,22 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
 import bodyClass from "discourse/helpers/body-class";
+import getURL from "discourse/lib/get-url";
 import { defaultHomepage } from "discourse/lib/utilities";
 import Category from "discourse/models/category";
-import dIcon from "discourse-common/helpers/d-icon";
-import i18n from "discourse-common/helpers/i18n";
+import dIcon from "discourse/ui-kit/helpers/d-icon";
+import { i18n } from "discourse-i18n";
 
 export default class Breadcrumbs extends Component {
   @service router;
 
-  // Should we render breadcrumbs on this route at all?
   get shouldShowBreadcrumbs() {
     const routeName = this.router?.currentRouteName || "";
 
-    // Never on admin
     if (routeName.startsWith("admin")) {
       return false;
     }
 
-    // Show on topic + category routes (and any other route
-    // where we resolve a currentPage label)
     return this.isTopicRoute || this.isCategoryRoute || !!this.currentPage;
   }
 
@@ -46,6 +43,14 @@ export default class Breadcrumbs extends Component {
     );
   }
 
+  get homeUrl() {
+    return getURL("/");
+  }
+
+  get currentPageUrl() {
+    return getURL(this.router?.currentURL || "/");
+  }
+
   get isTopicRoute() {
     const routeName = this.router?.currentRouteName || "";
     return routeName.startsWith("topic");
@@ -56,9 +61,10 @@ export default class Breadcrumbs extends Component {
       return null;
     }
 
-    // Prefer the connector args when available – on topic pages the
-    // plugin outlet usually receives the topic model directly.
+    const outletArgs = this.args?.outletArgs;
     const fromArgs =
+      outletArgs?.topic ||
+      outletArgs?.model ||
       this.args?.topic ||
       this.args?.model ||
       this.args?.topicModel ||
@@ -73,10 +79,10 @@ export default class Breadcrumbs extends Component {
       return null;
     }
 
-    // Try to get from route's parent attributes (common in Discourse topic routes)
     const parentAttrs = route.parent?.attributes;
     if (parentAttrs) {
       if (
+        parentAttrs.unicode_title ||
         parentAttrs.fancy_title ||
         parentAttrs.title ||
         parentAttrs.category_id
@@ -91,15 +97,16 @@ export default class Breadcrumbs extends Component {
       }
     }
 
-    // In most cases the topic itself is the route's attributes
     const attrs = route.attributes;
-
-    // If attributes already look like a topic, use them directly
-    if (attrs?.fancy_title || attrs?.title || attrs?.category_id) {
+    if (
+      attrs?.unicode_title ||
+      attrs?.fancy_title ||
+      attrs?.title ||
+      attrs?.category_id
+    ) {
       return attrs;
     }
 
-    // Some route setups nest the topic under `topic` or `model`
     if (attrs?.topic) {
       return attrs.topic;
     }
@@ -117,7 +124,7 @@ export default class Breadcrumbs extends Component {
       return null;
     }
 
-    return topic.fancy_title || topic.title || null;
+    return topic.unicode_title || topic.title || null;
   }
 
   get currentPage() {
@@ -128,20 +135,20 @@ export default class Breadcrumbs extends Component {
 
     switch (true) {
       case routeName.includes("userPrivateMessages"):
-        return i18n("js.groups.messages");
+        return i18n("groups.messages");
       case routeName === "userNotifications.responses" ||
         routeName === "userNotifications.mentions":
-        return i18n("js.groups.mentions");
+        return i18n("groups.mentions");
       case routeName === "userActivity.bookmarks":
-        return i18n("js.user.bookmarks");
+        return i18n("user.bookmarks");
       case this.router?.currentRoute?.parent?.name === "docs":
-        return i18n("js.docs.title");
+        return i18n("docs.title");
       case this.router?.currentRoute?.parent?.name === "preferences":
-        return i18n("js.user.preferences.title");
+        return i18n("user.preferences.title");
       case routeName === "discourse-post-event-upcoming-events.index":
-        return i18n("js.discourse_post_event.upcoming_events.title");
+        return i18n("discourse_post_event.upcoming_events.title");
       case routeName === "tags.index":
-        return i18n("js.tagging.all_tags");
+        return i18n("tagging.all_tags");
       case this.isTopicRoute:
         return this.topicTitle;
       case this.isCategoryRoute:
@@ -167,9 +174,7 @@ export default class Breadcrumbs extends Component {
   }
 
   get categoryName() {
-    if (this.currentCategory) {
-      return this.currentCategory.name;
-    }
+    return this.currentCategory?.name || null;
   }
 
   get parentCategory() {
@@ -182,21 +187,29 @@ export default class Breadcrumbs extends Component {
   }
 
   get parentCategoryName() {
-    if (this.parentCategory) {
-      return this.parentCategory.name;
-    }
+    return this.parentCategory?.name || null;
   }
 
   get parentCategoryLink() {
-    return this.parentCategory?.slug;
+    const parent = this.parentCategory;
+    if (!parent) {
+      return null;
+    }
+    const url = parent.url || `/c/${parent.slug}/${parent.id}`;
+    return getURL(url);
   }
 
   get categoryLink() {
-    return this.currentCategory?.url;
+    const cat = this.currentCategory;
+    if (!cat) {
+      return null;
+    }
+    const url = cat.url || `/c/${cat.slug}/${cat.id}`;
+    return getURL(url);
   }
 
   get showCategoryCrumb() {
-    return this.isTopicRoute && this.categoryName;
+    return this.isTopicRoute && !!this.categoryName && !!this.categoryLink;
   }
 
   get isCategoryRoute() {
@@ -207,30 +220,33 @@ export default class Breadcrumbs extends Component {
   <template>
     {{#if this.shouldShowBreadcrumbs}}
       {{bodyClass "has-breadcrumbs"}}
-      <div class="breadcrumbs">
+      <nav
+        aria-label={{i18n (themePrefix "breadcrumbs.aria_label")}}
+        class="breadcrumbs"
+      >
         <div class="breadcrumbs__container">
-
-          <ul class="breadcrumbs__links">
+          <ol class="breadcrumbs__links">
             <li class="home">
               {{#if this.homePage}}
-
-                Accueil
-
+                <a
+                  aria-current={{unless this.currentPage "page"}}
+                  href={{this.homeUrl}}
+                >
+                  {{i18n (themePrefix "breadcrumbs.home")}}
+                </a>
               {{else}}
-
-                <a href="/">
+                <a href={{this.homeUrl}}>
                   <span class="breadcrumbs__title">
                     {{dIcon "icarsoft-house"}}
                   </span>
-                  Accueil
+                  {{i18n (themePrefix "breadcrumbs.home")}}
                 </a>
-
               {{/if}}
             </li>
 
             {{#if this.parentCategoryName}}
               <li class="parent parent-category">
-                <a href="/c/{{this.parentCategoryLink}}">
+                <a href={{this.parentCategoryLink}}>
                   {{this.parentCategoryName}}
                 </a>
               </li>
@@ -238,7 +254,7 @@ export default class Breadcrumbs extends Component {
 
             {{#if this.showCategoryCrumb}}
               <li class="parent category">
-                <a href="{{this.categoryLink}}">
+                <a href={{this.categoryLink}}>
                   {{this.categoryName}}
                 </a>
               </li>
@@ -246,12 +262,14 @@ export default class Breadcrumbs extends Component {
 
             {{#if this.currentPage}}
               <li class="current">
-                {{this.currentPage}}
+                <a aria-current="page" href={{this.currentPageUrl}}>
+                  {{this.currentPage}}
+                </a>
               </li>
             {{/if}}
-          </ul>
+          </ol>
         </div>
-      </div>
+      </nav>
     {{/if}}
   </template>
 }

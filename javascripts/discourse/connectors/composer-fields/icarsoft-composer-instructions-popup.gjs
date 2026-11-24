@@ -1,7 +1,3 @@
-import IcarsoftComposerInstructionsPopup from "../../components/icarsoft-composer-instructions-popup";
+import IcarsoftComposerInstructionsPopup from "../../components/icarsoft-composer-instructions-popup.gjs";
 
-<template>
-  <IcarsoftComposerInstructionsPopup />
-</template>
-
-
+export default <template><IcarsoftComposerInstructionsPopup /></template>

@@ -5,7 +5,7 @@ function getCurrentTagFromUrl() {
     const path = window.location?.pathname || "";
     const search = window.location?.search || "";
 
-    // Only act on category routes like /c/renault/61 or /c/renault/61/...
+    // Only act on category routes like /c/renault/61 or /c/par-marques/renault/61
     if (!path.startsWith("/c/")) {
       return null;
     }
@@ -21,14 +21,13 @@ function getCurrentTagFromUrl() {
       return null;
     }
 
-    // Support multiple tags, take the first non-empty slug
     const first = tagsParam
       .split(",")
       .map((t) => t.trim())
       .find((t) => t.length > 0);
 
     return first || null;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -39,15 +38,13 @@ export default {
 
   initializeWithApi(api) {
     api.modifyClass(
-      "controller:composer",
+      "service:composer",
       (Superclass) =>
-        class PrefillComposerTagController extends Superclass {
+        class PrefillComposerTagService extends Superclass {
           open(...args) {
-            // The first argument is usually the options used to open the composer.
             const [opts, ...rest] = args;
             const options = opts || {};
 
-            // Only handle createTopic actions
             if (options.action !== "createTopic") {
               return super.open?.(...args);
             }
@@ -77,7 +74,7 @@ export default {
   },
 
   initialize() {
-    withPluginApi("0.12.1", (api) => {
+    withPluginApi((api) => {
       this.initializeWithApi(api);
     });
   },

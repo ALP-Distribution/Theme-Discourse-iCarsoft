@@ -1,0 +1,9 @@
+en:
+  theme_metadata:
+    description: "Custom Canvas theme for the iCarsoft France community forum."
+  breadcrumbs:
+    aria_label: "Breadcrumbs"
+    home: "Home"
+  composer_instructions:
+    title: "Instructions"
+    close: "Close"

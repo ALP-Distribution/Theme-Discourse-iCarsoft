@@ -1,7 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
-import getURLWithCDN from "discourse-common/lib/get-url";
+import { getURLWithCDN } from "discourse/lib/get-url";
 
-export default apiInitializer("1.8.0", (api) => {
+export default apiInitializer((api) => {
   const spritePath = settings.icons_sprite;
   if (spritePath && typeof spritePath === "string" && spritePath.trim()) {
     const spriteUrl = getURLWithCDN(spritePath);
@@ -10,6 +10,6 @@ export default apiInitializer("1.8.0", (api) => {
     }
     try {
       api.addIconSprite(spriteUrl);
-    } catch (e) {}
+    } catch {}
   }
 });

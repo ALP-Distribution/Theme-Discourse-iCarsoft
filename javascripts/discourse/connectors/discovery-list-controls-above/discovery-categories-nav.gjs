@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import getURLWithCDN from "discourse-common/lib/get-url";
+import getURL, { getURLWithCDN } from "discourse/lib/get-url";
 
 export default class DiscoveryCategoriesNav extends Component {
   @service router;
@@ -26,13 +26,15 @@ export default class DiscoveryCategoriesNav extends Component {
           if (window.location && window.location.pathname === "/") {
             return "root";
           }
-        } catch (e) {}
+        } catch {}
         return name || "";
     }
   }
 
   get show() {
-    if (!settings.enable_discovery_nav) return false;
+    if (!settings.enable_discovery_nav) {
+      return false;
+    }
     const pages = String(settings.discovery_nav_pages || "")
       .split("|")
       .map((s) => s.trim())
@@ -42,15 +44,21 @@ export default class DiscoveryCategoriesNav extends Component {
 
   get categories() {
     const cats = this.site.categories || [];
-    return cats
-      .filter((c) => !c.parent_category_id && !c.read_restricted)
-      // Remove uncategorized (French slug and id 1 safeguard)
-      .filter((c) => c.slug !== "sans-categorie" && c.id !== 1)
-      .sort((a, b) => (a.position || 0) - (b.position || 0));
+    return (
+      cats
+        .filter((c) => !c.parent_category_id && !c.read_restricted)
+        // Remove uncategorized (French slug and id 1 safeguard)
+        .filter((c) => c.slug !== "sans-categorie" && c.id !== 1)
+        .sort((a, b) => (a.position || 0) - (b.position || 0))
+    );
+  }
+
+  get hasCategories() {
+    return this.categories.length > 0;
   }
 
   urlForCategory(cat) {
-    return getURLWithCDN(`/c/${cat.slug}/${cat.id}`);
+    return getURL(`/c/${cat.slug}/${cat.id}`);
   }
 
   logoUrlForCategory(cat) {
@@ -58,26 +66,28 @@ export default class DiscoveryCategoriesNav extends Component {
     return raw ? getURLWithCDN(raw) : null;
   }
 
-  get hasCategories() {
-    return this.categories.length > 0;
-  }
-
   <template>
     {{#if this.show}}
       {{#if this.hasCategories}}
-        <nav class="tc-discovery-nav" aria-label="Categories navigation">
+        <nav aria-label="Categories navigation" class="tc-discovery-nav">
           <div class="tc-discovery-nav__wrap wrap">
             <ul class="tc-discovery-nav__list">
               {{#each this.categories as |cat|}}
                 <li class="tc-discovery-nav__item">
                   <a
                     class="tc-discovery-nav__link"
-                    href={{this.urlForCategory cat}}
                     data-category-id={{cat.id}}
+                    href={{this.urlForCategory cat}}
                   >
                     {{#let (this.logoUrlForCategory cat) as |logo|}}
                       {{#if logo}}
-                        <img class="tc-discovery-nav__logo" src={{logo}} alt="" aria-hidden="true" />
+                        <img
+                          alt=""
+                          aria-hidden="true"
+                          class="tc-discovery-nav__logo"
+                          decoding="async"
+                          src={{logo}}
+                        />
                       {{/if}}
                     {{/let}}
                     <span class="tc-discovery-nav__label">{{cat.name}}</span>
@@ -89,8 +99,5 @@ export default class DiscoveryCategoriesNav extends Component {
         </nav>
       {{/if}}
     {{/if}}
-    {{yield}}
   </template>
 }
-
-

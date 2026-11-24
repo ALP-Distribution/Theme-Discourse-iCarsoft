@@ -1,65 +1,71 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import getURLWithCDN from "discourse-common/lib/get-url";
+import getURL, { getURLWithCDN } from "discourse/lib/get-url";
 
 export default class TagNavConnector extends Component {
-  @service site;
+  @service router;
 
   get enable() {
     return settings.enable_tag_nav;
   }
 
   get currentTag() {
-    // Parse URL query params to find currently selected tag
+    const currentUrl = this.router?.currentURL || "";
     try {
-      const params = new URLSearchParams(window.location.search);
+      const queryIndex = currentUrl.indexOf("?");
+      const search =
+        queryIndex >= 0 ? currentUrl.slice(queryIndex) : window.location.search;
+      const params = new URLSearchParams(search);
       const tags = params.get("tags");
       if (tags) {
-        // Handle multiple tags (comma-separated) by taking the first one
-        const firstTag = tags.split(",")[0].trim();
-        return firstTag;
+        return tags.split(",")[0].trim() || null;
       }
-    } catch (e) {
+    } catch {
       // fallback if URL parsing fails
     }
     return null;
   }
 
   get category() {
-    return this.args?.category;
+    return this.args?.outletArgs?.category ?? this.args?.category;
   }
 
   get hasRequiredGroup() {
     const c = this.category;
-    if (!c) return false;
-    // Settings contain group names (case-insensitive)
+    if (!c) {
+      return false;
+    }
     const required = String(settings.tag_nav_group_ids || "")
       .split("|")
       .map((s) => s.trim().toLowerCase())
       .filter(Boolean);
-    if (required.length === 0) return false;
+    if (required.length === 0) {
+      return false;
+    }
     const onCatNames = (c.allowed_tag_groups || c.required_tag_groups || [])
       .map((s) => String(s).trim().toLowerCase())
       .filter(Boolean);
-    if (onCatNames.length === 0) return false;
+    if (onCatNames.length === 0) {
+      return false;
+    }
     return required.some((name) => onCatNames.includes(name));
   }
 
   get availableTagNames() {
     const c = this.category;
-    if (!c) return [];
-    // Prefer allowed_tags (category-scoped); then available_tags, available_tag_names, tags
-    const list =
+    if (!c) {
+      return [];
+    }
+    return (
       c.allowed_tags ||
       c.available_tags ||
       c.available_tag_names ||
       c.tags ||
-      [];
-    return list;
+      []
+    );
   }
 
   get tagToImageUrl() {
-    // Build mapping from setting lines: "slug::url"
     const raw = String(settings.tag_nav_images || "");
     const items = raw
       .split("|")
@@ -79,47 +85,46 @@ export default class TagNavConnector extends Component {
     return map;
   }
 
-  tagUrl(tag) {
-    const c = this.category;
-    if (!c) return getURLWithCDN(`/tags/${encodeURIComponent(tag)}`);
-
-    // If this tag is currently selected, toggle it off (return category URL)
-    if (
-      this.currentTag &&
-      this.currentTag.toLowerCase() === tag.toLowerCase()
-    ) {
-      return getURLWithCDN(`/c/${c.slug}/${c.id}`);
-    }
-
-    // Otherwise, link to category filtered by tag
-    return getURLWithCDN(
-      `/c/${c.slug}/${c.id}?tags=${encodeURIComponent(tag)}`
-    );
-  }
-
   get tags() {
-    if (!this.enable) {
-      return [];
-    }
-    if (!this.hasRequiredGroup) {
+    if (!this.enable || !this.hasRequiredGroup) {
       return [];
     }
     let names = this.availableTagNames;
     const map = this.tagToImageUrl;
     if (!Array.isArray(names) || names.length === 0) {
-      // Fallback: use keys from mapping setting
       names = Object.keys(map || {});
     }
-    if (!Array.isArray(names) || names.length === 0) return [];
+    if (!Array.isArray(names) || names.length === 0) {
+      return [];
+    }
     const current = this.currentTag;
-    const items = names.map((slug) => ({
+    return names.map((slug) => ({
       slug,
       label: this.prettyLabel(slug),
       url: this.tagUrl(slug),
       img: map[slug] || null,
-      isSelected: current && current.toLowerCase() === slug.toLowerCase(),
+      isSelected: !!current && current.toLowerCase() === slug.toLowerCase(),
     }));
-    return items;
+  }
+
+  get show() {
+    return this.tags.length > 0;
+  }
+
+  tagUrl(tag) {
+    const c = this.category;
+    if (!c) {
+      return getURL(`/tags/${encodeURIComponent(tag)}`);
+    }
+
+    if (
+      this.currentTag &&
+      this.currentTag.toLowerCase() === tag.toLowerCase()
+    ) {
+      return getURL(`/c/${c.slug}/${c.id}`);
+    }
+
+    return getURL(`/c/${c.slug}/${c.id}?tags=${encodeURIComponent(tag)}`);
   }
 
   prettyLabel(slug) {
@@ -128,25 +133,34 @@ export default class TagNavConnector extends Component {
       "mises-à-jour": "Mises à jour",
       notice: "Notice",
     };
-    if (overrides[slug]) return overrides[slug];
+    if (overrides[slug]) {
+      return overrides[slug];
+    }
     const label = String(slug || "").replace(/-/g, " ");
     return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
-  get show() {
-    return this.tags.length > 0;
-  }
-
   <template>
     {{#if this.show}}
-      <nav class="tc-tag-nav" aria-label="Tags navigation">
+      <nav aria-label="Tags navigation" class="tc-tag-nav">
         <div class="wrap">
           <ul class="tc-discovery-nav__list">
             {{#each this.tags as |t|}}
               <li class="tc-discovery-nav__item">
-                <a class="tc-discovery-nav__link {{if t.isSelected 'is-selected'}}" href={{t.url}}>
+                <a
+                  aria-current={{if t.isSelected "true"}}
+                  class="tc-discovery-nav__link
+                    {{if t.isSelected 'is-selected'}}"
+                  href={{t.url}}
+                >
                   {{#if t.img}}
-                    <img class="tc-discovery-nav__logo" src={{t.img}} alt="" aria-hidden="true" />
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      class="tc-discovery-nav__logo"
+                      decoding="async"
+                      src={{t.img}}
+                    />
                   {{/if}}
                   <span class="tc-discovery-nav__label">{{t.label}}</span>
                 </a>
@@ -156,6 +170,5 @@ export default class TagNavConnector extends Component {
         </div>
       </nav>
     {{/if}}
-    {{yield}}
   </template>
 }

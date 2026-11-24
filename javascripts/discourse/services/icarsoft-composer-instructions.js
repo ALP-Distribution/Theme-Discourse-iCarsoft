@@ -1,6 +1,5 @@
-import Service from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import { service } from "@ember/service";
+import Service, { service } from "@ember/service";
 import Category from "discourse/models/category";
 
 // Category ID -> Markdown template mapping (hardcoded by requirement).
@@ -16,7 +15,8 @@ const CATEGORY_TEMPLATES = {
 - **Question fréquente** (renseignement général)
 - **Mises à jour** (problème logiciel ou installation)
 - **Notices** (recherche de documentation)
-`,6: `Pour permettre à la communauté de diagnostiquer votre panne efficacement, merci de compléter les informations ci-dessous :
+`,
+  6: `Pour permettre à la communauté de diagnostiquer votre panne efficacement, merci de compléter les informations ci-dessous :
 
 **1. Informations véhicule**
 *   **Modèle exact :** [Ex: Peugeot 308 II]
@@ -32,55 +32,21 @@ const CATEGORY_TEMPLATES = {
 *   **Symptômes et détails de la panne :**
 
 **Rappel :** N’oubliez pas de sélectionner les étiquettes (tags) correspondant à la marque de votre véhicule en haut de ce message.
-`
+`,
 };
 
 export default class IcarsoftComposerInstructionsService extends Service {
   @service composer;
 
   @tracked isOpen = false;
+  @tracked _categoryId = null;
+  @tracked _action = null;
 
   _dismissedByCategory = new Set();
-
-  // We keep a tracked mirror of categoryId so the popup updates immediately
-  // when the user changes it via the dropdown (even if the composer model
-  // is not tracked in Glimmer).
-  @tracked _categoryId = null;
-
-  // Also track action so we can enforce "createTopic only" and auto-close on change.
-  @tracked _action = null;
 
   constructor(...args) {
     super(...args);
     this._dismissedByCategory = this._loadDismissedByCategory();
-  }
-
-  syncFromComposerModel(model) {
-    const m = model || this.composer?.model;
-    if (!m) {
-      this._categoryId = null;
-      this._action = null;
-      this.isOpen = false;
-      return;
-    }
-
-    // Support common composer model shapes across Discourse versions.
-    const nextCategoryId =
-      m.categoryId ?? m.category_id ?? m.category?.id ?? null;
-    this._action = m.action ?? null;
-
-    // If we’re not creating a topic, force-close.
-    if (!this.isCreateTopic) {
-      this.isOpen = false;
-      this._categoryId = nextCategoryId;
-      return;
-    }
-
-    const prevCategoryId = this._categoryId;
-    this._categoryId = nextCategoryId;
-
-    // Apply default-open behavior on open and on category changes.
-    this._applyDefaultOpenForCategory(prevCategoryId);
   }
 
   get isCreateTopic() {
@@ -109,12 +75,10 @@ export default class IcarsoftComposerInstructionsService extends Service {
       return null;
     }
 
-    // Sub-category first:
     if (CATEGORY_TEMPLATES[categoryId]) {
       return CATEGORY_TEMPLATES[categoryId];
     }
 
-    // Then fall back to parent:
     const parentId = this.parentCategoryId;
     if (parentId && CATEGORY_TEMPLATES[parentId]) {
       return CATEGORY_TEMPLATES[parentId];
@@ -135,20 +99,71 @@ export default class IcarsoftComposerInstructionsService extends Service {
     return this._dismissedByCategory.has(String(id));
   }
 
+  syncFromComposerModel(model) {
+    const m = model || this.composer?.model;
+    if (!m) {
+      this._categoryId = null;
+      this._action = null;
+      this.isOpen = false;
+      return;
+    }
+
+    const nextCategoryId =
+      m.categoryId ?? m.category_id ?? m.category?.id ?? null;
+    this._action = m.action ?? null;
+
+    if (!this.isCreateTopic) {
+      this.isOpen = false;
+      this._categoryId = nextCategoryId;
+      return;
+    }
+
+    const prevCategoryId = this._categoryId;
+    this._categoryId = nextCategoryId;
+
+    this._applyDefaultOpenForCategory(prevCategoryId);
+  }
+
+  dismiss() {
+    const id = this.selectedCategoryId;
+    if (id) {
+      this._dismissedByCategory.add(String(id));
+      this._saveDismissedByCategory();
+    }
+    this.isOpen = false;
+  }
+
+  toggle() {
+    if (!this.isCreateTopic || !this.hasTemplate) {
+      this.isOpen = false;
+      return;
+    }
+    if (this.isOpen) {
+      this.dismiss();
+      return;
+    }
+    this.isOpen = true;
+  }
+
+  open() {
+    if (!this.isCreateTopic || !this.hasTemplate) {
+      this.isOpen = false;
+      return;
+    }
+    this.isOpen = true;
+  }
+
+  close() {
+    this.isOpen = false;
+  }
+
   _applyDefaultOpenForCategory(prevCategoryId) {
     const categoryChanged = prevCategoryId !== this.selectedCategoryId;
     if (!categoryChanged) {
       return;
     }
 
-    // If no instruction template exists, don't render/open anything.
-    if (!this.hasTemplate) {
-      this.isOpen = false;
-      return;
-    }
-
-    // Open by default unless user has dismissed this category once.
-    if (this.dismissedForCurrentCategory) {
+    if (!this.hasTemplate || this.dismissedForCurrentCategory) {
       this.isOpen = false;
       return;
     }
@@ -187,48 +202,4 @@ export default class IcarsoftComposerInstructionsService extends Service {
       // ignore
     }
   }
-
-  dismiss() {
-    // User-initiated close that should be remembered per category.
-    const id = this.selectedCategoryId;
-    if (id) {
-      this._dismissedByCategory.add(String(id));
-      this._saveDismissedByCategory();
-    }
-    this.isOpen = false;
-  }
-
-  toggle() {
-    if (!this.isCreateTopic) {
-      this.isOpen = false;
-      return;
-    }
-    if (!this.hasTemplate) {
-      this.isOpen = false;
-      return;
-    }
-    if (this.isOpen) {
-      this.dismiss();
-      return;
-    }
-    this.isOpen = true;
-  }
-
-  open() {
-    if (!this.isCreateTopic) {
-      this.isOpen = false;
-      return;
-    }
-    if (!this.hasTemplate) {
-      this.isOpen = false;
-      return;
-    }
-    this.isOpen = true;
-  }
-
-  close() {
-    this.isOpen = false;
-  }
 }
-
-
