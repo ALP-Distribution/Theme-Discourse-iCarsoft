@@ -1,29 +1,6 @@
 import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
 import { service } from "@ember/service";
-import { ajax } from "discourse/lib/ajax";
 import getURL from "discourse/lib/get-url";
-
-let cachedSiteTagGroups = null;
-let siteTagGroupsPromise = null;
-
-function fetchSiteTagGroups() {
-  if (cachedSiteTagGroups !== null) {
-    return Promise.resolve(cachedSiteTagGroups);
-  }
-  if (!siteTagGroupsPromise) {
-    siteTagGroupsPromise = ajax("/tag_groups.json")
-      .then((result) => {
-        cachedSiteTagGroups = result?.tag_groups || result || [];
-        return cachedSiteTagGroups;
-      })
-      .catch(() => {
-        cachedSiteTagGroups = [];
-        return cachedSiteTagGroups;
-      });
-  }
-  return siteTagGroupsPromise;
-}
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -32,8 +9,7 @@ function escapeRegExp(value) {
 export default class ParMarquesTagNavConnector extends Component {
   @service router;
   @service site;
-
-  @tracked loadedTagGroups = cachedSiteTagGroups;
+  @service icarsoftTagContext;
 
   get enable() {
     return settings.enable_par_marques_tag_nav;
@@ -84,8 +60,10 @@ export default class ParMarquesTagNavConnector extends Component {
     if (!c) {
       return [];
     }
-    const groups = c.allowed_tag_groups || c.required_tag_groups || [];
-    return (groups || []).map((s) => String(s).trim()).filter(Boolean);
+    return this.icarsoftTagContext
+      .allowedTagGroupNames(c)
+      .map((s) => String(s).trim())
+      .filter(Boolean);
   }
 
   get modelesGroupNames() {
@@ -101,76 +79,12 @@ export default class ParMarquesTagNavConnector extends Component {
     });
   }
 
-  get tagGroupsOnSite() {
-    if (this.loadedTagGroups === null) {
-      this.ensureTagGroupsLoaded();
-      return [];
-    }
-    return this.loadedTagGroups || [];
-  }
-
   get modelesTagSlugs() {
     const groupNames = this.modelesGroupNames;
-    if (!groupNames.length) {
+    if (!groupNames.length || !this.category) {
       return [];
     }
-    const c = this.category;
-    if (!c) {
-      return [];
-    }
-
-    const groups = this.tagGroupsOnSite;
-    const wantedNames = groupNames.map((n) => String(n || "").toLowerCase());
-    const set = new Set();
-
-    if (Array.isArray(groups) && groups.length > 0) {
-      groups.forEach((group) => {
-        const gName = String(group?.name || "").toLowerCase();
-        if (!wantedNames.includes(gName)) {
-          return;
-        }
-        const tags = group.tag_names || group.tags || [];
-        (tags || []).forEach((tag) => {
-          let slug = null;
-          if (typeof tag === "string") {
-            slug = tag;
-          } else if (tag && typeof tag === "object") {
-            slug = tag.name || tag.id;
-          }
-          if (slug) {
-            set.add(String(slug));
-          }
-        });
-      });
-    }
-
-    // Fallback: if no tags resolved from tagGroups, approximate using category tag list
-    if (set.size === 0) {
-      const source =
-        c.allowed_tags ||
-        c.available_tags ||
-        c.available_tag_names ||
-        c.tags ||
-        [];
-
-      if (!Array.isArray(source) || source.length === 0) {
-        return [];
-      }
-
-      source.forEach((tag) => {
-        if (typeof tag === "string") {
-          set.add(tag);
-        } else if (tag && typeof tag === "object") {
-          if (tag.name) {
-            set.add(String(tag.name));
-          } else if (tag.id) {
-            set.add(String(tag.id));
-          }
-        }
-      });
-    }
-
-    return Array.from(set);
+    return this.icarsoftTagContext.tagsInGroups(groupNames);
   }
 
   get availableTagNames() {
@@ -217,18 +131,6 @@ export default class ParMarquesTagNavConnector extends Component {
 
   get show() {
     return this.tags.length > 0;
-  }
-
-  ensureTagGroupsLoaded() {
-    if (this.loadedTagGroups !== null) {
-      return;
-    }
-    Promise.resolve().then(async () => {
-      const groups = await fetchSiteTagGroups();
-      if (!this.isDestroying) {
-        this.loadedTagGroups = groups;
-      }
-    });
   }
 
   tagUrl(tag) {

@@ -4,6 +4,7 @@ import getURL, { getURLWithCDN } from "discourse/lib/get-url";
 
 export default class TagNavConnector extends Component {
   @service router;
+  @service icarsoftTagContext;
 
   get enable() {
     return settings.enable_tag_nav;
@@ -42,7 +43,8 @@ export default class TagNavConnector extends Component {
     if (required.length === 0) {
       return false;
     }
-    const onCatNames = (c.allowed_tag_groups || c.required_tag_groups || [])
+    const onCatNames = this.icarsoftTagContext
+      .allowedTagGroupNames(c)
       .map((s) => String(s).trim().toLowerCase())
       .filter(Boolean);
     if (onCatNames.length === 0) {
