@@ -31,4 +31,10 @@ $custom-button-padding-dark: 0.65rem 0.75rem;
   --subcats-logo-radius: #{dark-light-choose(0, 8px)};
   --subcats-logo-margin: #{dark-light-choose(0 0.25rem, 0.5rem 0.5rem)};
   --subcats-logo-opacity: #{dark-light-choose(1, 0.8)};
+
+  // Silver brand logos (DS, Mercedes, Lexus, Iveco, MAN) are too pale on white.
+  --silver-logo-filter: #{dark-light-choose(
+      brightness(0.45) contrast(1.6),
+      none
+    )};
 }

@@ -797,3 +797,18 @@ a.sidebar-section-link[href*="www.icarsoft"] {
     max-height: min(14rem, 25vh);
   }
 }
+
+// Brand grid: darken the silver logos in light mode (category ids: DS 31,
+// Mercedes 53, Lexus 48, Iveco 41, MAN 116, Mercedes-Benz HD 113).
+.tc-subcats-nav--par-marques {
+  .tc-subcats-nav__link[href$="/31"],
+  .tc-subcats-nav__link[href$="/53"],
+  .tc-subcats-nav__link[href$="/48"],
+  .tc-subcats-nav__link[href$="/41"],
+  .tc-subcats-nav__link[href$="/116"],
+  .tc-subcats-nav__link[href$="/113"] {
+    .tc-subcats-nav__logo {
+      filter: var(--silver-logo-filter);
+    }
+  }
+}
