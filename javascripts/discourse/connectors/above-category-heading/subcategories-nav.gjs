@@ -40,7 +40,7 @@ function labelFor(cat) {
   if (group === "moto") {
     name = name.replace(/\b(moto|motos)\b/gi, "");
   } else if (group === "truck") {
-    name = name.replace(/\b(pl|poids?-lourds?)\b/gi, "");
+    name = name.replace(/\b(pl|poids?[- ]lourds?)\b/gi, "");
     name = name.replace(/ \| ?P-?L/gi, "");
   }
   return name.trim();
