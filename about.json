@@ -32,7 +32,9 @@
     "thumb-update": "assets/update.png",
     "icon-car": "assets/car.svg",
     "icon-motorbike": "assets/motorbike.svg",
-    "icon-truck": "assets/truck.svg"
+    "icon-truck": "assets/truck.svg",
+    "icon-plug": "assets/plug.svg",
+    "icon-wrench": "assets/wrench.svg"
   },
   "modifiers": {},
   "color_schemes": {

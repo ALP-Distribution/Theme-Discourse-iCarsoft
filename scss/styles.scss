@@ -133,6 +133,14 @@ body .topic-card.topic-list-item.visited:not(.pinned) {
   &.icon-truck {
     background-image: var(--canvas-icon-truck);
   }
+
+  &.icon-accessories {
+    background-image: var(--canvas-icon-plug);
+  }
+
+  &.icon-tools {
+    background-image: var(--canvas-icon-wrench);
+  }
 }
 
 .topic-card {

@@ -2,6 +2,50 @@ import Component from "@glimmer/component";
 import { service } from "@ember/service";
 import getURL, { getURLWithCDN } from "discourse/lib/get-url";
 
+// Sections of the "Nos produits" / "Par marques" grids, in display order.
+// A subcategory joins a section through its slug (see groupOf).
+const SECTIONS = [
+  { key: "car", title: "Automobiles", icon: "icon-car" },
+  { key: "moto", title: "Motos", icon: "icon-motorbike" },
+  { key: "truck", title: "Poids lourds", icon: "icon-truck" },
+  {
+    key: "accessories",
+    title: "Accessoires & modules",
+    icon: "icon-accessories",
+  },
+  { key: "tools", title: "Outils & équipements", icon: "icon-tools" },
+];
+
+function groupOf(cat) {
+  const slug = String(cat?.slug || "").toLowerCase();
+  if (slug.endsWith("-moto")) {
+    return "moto";
+  }
+  if (slug.endsWith("-pl")) {
+    return "truck";
+  }
+  if (slug.startsWith("accessoires")) {
+    return "accessories";
+  }
+  if (slug.endsWith("-outils")) {
+    return "tools";
+  }
+  return "car";
+}
+
+// Section headings already say "Motos" / "Poids lourds": drop it from tile labels.
+function labelFor(cat) {
+  let name = String(cat?.name || "");
+  const group = groupOf(cat);
+  if (group === "moto") {
+    name = name.replace(/\b(moto|motos)\b/gi, "");
+  } else if (group === "truck") {
+    name = name.replace(/\b(pl|poids?-lourds?)\b/gi, "");
+    name = name.replace(/ \| ?P-?L/gi, "");
+  }
+  return name.trim();
+}
+
 export default class SubcategoriesNavConnector extends Component {
   @service site;
 
@@ -64,25 +108,12 @@ export default class SubcategoriesNavConnector extends Component {
     );
   }
 
-  get automobileSubcategories() {
-    return this.subcategories.filter((cat) => {
-      const slug = String(cat.slug || "").toLowerCase();
-      return !slug.endsWith("-moto") && !slug.endsWith("-pl");
-    });
-  }
-
-  get motoSubcategories() {
-    return this.subcategories.filter((cat) => {
-      const slug = String(cat.slug || "").toLowerCase();
-      return slug.endsWith("-moto");
-    });
-  }
-
-  get poidLourdSubcategories() {
-    return this.subcategories.filter((cat) => {
-      const slug = String(cat.slug || "").toLowerCase();
-      return slug.endsWith("-pl");
-    });
+  get sections() {
+    const subcategories = this.subcategories;
+    return SECTIONS.map((section) => ({
+      ...section,
+      categories: subcategories.filter((cat) => groupOf(cat) === section.key),
+    })).filter((section) => section.categories.length > 0);
   }
 
   urlForCategory(cat) {
@@ -94,23 +125,8 @@ export default class SubcategoriesNavConnector extends Component {
     return raw ? getURLWithCDN(raw) : null;
   }
 
-  motoSubcategorieName(cat) {
-    if (!cat || !cat.name) {
-      return "";
-    }
-    let name = String(cat.name);
-    name = name.replace(/\b(moto|motos)\b/gi, "");
-    return name.trim();
-  }
-
-  poidLourdSubcategorieName(cat) {
-    if (!cat || !cat.name) {
-      return "";
-    }
-    let name = String(cat.name);
-    name = name.replace(/\b(pl|poid-lourd|poid-lourds)\b/gi, "");
-    name = name.replace(/ \| ?P-?L/gi, "");
-    return name.trim();
+  labelFor(cat) {
+    return labelFor(cat);
   }
 
   <template>
@@ -118,42 +134,13 @@ export default class SubcategoriesNavConnector extends Component {
       {{#if this.isDividedBySubcategories}}
         <nav aria-label="Subcategories navigation" class={{this.navClass}}>
           <div class="tc-subcats-nav__wrap wrap">
-            <div class="tc-subcats-nav__section">
-              <h3 class="tc-subcats-nav__title"><span
-                  class="tc-subcats-nav__icon icon-car"
-                ></span>Automobiles</h3>
-              <ul class="tc-subcats-nav__list">
-                {{#each this.automobileSubcategories as |cat|}}
-                  <li class="tc-subcats-nav__item">
-                    <a
-                      class="tc-subcats-nav__link"
-                      href={{this.urlForCategory cat}}
-                    >
-                      {{#let (this.logoUrlForCategory cat) as |logo|}}
-                        {{#if logo}}
-                          <img
-                            alt=""
-                            aria-hidden="true"
-                            class="tc-subcats-nav__logo"
-                            decoding="async"
-                            loading="lazy"
-                            src={{logo}}
-                          />
-                        {{/if}}
-                      {{/let}}
-                      <span class="tc-subcats-nav__label">{{cat.name}}</span>
-                    </a>
-                  </li>
-                {{/each}}
-              </ul>
-            </div>
-            {{#if this.motoSubcategories.length}}
+            {{#each this.sections as |section|}}
               <div class="tc-subcats-nav__section">
                 <h3 class="tc-subcats-nav__title"><span
-                    class="tc-subcats-nav__icon icon-motorbike"
-                  ></span>Motos</h3>
+                    class="tc-subcats-nav__icon {{section.icon}}"
+                  ></span>{{section.title}}</h3>
                 <ul class="tc-subcats-nav__list">
-                  {{#each this.motoSubcategories as |cat|}}
+                  {{#each section.categories as |cat|}}
                     <li class="tc-subcats-nav__item">
                       <a
                         class="tc-subcats-nav__link"
@@ -171,48 +158,15 @@ export default class SubcategoriesNavConnector extends Component {
                             />
                           {{/if}}
                         {{/let}}
-                        <span
-                          class="tc-subcats-nav__label"
-                        >{{this.motoSubcategorieName cat}}</span>
+                        <span class="tc-subcats-nav__label">{{this.labelFor
+                            cat
+                          }}</span>
                       </a>
                     </li>
                   {{/each}}
                 </ul>
               </div>
-            {{/if}}
-            {{#if this.poidLourdSubcategories.length}}
-              <div class="tc-subcats-nav__section">
-                <h3 class="tc-subcats-nav__title"><span
-                    class="tc-subcats-nav__icon icon-truck"
-                  ></span>Poid-lourds</h3>
-                <ul class="tc-subcats-nav__list">
-                  {{#each this.poidLourdSubcategories as |cat|}}
-                    <li class="tc-subcats-nav__item">
-                      <a
-                        class="tc-subcats-nav__link"
-                        href={{this.urlForCategory cat}}
-                      >
-                        {{#let (this.logoUrlForCategory cat) as |logo|}}
-                          {{#if logo}}
-                            <img
-                              alt=""
-                              aria-hidden="true"
-                              class="tc-subcats-nav__logo"
-                              decoding="async"
-                              loading="lazy"
-                              src={{logo}}
-                            />
-                          {{/if}}
-                        {{/let}}
-                        <span
-                          class="tc-subcats-nav__label"
-                        >{{this.poidLourdSubcategorieName cat}}</span>
-                      </a>
-                    </li>
-                  {{/each}}
-                </ul>
-              </div>
-            {{/if}}
+            {{/each}}
           </div>
         </nav>
       {{else}}
